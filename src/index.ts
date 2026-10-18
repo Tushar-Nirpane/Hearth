@@ -4,9 +4,14 @@ import { randomUUID } from "node:crypto";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js";
 import { buildServer } from "./server.js";
+import { handleTurn } from "./api/turn.js";
+
+import path from "node:path";
 
 const app = express();
 app.use(express.json({ limit: "4mb" }));
+app.use(express.static(path.join(process.cwd(), "public")));
+app.post("/api/turn", handleTurn);
 
 const PORT = Number(process.env.PORT ?? 8787);
 const sessions = new Map<
@@ -14,17 +19,6 @@ const sessions = new Map<
   { transport: StreamableHTTPServerTransport; lastActive: number }
 >();
 
-app.get("/", (_req, res) => {
-  res.type("html").send(`<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Hearth MCP</title>
-<style>body{font-family:ui-sans-serif,system-ui;max-width:640px;margin:80px auto;padding:0 24px;color:#1c1917;background:#f7f5f1}
-code{background:#fff;border:1px solid #e7e1d8;padding:2px 6px;border-radius:4px}</style></head>
-<body><h1>Hearth</h1>
-<p>The operating record of a house, exposed as a self-hosted MCP server.</p>
-<p>Endpoint: <code>POST /mcp</code> · Health: <code>GET /health</code></p>
-<p>Tools: get_property, find_shutoff, get_asset, start_runbook, answer_runbook, resume_runbook.</p>
-</body></html>`);
-});
 
 app.get("/health", (_req, res) => {
   res.json({

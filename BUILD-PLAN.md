@@ -66,10 +66,10 @@ npm start          # terminal 1
 npm run smoke      # terminal 2
 ```
 
-- [ ] All 8 checks pass
-- [ ] `git init`, commit as "deterministic runbook engine + MCP server"
-- [ ] Add `MIT LICENSE` in this commit
-- [ ] Create `docs/friction-log.md` with the first 3 entries from today
+- [x] All 8 checks pass
+- [x] `git init`, commit as "deterministic runbook engine + MCP server"
+- [x] Add `MIT LICENSE` in this commit
+- [x] Create `docs/friction-log.md` with the first 3 entries from today
 
 ### Block 1.2 — `POST /api/turn` (2h)
 
@@ -140,9 +140,9 @@ Rules: ≤ 22 words per instruction, no jargon, no "please", no numbered lists.
 
 ### Block 1.5 — Commit + friction log (30 min)
 
-- [ ] `git add -A && git commit`
-- [ ] 5+ friction log entries with severity ratings
-- [ ] Note today's actual hours vs estimate (calibrates Days 2–4)
+- [x] `git add -A && git commit`
+- [x] 5+ friction log entries with severity ratings
+- [x] Note today's actual hours vs estimate (calibrates Days 2–4)
 
 ---
 

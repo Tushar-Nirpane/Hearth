@@ -45,7 +45,7 @@ export const waterRunbook: Runbook = {
     },
     to_main: {
       id: "to_main",
-      say: "Go to {{water_main.location}}. {{water_main.access_notes}} Turn the lever clockwise until it stops. Tell me when it's done.",
+      say: "Go to {{water_main_location}}. {{water_main_access_notes}} Turn the lever clockwise until it stops. Tell me when it's done.",
       expect: "confirm",
       next: "check_main",
       requires: "water_main",
@@ -68,7 +68,7 @@ export const waterRunbook: Runbook = {
     },
     no_record: {
       id: "no_record",
-      say: "I don't have a verified main shutoff location for this house, and I won't guess. Call your water utility or a plumber now. Once this is over, record the shutoff so I can walk you through it next time.",
+      say: "I don't have a verified main shutoff for this house, and won't guess. Call a plumber or your utility now.",
       expect: "confirm",
       next: "close",
     },

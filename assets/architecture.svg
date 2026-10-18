@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif">
+  <rect width="1600" height="900" fill="#F7F5F1"/>
+
+  <text x="70" y="58" font-size="11" font-weight="700" letter-spacing="2" fill="#A8A29E">ALEXA+ TRACK · SYSTEM</text>
+  <text x="70" y="100" font-size="31" font-weight="600" fill="#1C1917">One MCP server, six tools, and a refusal it never breaks</text>
+  <text x="70" y="128" font-size="14" fill="#78716C">The browser is a stand-in for Alexa+. Both speak to the same endpoint.</text>
+
+  <g font-size="11" font-weight="700" letter-spacing="1.6">
+    <text x="70" y="180" fill="#B45309">01</text><text x="100" y="180" fill="#A8A29E">SPEAK</text>
+    <text x="450" y="180" fill="#B45309">02</text><text x="480" y="180" fill="#A8A29E">ROUTE</text>
+    <text x="830" y="180" fill="#B45309">03</text><text x="860" y="180" fill="#A8A29E">ACT</text>
+    <text x="1210" y="180" fill="#B45309">04</text><text x="1240" y="180" fill="#A8A29E">REMEMBER</text>
+  </g>
+
+  <!-- 01 -->
+  <rect x="70" y="200" width="330" height="380" rx="12" fill="#FFFFFF" stroke="#E7E1D8"/>
+  <text x="92" y="236" font-size="16" font-weight="600" fill="#1C1917">Browser / Alexa+</text>
+  <line x1="92" y1="254" x2="378" y2="254" stroke="#F0EBE3"/>
+  <text x="92" y="284" font-size="13" fill="#57534E">Voice in, one question at a time</text>
+  <text x="92" y="312" font-size="13" fill="#57534E">Choice chips from the step</text>
+  <text x="92" y="340" font-size="13" fill="#57534E">Spoken reply, large type</text>
+  <text x="92" y="368" font-size="13" fill="#57534E">House record beside it</text>
+  <rect x="92" y="400" width="286" height="1" fill="#F0EBE3"/>
+  <text x="92" y="430" font-size="12" fill="#A8A29E">Text input always visible —</text>
+  <text x="92" y="450" font-size="12" fill="#A8A29E">never depends on a microphone</text>
+  <rect x="92" y="480" width="160" height="30" rx="15" fill="#FDF6EC" stroke="#F3D9BC"/>
+  <text x="172" y="500" font-size="11.5" font-weight="600" fill="#B45309" text-anchor="middle">mic + speaker</text>
+
+  <!-- 02 -->
+  <rect x="450" y="200" width="330" height="380" rx="12" fill="#FFFFFF" stroke="#E7E1D8"/>
+  <text x="472" y="236" font-size="16" font-weight="600" fill="#1C1917">BFF · Express</text>
+  <line x1="472" y1="254" x2="758" y2="254" stroke="#F0EBE3"/>
+  <text x="472" y="284" font-size="13" fill="#57534E">POST /api/turn</text>
+  <text x="472" y="312" font-size="13" fill="#57534E">Deterministic intent router</text>
+  <text x="472" y="340" font-size="13" fill="#57534E">Holds no runbook state</text>
+  <text x="472" y="368" font-size="13" fill="#57534E">Stands in for Alexa NLU</text>
+  <rect x="472" y="400" width="286" height="1" fill="#F0EBE3"/>
+  <text x="472" y="430" font-size="12" fill="#A8A29E">In production this layer</text>
+  <text x="472" y="450" font-size="12" fill="#A8A29E">disappears — Alexa calls</text>
+  <text x="472" y="470" font-size="12" fill="#A8A29E">the MCP endpoint directly.</text>
+
+  <!-- 03 -->
+  <rect x="830" y="200" width="330" height="380" rx="12" fill="#FFFFFF" stroke="#B45309" stroke-width="1.5"/>
+  <text x="852" y="236" font-size="16" font-weight="600" fill="#1C1917">Hearth MCP server</text>
+  <line x1="852" y1="254" x2="1138" y2="254" stroke="#F0EBE3"/>
+  <text x="852" y="282" font-size="13" fill="#57534E">POST /mcp · Streamable HTTP</text>
+  <text x="852" y="306" font-size="12" fill="#A8A29E">spec 2025-11-25</text>
+  <text x="852" y="336" font-size="13" fill="#57534E">get_property · find_shutoff</text>
+  <text x="852" y="358" font-size="13" fill="#57534E">get_asset · start_runbook</text>
+  <text x="852" y="380" font-size="13" fill="#57534E">answer_runbook · resume_runbook</text>
+  <rect x="852" y="404" width="286" height="1" fill="#F0EBE3"/>
+  <text x="852" y="434" font-size="13" font-weight="600" fill="#1C1917">Deterministic step machine</text>
+  <text x="852" y="456" font-size="12" fill="#A8A29E">one instruction per turn</text>
+  <rect x="852" y="480" width="150" height="30" rx="15" fill="#FDF0E6" stroke="#F0C9A8"/>
+  <text x="927" y="500" font-size="11.5" font-weight="600" fill="#B45309" text-anchor="middle">no LLM inside</text>
+
+  <!-- 04 -->
+  <rect x="1210" y="200" width="330" height="380" rx="12" fill="#FFFFFF" stroke="#E7E1D8"/>
+  <text x="1232" y="236" font-size="16" font-weight="600" fill="#1C1917">State &amp; documents</text>
+  <line x1="1232" y1="254" x2="1518" y2="254" stroke="#F0EBE3"/>
+  <text x="1232" y="284" font-size="13" fill="#57534E">SQLite</text>
+  <text x="1232" y="306" font-size="12" fill="#A8A29E">properties · utility_points</text>
+  <text x="1232" y="324" font-size="12" fill="#A8A29E">assets · service_records</text>
+  <text x="1232" y="342" font-size="12" fill="#A8A29E">runbook_sessions · incidents</text>
+  <rect x="1232" y="368" width="286" height="1" fill="#F0EBE3"/>
+  <text x="1232" y="396" font-size="13" fill="#57534E">Amazon Bedrock</text>
+  <text x="1232" y="418" font-size="12" fill="#A8A29E">photo → structured fields</text>
+  <text x="1232" y="436" font-size="12" fill="#A8A29E">capture only, never steps</text>
+  <rect x="1232" y="462" width="120" height="26" rx="13" fill="#F5F1EA" stroke="#E7E1D8"/>
+  <text x="1292" y="480" font-size="11" fill="#78716C" text-anchor="middle">dashed = optional</text>
+
+  <!-- arrows -->
+  <g stroke="#C9C2B8" stroke-width="1.6" fill="none">
+    <line x1="400" y1="390" x2="442" y2="390"/><polygon points="437,385 443,390 437,395" fill="#C9C2B8" stroke="none"/>
+    <line x1="780" y1="390" x2="822" y2="390"/><polygon points="817,385 823,390 817,395" fill="#C9C2B8" stroke="none"/>
+    <line x1="1160" y1="390" x2="1202" y2="390"/><polygon points="1197,385 1203,390 1197,395" fill="#C9C2B8" stroke="none"/>
+  </g>
+
+  <!-- bottom -->
+  <rect x="70" y="630" width="740" height="150" rx="12" fill="#FFFFFF" stroke="#E7E1D8"/>
+  <text x="94" y="664" font-size="11" font-weight="700" letter-spacing="1.8" fill="#B45309">TWO RULES THE SYSTEM CANNOT BREAK</text>
+  <text x="94" y="696" font-size="13.5" fill="#44403C">1.  Step order is code, not generation. "Get everyone out" precedes "call the utility".</text>
+  <text x="94" y="724" font-size="13.5" fill="#44403C">2.  An unverified shutoff returns found: false. It never infers a location.</text>
+  <text x="94" y="756" font-size="12" fill="#A8A29E">Both are enforced in src/engine.ts and src/db.ts, and covered by the smoke suite.</text>
+
+  <rect x="850" y="630" width="690" height="150" rx="12" fill="#FFFFFF" stroke="#E7E1D8"/>
+  <text x="874" y="664" font-size="11" font-weight="700" letter-spacing="1.8" fill="#0F766E">WHY IT SURVIVES A DISCONNECT</text>
+  <text x="874" y="696" font-size="13.5" fill="#44403C">Transport sessions are disposable. Runbook position lives in SQLite.</text>
+  <text x="874" y="724" font-size="13.5" fill="#44403C">resume_runbook(sessionId) works on a brand-new connection.</text>
+  <text x="874" y="756" font-size="12" fill="#A8A29E">This is the moment the demo stops looking scripted.</text>
+
+  <text x="70" y="838" font-size="11" fill="#A8A29E">Hearth · MIT · Node 22+ · TypeScript ESM · SQLite · Amazon Bedrock</text>
+</svg>

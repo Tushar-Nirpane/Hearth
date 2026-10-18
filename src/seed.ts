@@ -95,6 +95,36 @@ insertAsset.run(
   "Kitchen",
   "2028-06-30",
 );
+insertAsset.run(
+  "as_furnace",
+  DEMO_PROPERTY,
+  "Furnace",
+  "Trane",
+  "XR95",
+  "TR-90412",
+  "Basement",
+  "2029-01-15",
+);
+insertAsset.run(
+  "as_water_heater",
+  DEMO_PROPERTY,
+  "Water Heater",
+  "Rheem",
+  "Performance Platinum",
+  "RH-88310",
+  "Basement",
+  "2028-10-20",
+);
+insertAsset.run(
+  "as_sump_pump",
+  DEMO_PROPERTY,
+  "Sump Pump",
+  "Wayne",
+  "CDU980",
+  "WN-5542",
+  "Basement",
+  "2027-05-11",
+);
 
 const insertService = db.prepare(
   `INSERT INTO service_records (id, asset_id, performed_at, vendor, notes) VALUES (?, ?, ?, ?, ?)`,
@@ -112,6 +142,20 @@ insertService.run(
   "2026-03-02",
   "Cedar Heating",
   "Annual service. Replaced thermocouple. System holds pressure.",
+);
+insertService.run(
+  "sr_3",
+  "as_furnace",
+  "2025-09-15",
+  "Cedar Heating",
+  "Pre-winter burner inspection and filter replacement.",
+);
+insertService.run(
+  "sr_4",
+  "as_water_heater",
+  "2026-01-10",
+  "Apex Plumbing",
+  "Flushed tank sediment and inspected pressure relief valve.",
 );
 
 console.log(`Seeded ${DEMO_PROPERTY} (full record) and ${EMPTY_PROPERTY} (empty, for refusal tests).`);

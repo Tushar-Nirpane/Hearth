@@ -5,6 +5,7 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js";
 import { buildServer } from "./server.js";
 import { handleTurn } from "./api/turn.js";
+import { handlePhotoCapture, handleAssetConfirm, handleGetIncident } from "./api/capture.js";
 
 import path from "node:path";
 
@@ -12,6 +13,9 @@ const app = express();
 app.use(express.json({ limit: "4mb" }));
 app.use(express.static(path.join(process.cwd(), "public")));
 app.post("/api/turn", handleTurn);
+app.post("/api/capture/photo", handlePhotoCapture);
+app.post("/api/assets/confirm", handleAssetConfirm);
+app.get("/api/incidents/:id", handleGetIncident);
 
 const PORT = Number(process.env.PORT ?? 8787);
 const sessions = new Map<

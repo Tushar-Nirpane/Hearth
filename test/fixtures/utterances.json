@@ -1,0 +1,48 @@
+[
+  { "text": "there's water everywhere", "expectTool": "start_runbook", "expectType": "water" },
+  { "text": "the sink is leaking badly", "expectTool": "start_runbook", "expectType": "water" },
+  { "text": "water pouring from the ceiling", "expectTool": "start_runbook", "expectType": "water" },
+  { "text": "flooding in basement", "expectTool": "start_runbook", "expectType": "water" },
+  { "text": "pipes leaking", "expectTool": "start_runbook", "expectType": "water" },
+  { "text": "there is water under the sink", "expectTool": "start_runbook", "expectType": "water" },
+  { "text": "emergency water leak", "expectTool": "start_runbook", "expectType": "water" },
+  { "text": "help there is water on the floor", "expectTool": "start_runbook", "expectType": "water" },
+  { "text": "water spraying everywhere", "expectTool": "start_runbook", "expectType": "water" },
+  { "text": "massive leak in bathroom", "expectTool": "start_runbook", "expectType": "water" },
+
+  { "text": "I smell gas in the kitchen", "expectTool": "start_runbook", "expectType": "gas" },
+  { "text": "there is a gas leak", "expectTool": "start_runbook", "expectType": "gas" },
+  { "text": "smell of gas near stove", "expectTool": "start_runbook", "expectType": "gas" },
+  { "text": "gas odor detected", "expectTool": "start_runbook", "expectType": "gas" },
+  { "text": "we smell gas outside", "expectTool": "start_runbook", "expectType": "gas" },
+  { "text": "strong gas smell in hallway", "expectTool": "start_runbook", "expectType": "gas" },
+  { "text": "help gas leak in basement", "expectTool": "start_runbook", "expectType": "gas" },
+  { "text": "smelling natural gas", "expectTool": "start_runbook", "expectType": "gas" },
+
+  { "text": "where's the water shutoff", "expectTool": "find_shutoff" },
+  { "text": "where is the shutoff valve", "expectTool": "find_shutoff" },
+  { "text": "where is the water main", "expectTool": "find_shutoff" },
+  { "text": "where is the shutoff", "expectTool": "find_shutoff" },
+  { "text": "where is the shut off", "expectTool": "find_shutoff" },
+  { "text": "where is the water valve", "expectTool": "find_shutoff" },
+  { "text": "where is water shutoff located", "expectTool": "find_shutoff" },
+
+  { "text": "when was the boiler last serviced", "expectTool": "get_asset" },
+  { "text": "check dishwasher", "expectTool": "get_asset" },
+  { "text": "how old is the furnace", "expectTool": "get_asset" },
+  { "text": "what model is the fridge", "expectTool": "get_asset" },
+  { "text": "boiler status", "expectTool": "get_asset" },
+  { "text": "dishwasher warranty", "expectTool": "get_asset" },
+  { "text": "furnace records", "expectTool": "get_asset" },
+
+  { "text": "where were we", "expectTool": "resume_runbook" },
+  { "text": "continue runbook", "expectTool": "resume_runbook" },
+
+  { "text": "hmm", "expectTool": "get_property" },
+  { "text": "hello", "expectTool": "get_property" },
+  { "text": "what can you do", "expectTool": "get_property" },
+
+  { "text": "where is the water shutoff", "propertyId": "prop_canyon", "expectTool": "find_shutoff", "expectRefusal": true },
+  { "text": "where is the shutoff valve", "propertyId": "prop_canyon", "expectTool": "find_shutoff", "expectRefusal": true },
+  { "text": "where is the shutoff", "propertyId": "prop_canyon", "expectTool": "find_shutoff", "expectRefusal": true }
+]

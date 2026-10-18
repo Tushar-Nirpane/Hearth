@@ -57,7 +57,38 @@ async function callTool(name: string, args: Record<string, unknown>): Promise<an
 export async function processTurn(input: TurnRequest): Promise<TurnResponse> {
   const { propertyId, text, sessionId } = input;
 
-  // 1. sessionId present and active
+  // Resume intent takes priority over active session answering
+  if (/where were we|continue/i.test(text)) {
+    let targetSessionId = sessionId;
+    if (!targetSessionId) {
+      const row = db
+        .prepare(
+          "SELECT id FROM runbook_sessions WHERE property_id = ? AND status = 'active' ORDER BY updated_at DESC LIMIT 1",
+        )
+        .get(propertyId) as { id: string } | undefined;
+      targetSessionId = row?.id;
+    }
+    if (targetSessionId) {
+      try {
+        const res = await callTool("resume_runbook", { sessionId: targetSessionId });
+        if (!res.error) {
+          return {
+            say: res.say,
+            sessionId: res.sessionId,
+            stepId: res.stepId,
+            expect: res.expect,
+            choices: res.choices ?? [],
+            panel: { kind: "incident", data: res },
+          };
+        }
+      } catch {
+        // fall through
+      }
+    }
+    return { say: "There is no active runbook to resume." };
+  }
+
+  // 1. sessionId present and active — forward answer to the runbook engine
   if (sessionId) {
     try {
       const res = await callTool("answer_runbook", { sessionId, answer: text });
@@ -76,8 +107,8 @@ export async function processTurn(input: TurnRequest): Promise<TurnResponse> {
     }
   }
 
-  // 2. text matches /where.*(water|shut ?off)/i
-  if (/where.*(water|shut ?off)/i.test(text)) {
+  // 2. text matches shutoff queries
+  if (/(where|find|locate).*(water|shut ?off|main|valve)/i.test(text) || /shut ?off/i.test(text)) {
     const res = await callTool("find_shutoff", { propertyId, utility: "water_main" });
     if (res.found) {
       const notes = res.accessNotes ? ` ${res.accessNotes}` : "";
@@ -95,8 +126,8 @@ export async function processTurn(input: TurnRequest): Promise<TurnResponse> {
     }
   }
 
-  // 3. text matches /gas/i and /smell|leak/i
-  if (/gas/i.test(text) && /smell|leak/i.test(text)) {
+  // 3. text matches /gas/i and /smell|leak|odor|detect/i
+  if (/gas/i.test(text) && /smell|leak|odor|detect/i.test(text)) {
     const res = await callTool("start_runbook", { propertyId, emergencyType: "gas" });
     return {
       say: res.say,
@@ -152,38 +183,6 @@ export async function processTurn(input: TurnRequest): Promise<TurnResponse> {
     }
   }
 
-  // 6. text matches /where were we|continue/i
-  if (/where were we|continue/i.test(text)) {
-    let targetSessionId = sessionId;
-    if (!targetSessionId) {
-      const row = db
-        .prepare(
-          "SELECT id FROM runbook_sessions WHERE property_id = ? AND status = 'active' ORDER BY updated_at DESC LIMIT 1",
-        )
-        .get(propertyId) as { id: string } | undefined;
-      targetSessionId = row?.id;
-    }
-    if (targetSessionId) {
-      try {
-        const res = await callTool("resume_runbook", { sessionId: targetSessionId });
-        if (!res.error) {
-          return {
-            say: res.say,
-            sessionId: res.sessionId,
-            stepId: res.stepId,
-            expect: res.expect,
-            choices: res.choices ?? [],
-            panel: { kind: "incident", data: res },
-          };
-        }
-      } catch {
-        // fall through
-      }
-    }
-    return {
-      say: "There is no active runbook to resume.",
-    };
-  }
 
   // 7. otherwise: get_property + disambiguation line
   const property = await callTool("get_property", { propertyId });

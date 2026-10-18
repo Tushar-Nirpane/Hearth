@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { getAsset, getProperty, findVerifiedPoint } from "./db.js";
+import { getAsset, getProperty, findVerifiedPoint, getIncident } from "./db.js";
 import { answerRunbook, resumeRunbook, startRunbook } from "./engine.js";
 import type { EmergencyType, UtilityKind } from "./types.js";
 
@@ -155,6 +155,69 @@ export function buildServer(): McpServer {
         const message = error instanceof Error ? error.message : "unknown_error";
         return fail(message, "Could not resume runbook");
       }
+    },
+  );
+
+  server.registerTool(
+    "draft_claim",
+    {
+      title: "Draft an insurance or warranty claim",
+      description:
+        "Generate a structured insurance claim draft from an incident record, including involved appliances and documented timeline.",
+      inputSchema: {
+        incidentId: z.string().describe("Identifier of the logged incident"),
+      },
+    },
+    async ({ incidentId }) => {
+      const incident = getIncident(incidentId);
+      if (!incident) return fail("incident_not_found", `No incident with ID ${incidentId}`);
+      const property = getProperty(incident.propertyId);
+
+      // Resolve involved assets or relevant property assets
+      const assetsInvolved = (incident.assetsInvolved ?? []).map((assetId: string) => {
+        const full = property ? getAsset(property.id, assetId) : null;
+        const warrantyActive = full?.warrantyEndsAt
+          ? new Date(full.warrantyEndsAt) > new Date()
+          : false;
+        return {
+          name: full?.name ?? "Appliance",
+          make: full?.make ?? "Unknown",
+          model: full?.model ?? "Unknown",
+          serial: full?.serial ?? "Unknown",
+          warrantyEndsAt: full?.warrantyEndsAt ?? null,
+          warrantyActive,
+        };
+      });
+
+      const draftText = [
+        `HOME INSURANCE / WARRANTY INCIDENT REPORT`,
+        `Incident Reference: ${incident.id}`,
+        `Property: ${property?.address ?? incident.propertyId}`,
+        `Incident Type: ${incident.type.toUpperCase()}`,
+        `Reported Date: ${incident.startedAt}`,
+        `Current Status: ${incident.status}`,
+        `Summary: ${incident.summary}`,
+        ``,
+        `CHRONOLOGICAL MITIGATION STEPS:`,
+        ...incident.stepsTaken.map((s, idx) => `  ${idx + 1}. [${s.at}] Step ${s.stepId}${s.answer ? ` - Response: "${s.answer}"` : ""}`),
+        ``,
+        `ASSETS INVOLVED & WARRANTY STATUS:`,
+        ...(assetsInvolved.length > 0
+          ? assetsInvolved.map((a) => `  - ${a.name} (${a.make} ${a.model}) | Serial: ${a.serial} | Warranty: ${a.warrantyEndsAt ?? "N/A"} (${a.warrantyActive ? "ACTIVE" : "EXPIRED/NONE"})`)
+          : ["  - No specific assets flagged during initial triage"]),
+        ``,
+        `CLAIM STATEMENT:`,
+        `On ${incident.startedAt}, a ${incident.type} event occurred at ${property?.address ?? "the insured property"}. Hearth guided immediate mitigation runbooks to isolate the fault. All documented steps and appliance serials are recorded above for adjuster evaluation.`
+      ].join("\n");
+
+      return json({
+        incidentId: incident.id,
+        incidentType: incident.type,
+        occurredAt: incident.startedAt,
+        assetsInvolved,
+        stepsTaken: incident.stepsTaken,
+        draft: draftText,
+      });
     },
   );
 

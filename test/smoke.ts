@@ -22,7 +22,7 @@ const check = (name: string, condition: boolean, detail?: unknown) => {
 };
 
 const tools = await client.listTools();
-check("exposes 6 tools", tools.tools.length === 6, tools.tools.map((t) => t.name));
+check("exposes 7 tools", tools.tools.length === 7, tools.tools.map((t) => t.name));
 
 const property = parse(
   await client.callTool({ name: "get_property", arguments: { propertyId: "prop_alder" } }),
@@ -76,6 +76,14 @@ const gas = parse(
   }),
 );
 check("gas flow leads with evacuation", /Get everyone out/i.test(gas.say), gas);
+
+const claim = parse(
+  await client.callTool({
+    name: "draft_claim",
+    arguments: { incidentId: started.incidentId },
+  }),
+);
+check("drafts an insurance claim from incident", claim.incidentId === started.incidentId && typeof claim.draft === "string", claim);
 
 await client.close();
 console.log(failures === 0 ? "\nAll checks passed." : `\n${failures} check(s) failed.`);

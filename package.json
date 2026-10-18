@@ -9,7 +9,8 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "seed": "tsx src/seed.ts",
-    "smoke": "tsx test/smoke.ts"
+    "smoke": "tsx test/smoke.ts",
+    "eval": "tsx test/eval.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",

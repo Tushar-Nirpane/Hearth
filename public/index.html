@@ -17,35 +17,37 @@
       --space-5: 20px;
       --space-6: 24px;
       --space-8: 32px;
-      --space-10: 40px;
 
       /* Design Tokens */
       --bg: #070a12;
       --surface: #0f172a;
       --surface-raised: #1e293b;
-      --surface-glass: rgba(15, 23, 42, 0.78);
+      --surface-glass: rgba(15, 23, 42, 0.82);
       --border: rgba(255, 255, 255, 0.08);
       --border-prominent: rgba(255, 255, 255, 0.16);
       --border-focus: #e8732a;
 
-      /* Typography Tokens (WCAG AA Compliant) */
+      /* Typography Tokens (WCAG AA Compliant >= 4.5:1) */
       --text: #f8fafc;
       --text-muted: #94a3b8; /* 7.2:1 against dark bg */
       --text-dim: #64748b;
 
-      /* Brand Identity */
+      /* Semantic Brand & Domain Colors */
       --accent: #e8732a;
       --accent-hover: #ea580c;
-      --accent-subtle: rgba(232, 115, 42, 0.15);
+      --accent-subtle: rgba(232, 115, 42, 0.14);
       --accent-contrast: #ffffff;
 
-      /* Status Tokens */
+      --water-blue: #38bdf8;
+      --gas-orange: #fb923c;
+      --electric-yellow: #facc15;
+
       --success: #10b981;
       --success-subtle: rgba(16, 185, 129, 0.15);
       --warning: #f59e0b;
       --warning-subtle: rgba(245, 158, 11, 0.15);
       --danger: #ef4444;
-      --danger-subtle: rgba(239, 68, 68, 0.15);
+      --danger-subtle: rgba(239, 68, 68, 0.18);
 
       /* Shape & Elevation */
       --radius-card: 16px;
@@ -53,7 +55,7 @@
       --radius-sm: 8px;
       --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
       --shadow-glow: 0 0 25px rgba(232, 115, 42, 0.35);
-      --shadow-danger: 0 0 35px rgba(239, 68, 68, 0.5);
+      --shadow-danger: 0 0 35px rgba(239, 68, 68, 0.55);
     }
 
     * {
@@ -95,17 +97,18 @@
 
     /* Top Navigation Header */
     header {
-      background: rgba(10, 15, 29, 0.88);
+      background: rgba(10, 15, 29, 0.90);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
-      padding: 12px 28px;
+      padding: 10px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
       z-index: 100;
+      height: 64px;
     }
 
     .brand {
@@ -115,8 +118,8 @@
     }
 
     .brand-logo {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       background: linear-gradient(135deg, #fb923c, var(--accent), #dc2626);
       border-radius: 10px;
       display: flex;
@@ -124,8 +127,8 @@
       justify-content: center;
       color: white;
       font-weight: 800;
-      font-size: 20px;
-      box-shadow: 0 0 20px rgba(232, 115, 42, 0.45);
+      font-size: 19px;
+      box-shadow: 0 0 18px rgba(232, 115, 42, 0.45);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
@@ -143,15 +146,15 @@
     .brand-title {
       font-family: 'Outfit', sans-serif;
       font-weight: 800;
-      font-size: 22px;
+      font-size: 20px;
       letter-spacing: -0.02em;
       color: #ffffff;
     }
 
     .brand-tag {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: var(--radius-pill);
       background: rgba(232, 115, 42, 0.15);
       color: #fb923c;
@@ -161,17 +164,17 @@
     }
 
     .brand-sub {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
     }
 
     .header-controls {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    /* Unified Status Cluster (P2 - Task 15) */
+    /* Status Cluster */
     .status-cluster {
       display: flex;
       align-items: center;
@@ -179,7 +182,8 @@
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border);
       border-radius: var(--radius-pill);
-      padding: 4px 10px;
+      padding: 5px 12px;
+      cursor: pointer;
     }
 
     .status-pill {
@@ -233,13 +237,13 @@
       gap: 6px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
-      padding: 6px 12px;
+      padding: 4px 10px;
       border-radius: var(--radius-sm);
-      min-height: 44px;
+      min-height: 38px;
     }
 
     .property-wrap label {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
       font-weight: 500;
     }
@@ -247,13 +251,12 @@
     .property-wrap select {
       background: transparent;
       border: none;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
       outline: none;
       font-family: inherit;
-      min-height: 32px;
     }
 
     .property-wrap select option {
@@ -261,21 +264,21 @@
       color: var(--text);
     }
 
-    /* Voice Switch (P0 - Task 4) */
+    /* Voice Switch */
     .voice-switch-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: var(--radius-sm);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.2s ease;
-      min-height: 44px;
+      min-height: 38px;
     }
 
     .voice-switch-btn:hover {
@@ -289,49 +292,61 @@
       color: #fb923c;
     }
 
-    /* Main Responsive Grid Layout */
+    /* Main Responsive Grid Layout (Tasks 8 & 9: 1440x900 Above-the-Fold Viewport Fit) */
     main {
       flex: 1;
       display: grid;
-      grid-template-columns: minmax(420px, 1fr) minmax(440px, 1.1fr);
-      gap: var(--space-6);
-      padding: var(--space-6) 28px;
+      grid-template-columns: minmax(430px, 1fr) minmax(460px, 1.1fr);
+      gap: var(--space-4);
+      padding: var(--space-3) 24px;
       max-width: 1540px;
       width: 100%;
       margin: 0 auto;
-      position: relative;
-      z-index: 10;
+      height: calc(100vh - 64px);
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       main {
         grid-template-columns: 1fr;
+        height: auto;
+        overflow: visible;
         padding: 16px;
-        gap: 16px;
       }
     }
 
-    /* Left Column */
+    /* Left Column: Fixed viewport flex fit */
     .left-column {
       display: flex;
       flex-direction: column;
-      gap: var(--space-4);
+      gap: var(--space-3);
+      height: 100%;
+      overflow: hidden;
     }
 
-    /* Hero Assistant Card (P1 - Tasks 5, 8, 9, 10) */
+    @media (max-width: 960px) {
+      .left-column {
+        height: auto;
+        overflow: visible;
+      }
+    }
+
+    /* Hero Assistant Card (Tasks 5, 8, 9, 10) */
     .hero-card {
       background: var(--surface-glass);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
       border-radius: var(--radius-card);
-      padding: var(--space-5) var(--space-6);
+      padding: 16px 20px;
       box-shadow: var(--shadow-glass);
       display: flex;
       flex-direction: column;
-      gap: var(--space-4);
+      gap: var(--space-3);
       position: relative;
       overflow: hidden;
+      flex-shrink: 0;
       transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
@@ -353,7 +368,7 @@
       animation: orangeSweep 1.5s linear infinite;
     }
 
-    .hero-card.state-processing::before {
+    .hero-card.state-thinking::before {
       background: linear-gradient(90deg, rgba(255,255,255,0.1), #f97316, #38bdf8, rgba(255,255,255,0.1));
       background-size: 200% 100%;
       animation: shimmerSweep 1.2s infinite;
@@ -364,11 +379,15 @@
       animation: pulseGlow 1.2s infinite alternate;
     }
 
+    .hero-card.state-answered::before {
+      background: linear-gradient(90deg, #10b981, #06b6d4);
+    }
+
     /* Emergency Mode Top Bar & Aura (Task 5) */
     .hero-card.emergency-mode {
       border-color: var(--danger) !important;
       box-shadow: var(--shadow-danger) !important;
-      background: rgba(26, 12, 16, 0.88);
+      background: rgba(26, 12, 16, 0.92);
     }
 
     .hero-card.emergency-mode::before {
@@ -405,8 +424,8 @@
     }
 
     .hero-avatar {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       background: var(--accent-subtle);
       border: 1px solid rgba(232, 115, 42, 0.4);
       border-radius: 50%;
@@ -425,7 +444,7 @@
     .hero-name {
       font-family: 'Outfit', sans-serif;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14px;
       color: #ffffff;
     }
 
@@ -454,31 +473,101 @@
       color: #fecaca;
     }
 
-    /* Hero Prompt Text (Task 10 - clamp font size) */
-    .hero-prompt-text {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(24px, 3.2vw, 30px);
-      font-weight: 600;
-      line-height: 1.35;
-      color: #ffffff;
-      min-height: 48px;
+    /* Structured Answer Presentation (Task 5: Headline, Steps, Callout) */
+    .answer-structured-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .hero-subline {
+    .answer-headline {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(20px, 2.4vw, 26px);
+      font-weight: 700;
+      line-height: 1.3;
+      color: #ffffff;
+    }
+
+    .answer-step-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
       font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    .answer-step-icon {
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .answer-callout-chip {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fef3c7;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.4;
+    }
+
+    .answer-callout-icon {
+      color: var(--warning);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Hero Answer Action Bar (Task 6) */
+    .answer-action-bar {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .answer-action-bar.visible {
+      display: flex;
+    }
+
+    .btn-answer-action {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-prominent);
       color: var(--text-muted);
-      margin-top: -8px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      min-height: 30px;
+    }
+
+    .btn-answer-action:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border-color: var(--accent);
     }
 
     /* Emergency Checklist (Task 5) */
     .emergency-checklist {
       display: none;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       background: rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(239, 68, 68, 0.35);
       border-radius: var(--radius-sm);
-      padding: 12px 14px;
+      padding: 10px 12px;
     }
 
     .hero-card.emergency-mode .emergency-checklist {
@@ -488,8 +577,8 @@
     .check-step {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      font-size: 13px;
+      gap: 8px;
+      font-size: 12px;
       color: var(--text-muted);
     }
 
@@ -501,18 +590,18 @@
     .check-step.current {
       color: #ffffff;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .step-number-badge {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       flex-shrink: 0;
     }
@@ -526,7 +615,7 @@
     .emergency-action-bar {
       display: none;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .hero-card.emergency-mode .emergency-action-bar {
@@ -538,35 +627,32 @@
       background: linear-gradient(135deg, #ef4444, #dc2626);
       color: white;
       text-decoration: none;
-      padding: 10px 16px;
+      padding: 8px 14px;
       border-radius: var(--radius-sm);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
-      min-height: 44px;
-      transition: all 0.2s ease;
+      min-height: 40px;
     }
 
     .btn-emergency-call:hover {
       background: #dc2626;
-      transform: translateY(-1px);
     }
 
     .btn-stop-runbook {
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--border-prominent);
       color: #f8fafc;
-      padding: 10px 14px;
+      padding: 8px 12px;
       border-radius: var(--radius-sm);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
-      min-height: 44px;
-      transition: all 0.2s ease;
+      min-height: 40px;
     }
 
     .btn-stop-runbook:hover {
@@ -577,43 +663,40 @@
     .choice-chips-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
     }
 
     .choice-chip {
       background: var(--accent-subtle);
       border: 1px solid rgba(232, 115, 42, 0.35);
       color: #fed7aa;
-      padding: 8px 16px;
+      padding: 6px 14px;
       border-radius: var(--radius-pill);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      min-height: 44px;
+      transition: all 0.15s ease;
+      min-height: 38px;
     }
 
     .choice-chip:hover {
       background: var(--accent);
       color: #ffffff;
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(232, 115, 42, 0.35);
     }
 
-    /* Voice / Command Input Card (Task 8 - Centered 76px Mic) */
+    /* Voice / Command Card (Tasks 8 & 10: 80px mic, breathing glow, space hint) */
     .command-card {
       background: var(--surface-glass);
       backdrop-filter: blur(20px);
       border: 1px solid var(--border);
       border-radius: var(--radius-card);
-      padding: var(--space-4) var(--space-5);
+      padding: 12px 18px;
       box-shadow: var(--shadow-glass);
       display: flex;
       flex-direction: column;
-      gap: var(--space-3);
+      gap: 8px;
+      flex-shrink: 0;
     }
 
     .mic-center-area {
@@ -621,33 +704,36 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 8px 0;
+      gap: 4px;
     }
 
+    /* 80px Mic with Idle Breathing Glow (Task 10) */
     .mic-btn-main {
-      width: 76px;
-      height: 76px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       background: linear-gradient(135deg, #1e293b, #0f172a);
-      border: 2px solid rgba(232, 115, 42, 0.4);
+      border: 2px solid rgba(232, 115, 42, 0.45);
       color: #fb923c;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      animation: idleBreathe 3s ease-in-out infinite;
       position: relative;
     }
 
-    .mic-btn-main:hover {
-      transform: scale(1.05);
-      border-color: var(--accent);
-      box-shadow: 0 0 25px rgba(232, 115, 42, 0.45);
+    @keyframes idleBreathe {
+      0%, 100% { box-shadow: 0 0 14px rgba(232, 115, 42, 0.2); }
+      50% { box-shadow: 0 0 26px rgba(232, 115, 42, 0.45); }
     }
 
-    /* Mic States (Task 8) */
+    .mic-btn-main:hover {
+      transform: scale(1.04);
+      border-color: var(--accent);
+    }
+
     .mic-btn-main.state-listening {
       background: linear-gradient(135deg, var(--accent), #dc2626);
       color: white;
@@ -661,7 +747,7 @@
       100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
     }
 
-    .mic-btn-main.state-processing {
+    .mic-btn-main.state-thinking {
       border-color: #38bdf8;
       color: #38bdf8;
       animation: micSpin 1.2s linear infinite;
@@ -673,18 +759,24 @@
     }
 
     .mic-status-text {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: var(--text);
       text-align: center;
     }
 
-    /* Soundwave bars */
+    .mic-hint-text {
+      font-size: 11px;
+      color: var(--text-dim);
+      text-align: center;
+    }
+
+    /* Waveform animates ONLY while listening or speaking (Task 10) */
     .mic-soundwave {
       display: flex;
       align-items: center;
       gap: 3px;
-      height: 12px;
+      height: 10px;
     }
 
     .mic-wave-bar {
@@ -705,16 +797,14 @@
       50% { transform: scaleY(1); }
     }
 
-    .mic-soundwave.paused .mic-wave-bar {
-      animation: none;
-      transform: scaleY(0.25);
-      background: var(--text-dim);
+    .mic-soundwave.paused {
+      display: none;
     }
 
-    /* Secondary Text Input Form (Task 8) */
+    /* Secondary Command Input Form */
     .command-form {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
 
     .command-input {
@@ -722,17 +812,17 @@
       background: rgba(15, 23, 42, 0.7);
       border: 1px solid var(--border-prominent);
       border-radius: var(--radius-sm);
-      padding: 10px 14px;
+      padding: 8px 12px;
       color: var(--text);
-      font-size: 13px;
+      font-size: 12px;
       font-family: inherit;
       outline: none;
-      min-height: 44px;
+      min-height: 38px;
     }
 
     .command-input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 12px rgba(232, 115, 42, 0.3);
+      box-shadow: 0 0 10px rgba(232, 115, 42, 0.3);
     }
 
     .command-input::placeholder {
@@ -743,75 +833,77 @@
       background: linear-gradient(135deg, var(--accent), #ea580c);
       color: white;
       border: none;
-      padding: 0 18px;
+      padding: 0 16px;
       border-radius: var(--radius-sm);
       font-weight: 600;
-      font-size: 13px;
+      font-size: 12px;
       cursor: pointer;
-      min-height: 44px;
-      transition: all 0.2s ease;
+      min-height: 38px;
     }
 
-    .btn-send:hover {
-      background: #ea580c;
-    }
-
-    /* Collapsible Demo Scenarios (Task 13) */
+    /* Collapsible Demo Scenarios (Tasks 7 & 13) */
     .demo-accordion {
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       background: rgba(255, 255, 255, 0.02);
-      padding: 4px;
+      padding: 2px 4px;
     }
 
     .demo-summary {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--text-muted);
-      padding: 8px 10px;
+      padding: 6px 8px;
       cursor: pointer;
       list-style: none;
       display: flex;
       align-items: center;
       justify-content: space-between;
       user-select: none;
-      min-height: 38px;
+      min-height: 32px;
     }
 
     .demo-summary::-webkit-details-marker {
       display: none;
     }
 
-    .demo-summary::after {
-      content: "▾";
-      font-size: 12px;
-      transition: transform 0.2s ease;
+    .demo-summary-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .demo-accordion[open] .demo-summary::after {
+    .demo-chevron {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.2s ease;
+      color: var(--text-dim);
+    }
+
+    .demo-accordion[open] .demo-chevron {
       transform: rotate(180deg);
     }
 
     .scenario-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
       gap: 6px;
-      padding: 8px 6px 4px 6px;
+      padding: 6px 4px;
     }
 
     .scenario-chip {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border);
-      padding: 8px 12px;
+      padding: 6px 10px;
       border-radius: var(--radius-sm);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
       color: var(--text-muted);
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
-      min-height: 44px; /* Task 13: 44px tall touch targets */
+      min-height: 44px; /* Touch target >=44px */
       transition: all 0.15s ease;
     }
 
@@ -821,18 +913,20 @@
       border-color: rgba(232, 115, 42, 0.4);
     }
 
-    /* Live Voice Transcript Card (Task 12) */
+    /* Live Voice Transcript Card (Tasks 8 & 12) */
     .transcript-card {
       background: var(--surface-glass);
       backdrop-filter: blur(20px);
       border: 1px solid var(--border);
       border-radius: var(--radius-card);
-      padding: 16px 20px;
+      padding: 12px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      max-height: 280px;
+      gap: 8px;
+      flex: 1; /* Fills remaining height in left column */
+      min-height: 200px;
       box-shadow: var(--shadow-glass);
+      overflow: hidden;
     }
 
     .transcript-header {
@@ -840,7 +934,8 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 8px;
+      padding-bottom: 6px;
+      flex-shrink: 0;
     }
 
     .transcript-title-row {
@@ -850,7 +945,7 @@
     }
 
     .transcript-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -858,7 +953,7 @@
     }
 
     .transcript-session-badge {
-      font-size: 11px;
+      font-size: 10px;
       font-family: 'JetBrains Mono', monospace;
       color: var(--text-dim);
     }
@@ -869,7 +964,7 @@
       color: var(--text-dim);
       font-size: 11px;
       cursor: pointer;
-      padding: 4px 6px;
+      padding: 2px 6px;
       border-radius: 4px;
     }
 
@@ -882,7 +977,7 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       padding-right: 4px;
       flex: 1;
     }
@@ -895,12 +990,11 @@
       border-radius: 4px;
     }
 
-    /* Message Bubbles (Task 12: user orange tint, assistant neutral) */
     .msg-row {
       display: flex;
       flex-direction: column;
       gap: 2px;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .msg-row.user {
@@ -918,8 +1012,8 @@
     }
 
     .msg-bubble {
-      padding: 8px 14px;
-      border-radius: 14px;
+      padding: 7px 12px;
+      border-radius: 12px;
       max-width: 88%;
       word-break: break-word;
       line-height: 1.45;
@@ -939,40 +1033,18 @@
       border-bottom-left-radius: 4px;
     }
 
-    /* Status Summary Card (Task 3) */
-    .status-summary-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-prominent);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-      font-size: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      color: #e2e8f0;
-    }
-
-    .status-summary-card .status-line {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    /* Right Column: House Operating Record (Task 11 - Sticky) */
+    /* Right Column: Sticky House Profile & Safety Guarantees */
     .right-column {
       display: flex;
       flex-direction: column;
-      gap: var(--space-4);
-      position: sticky;
-      top: 80px;
-      height: calc(100vh - 100px);
+      gap: var(--space-3);
+      height: 100%;
       overflow-y: auto;
       padding-right: 4px;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .right-column {
-        position: static;
         height: auto;
         overflow-y: visible;
       }
@@ -983,12 +1055,12 @@
       backdrop-filter: blur(20px);
       border: 1px solid var(--border);
       border-radius: var(--radius-card);
-      padding: var(--space-5);
+      padding: 16px 20px;
       box-shadow: var(--shadow-glass);
       display: flex;
       flex-direction: column;
-      gap: var(--space-4);
-      flex: 1;
+      gap: var(--space-3);
+      flex-shrink: 0;
     }
 
     .house-header {
@@ -996,32 +1068,64 @@
       align-items: flex-start;
       justify-content: space-between;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
+      padding-bottom: 10px;
     }
 
     .house-address {
       font-family: 'Outfit', sans-serif;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
       color: #ffffff;
       letter-spacing: -0.01em;
     }
 
     .house-meta {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
-    /* Single-Line Scrollable Pill Tabs (P0 - Task 1) */
+    /* Tab List with Overflow Fade Masks & Scroll Controls (Task 3) */
+    .tab-list-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+    }
+
+    .tab-scroll-btn {
+      width: 24px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s ease;
+    }
+
+    .tab-scroll-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--text);
+    }
+
     .tab-list {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      padding-bottom: 4px;
-      border-bottom: 1px solid var(--border);
       scrollbar-width: none;
+      flex: 1;
+      padding: 2px 0;
+      mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent);
     }
 
     .tab-list::-webkit-scrollbar {
@@ -1032,19 +1136,25 @@
       white-space: nowrap;
       scroll-snap-align: start;
       flex-shrink: 0;
-      height: 38px;
+      height: 36px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 0 14px;
+      padding: 0 10px;
       border-radius: var(--radius-pill);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    @media (min-width: 1280px) {
+      .tab-pill {
+        padding: 0 9px;
+      }
     }
 
     .tab-pill:hover {
@@ -1076,28 +1186,57 @@
     .tab-panel {
       display: none;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .tab-panel.active {
       display: flex;
     }
 
-    /* Shutoff Cards (P1 - Task 7) */
+    /* Tab Error & Empty State Handlers (Task 2) */
+    .tab-error-box, .tab-empty-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed var(--border-prominent);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-error-box {
+      border-color: rgba(239, 68, 68, 0.4);
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .btn-retry {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-prominent);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Shutoff Cards (Tasks 6, 7 & 11) */
     .shutoff-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .shutoff-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 14px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s ease;
     }
 
@@ -1106,10 +1245,16 @@
       background: rgba(255, 255, 255, 0.05);
     }
 
-    .shutoff-card.active-target {
-      border-color: var(--accent);
-      background: rgba(232, 115, 42, 0.12);
-      box-shadow: 0 0 20px rgba(232, 115, 42, 0.3);
+    .shutoff-card.highlighted-glow {
+      border-color: var(--accent) !important;
+      background: rgba(232, 115, 42, 0.15) !important;
+      box-shadow: 0 0 25px rgba(232, 115, 42, 0.45) !important;
+      animation: highlightPulse 2s ease-out;
+    }
+
+    @keyframes highlightPulse {
+      0% { transform: scale(1.02); }
+      100% { transform: scale(1); }
     }
 
     .shutoff-top {
@@ -1119,7 +1264,7 @@
     }
 
     .shutoff-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: #ffffff;
       text-transform: capitalize;
@@ -1128,14 +1273,19 @@
       gap: 6px;
     }
 
-    /* Provenance & Confidence Badges (P1 - Task 6) */
+    /* Semantic Icon Colors (Task 11) */
+    .icon-water { color: var(--water-blue); }
+    .icon-gas { color: var(--gas-orange); }
+    .icon-electric { color: var(--electric-yellow); }
+
+    /* Verification Badge with Provenance (Task 6) */
     .verification-badge {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
-      padding: 3px 8px;
+      padding: 2px 7px;
       border-radius: var(--radius-pill);
       cursor: help;
     }
@@ -1159,33 +1309,31 @@
     }
 
     .shutoff-loc {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: #e2e8f0;
     }
 
-    /* Critical Instruction Callout (P1 - Task 7) */
     .shutoff-instruction-callout {
       background: rgba(245, 158, 11, 0.08);
       border-left: 3px solid var(--warning);
-      padding: 8px 10px;
+      padding: 6px 10px;
       border-radius: 4px;
-      font-size: 12px;
+      font-size: 11px;
       color: #fef3c7;
       font-weight: 600;
       display: flex;
       align-items: flex-start;
-      gap: 8px;
+      gap: 6px;
       line-height: 1.4;
     }
 
-    /* Shutoff Action Bar (Task 7: Read aloud, Copy, Photo thumbnail) */
     .shutoff-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 4px;
-      padding-top: 8px;
+      gap: 6px;
+      margin-top: 2px;
+      padding-top: 6px;
       border-top: 1px solid var(--border);
     }
 
@@ -1193,7 +1341,7 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 4px;
       font-size: 11px;
       font-weight: 600;
@@ -1201,8 +1349,7 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      transition: all 0.15s ease;
-      min-height: 32px;
+      min-height: 30px;
     }
 
     .btn-card-action:hover {
@@ -1212,10 +1359,10 @@
 
     .photo-thumbnail-slot {
       margin-left: auto;
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px dashed var(--border-prominent);
       display: flex;
       align-items: center;
@@ -1223,35 +1370,11 @@
       color: var(--text-dim);
     }
 
-    /* Refusal Banner */
-    .refusal-box {
-      background: rgba(239, 68, 68, 0.08);
-      border: 1px dashed rgba(239, 68, 68, 0.4);
-      border-radius: var(--radius-sm);
-      padding: 16px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .refusal-box h4 {
-      color: #fb7185;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .refusal-box p {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
     /* Appliances Grid */
     .appliance-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 8px;
     }
 
     @media (max-width: 600px) {
@@ -1264,15 +1387,22 @@
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 12px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      font-size: 12px;
+      gap: 3px;
+      font-size: 11px;
+      transition: all 0.2s ease;
+    }
+
+    .appliance-card.highlighted-glow {
+      border-color: var(--accent) !important;
+      background: rgba(232, 115, 42, 0.15) !important;
+      box-shadow: 0 0 20px rgba(232, 115, 42, 0.35) !important;
     }
 
     .appliance-name-row {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: #ffffff;
       display: flex;
@@ -1281,10 +1411,10 @@
     }
 
     .warranty-tag {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 4px;
+      padding: 1px 5px;
+      border-radius: 3px;
       font-family: 'JetBrains Mono', monospace;
     }
 
@@ -1303,25 +1433,25 @@
     .capture-box {
       border: 2px dashed rgba(232, 115, 42, 0.35);
       border-radius: var(--radius-sm);
-      padding: 20px;
+      padding: 16px;
       text-align: center;
       background: rgba(232, 115, 42, 0.03);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .btn-test-capture {
       background: linear-gradient(135deg, var(--accent), #ea580c);
       color: white;
       border: none;
-      padding: 8px 16px;
+      padding: 8px 14px;
       border-radius: var(--radius-sm);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
-      min-height: 44px;
+      min-height: 38px;
     }
 
     .capture-output {
@@ -1330,13 +1460,13 @@
       background: rgba(0, 0, 0, 0.35);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 12px;
+      padding: 10px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       color: #38bdf8;
       display: none;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     /* Claim Box */
@@ -1344,10 +1474,10 @@
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 14px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .claim-text-area {
@@ -1358,13 +1488,13 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       color: #e2e8f0;
-      height: 180px;
+      height: 160px;
       overflow-y: auto;
       white-space: pre-wrap;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
-    /* Recent Activity Card (Task 11) */
+    /* Safety Guarantees Telemetry Card (Task 12) */
     .activity-card {
       background: var(--surface-glass);
       backdrop-filter: blur(20px);
@@ -1375,6 +1505,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      flex-shrink: 0;
     }
 
     .activity-title {
@@ -1393,7 +1524,23 @@
       color: var(--text-muted);
     }
 
-    /* Mobile Bottom Pinned Bar (P2 - Task 18) */
+    .activity-val {
+      color: var(--text);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot-sm {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+      display: inline-block;
+    }
+
+    /* Mobile Bottom Pinned Bar */
     .mobile-dock {
       display: none;
       position: fixed;
@@ -1403,7 +1550,7 @@
       background: rgba(10, 15, 29, 0.95);
       backdrop-filter: blur(20px);
       border-top: 1px solid var(--border-prominent);
-      padding: 10px 16px;
+      padding: 8px 16px;
       z-index: 99;
       align-items: center;
       justify-content: space-around;
@@ -1415,7 +1562,7 @@
         display: flex;
       }
       body {
-        padding-bottom: 70px;
+        padding-bottom: 60px;
       }
     }
   </style>
@@ -1457,20 +1604,19 @@
         </select>
       </div>
 
-      <!-- Voice On/Off Toggle Button (P0 - Task 4: Real role="switch") -->
+      <!-- Voice On/Off Toggle Button (P0 - Task 4) -->
       <button id="speechToggleBtn" class="voice-switch-btn" role="switch" aria-checked="true" aria-label="Toggle voice output">
         <span id="speechIcon" aria-hidden="true">
-          <!-- Lucide volume-2 -->
-          <svg class="lucide" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
         </span>
         <span id="speechLabel">Voice On</span>
       </button>
     </div>
   </header>
 
-  <!-- Main Grid Layout -->
+  <!-- Main Grid Layout (Above-the-fold Viewport Fit) -->
   <main>
-    <!-- Left Column: Voice Interaction & Agent Flow -->
+    <!-- Left Column: Fixed viewport flex fit -->
     <section class="left-column" aria-label="Voice Assistant Interaction">
       
       <!-- Hero Agent Card (Tasks 5, 8, 9, 10) -->
@@ -1478,8 +1624,7 @@
         <div class="hero-header">
           <div class="hero-identity">
             <div class="hero-avatar" aria-hidden="true">
-              <!-- Lucide flame -->
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
             </div>
             <div class="hero-name-col">
               <span class="hero-name">Hearth Assistant</span>
@@ -1491,11 +1636,33 @@
           <span id="stepBadge" class="hero-step-pill" aria-live="polite">IDLE</span>
         </div>
 
-        <!-- Hero Prompt Heading -->
-        <div id="agentReplyText" class="hero-prompt-text" aria-live="assertive">
-          Say: "there's water under the sink"
+        <!-- Structured Answer Presentation (Task 5) -->
+        <div class="answer-structured-wrap" id="answerStructuredWrap">
+          <div id="answerHeadline" class="answer-headline" aria-live="assertive">
+            Say: "there's water under the sink"
+          </div>
+          <div id="answerStepsList"></div>
+          <div id="answerCallout" class="answer-callout-chip" style="display:none;"></div>
         </div>
-        <div id="heroSubline" class="hero-subline">One instruction per turn · Deterministic safety machine</div>
+
+        <!-- Hero Answer Action Bar (Task 6) -->
+        <div class="answer-action-bar" id="answerActionBar">
+          <button id="btnReadAloudAgain" class="btn-answer-action">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <span>Read aloud again</span>
+          </button>
+          <button id="btnShowOnProfile" class="btn-answer-action">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Show on profile</span>
+          </button>
+          <button id="btnCopyAnswer" class="btn-answer-action">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span>Copy</span>
+          </button>
+          <button id="btnAskAnother" class="btn-answer-action" style="margin-left:auto;">
+            <span>Ask another question</span>
+          </button>
+        </div>
 
         <!-- Emergency Checklist (Task 5) -->
         <div class="emergency-checklist" id="emergencyChecklist">
@@ -1516,8 +1683,7 @@
         <!-- Emergency Action Bar (Task 5) -->
         <div class="emergency-action-bar" id="emergencyActionBar">
           <a id="emergencyCallBtn" href="tel:911" class="btn-emergency-call" aria-label="Call Emergency 911">
-            <!-- Lucide phone-call -->
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/></svg>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/></svg>
             <span>Call 911 / Gas Utility (1-800-427-2200)</span>
           </a>
           <button id="btnStopRunbook" class="btn-stop-runbook">Stop Runbook</button>
@@ -1527,14 +1693,14 @@
         <div id="choiceChips" class="choice-chips-container" role="group" aria-label="Response options"></div>
       </div>
 
-      <!-- Voice & Command Input Card (Task 8 - Centered Mic) -->
+      <!-- Voice & Command Input Card (Task 8 & 10: 80px mic, space hint, clean bars) -->
       <div class="command-card">
         <div class="mic-center-area">
           <button id="micBtn" class="mic-btn-main" aria-label="Microphone, tap to speak" title="Click to speak (or press Space)">
-            <!-- Lucide mic -->
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
           </button>
           <div class="mic-status-text" id="micStatus">Tap microphone to speak or choose a scenario below</div>
+          <div class="mic-hint-text">Press Space to talk</div>
           <div class="mic-soundwave paused" id="micSoundwave" aria-hidden="true">
             <div class="mic-wave-bar"></div>
             <div class="mic-wave-bar"></div>
@@ -1543,13 +1709,13 @@
           </div>
         </div>
 
-        <!-- Secondary Text Input Form (Task 8) -->
+        <!-- Secondary Command Input Form -->
         <form id="textForm" class="command-form">
           <input
             id="textInput"
             type="text"
             class="command-input"
-            placeholder="Type your message or emergency query here..."
+            placeholder="Type your emergency query or command here..."
             autocomplete="off"
             aria-label="Text message input"
           />
@@ -1558,37 +1724,37 @@
           </button>
         </form>
 
-        <!-- Collapsible Demo Scenarios (Task 13) -->
+        <!-- Collapsible Demo Scenarios (Tasks 7 & 13) -->
         <details class="demo-accordion" id="demoScenariosDetails">
-          <summary class="demo-summary">🧪 Demo & Testing Scenarios</summary>
+          <summary class="demo-summary">
+            <span class="demo-summary-label">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31M14 2v7.31M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0"/></svg>
+              <span>Demo & Testing Scenarios</span>
+            </span>
+            <svg class="demo-chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
           <div class="scenario-grid">
             <button class="scenario-chip" data-query="there's water under the sink">
-              <!-- Lucide droplet -->
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+              <svg class="icon-water" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
               <span>Water Under Sink</span>
             </button>
             <button class="scenario-chip" data-query="where is the water shutoff">
-              <!-- Lucide alert-triangle -->
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#f59e0b" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
               <span>Where is Shutoff?</span>
             </button>
             <button class="scenario-chip" data-query="I smell gas in the kitchen">
-              <!-- Lucide flame -->
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+              <svg class="icon-gas" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
               <span>Gas Odor Alert</span>
             </button>
             <button class="scenario-chip" data-query="check dishwasher">
-              <!-- Lucide package -->
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
               <span>Check Dishwasher</span>
             </button>
             <button class="scenario-chip" data-query="when was the boiler last serviced">
-              <!-- Lucide wrench -->
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
               <span>Boiler Service Log</span>
             </button>
             <button class="scenario-chip" data-query="where were we">
-              <!-- Lucide refresh-cw -->
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
               <span>Resume Runbook</span>
             </button>
@@ -1596,7 +1762,7 @@
         </details>
       </div>
 
-      <!-- Live Voice Transcript Card (Task 12: Fixed height, timestamps, role="log") -->
+      <!-- Live Voice Transcript Card (Tasks 8 & 12: Internal scroll, flex:1, role="log") -->
       <div class="transcript-card">
         <div class="transcript-header">
           <div class="transcript-title-row">
@@ -1614,7 +1780,7 @@
       </div>
     </section>
 
-    <!-- Right Column: Living House Operating Record (Task 11: Sticky) -->
+    <!-- Right Column: Sticky House Profile & Safety Guarantees (Tasks 9, 11, 12) -->
     <aside class="right-column" aria-label="House Operating Profile">
       <div class="house-card">
         <div class="house-header">
@@ -1624,44 +1790,49 @@
           </div>
         </div>
 
-        <!-- Single-Line Scrollable Pill Tabs (Task 1) -->
-        <div class="tab-list" role="tablist" aria-label="House profile tabs">
-          <button class="tab-pill" role="tab" aria-selected="true" id="tabBtnShutoffs" aria-controls="panelShutoffs" data-tab="panelShutoffs">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
-            <span>Shutoffs</span>
-            <span class="tab-count-badge" id="shutoffTabCount">3</span>
-          </button>
-          <button class="tab-pill" role="tab" aria-selected="false" id="tabBtnAppliances" aria-controls="panelAppliances" data-tab="panelAppliances">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            <span>Appliances</span>
-            <span class="tab-count-badge">6</span>
-          </button>
-          <button class="tab-pill" role="tab" aria-selected="false" id="tabBtnServices" aria-controls="panelServices" data-tab="panelServices">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-            <span>Service Log</span>
-            <span class="tab-count-badge">4</span>
-          </button>
-          <button class="tab-pill" role="tab" aria-selected="false" id="tabBtnCapture" aria-controls="panelCapture" data-tab="panelCapture">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-            <span>Vision Capture</span>
-          </button>
-          <button class="tab-pill" role="tab" aria-selected="false" id="tabBtnClaim" aria-controls="panelClaim" data-tab="panelClaim">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/></svg>
-            <span>Insurance Claim</span>
-          </button>
+        <!-- Single-Line Scrollable Pill Tabs with Fade Masks & Arrows (Tasks 1, 3, 11) -->
+        <div class="tab-list-wrapper">
+          <button class="tab-scroll-btn" id="tabScrollPrev" aria-label="Scroll tabs left">‹</button>
+          <div class="tab-list" id="tabList" role="tablist" aria-label="House profile tabs">
+            <button class="tab-pill" role="tab" aria-selected="true" id="tabBtnShutoffs" aria-controls="panelShutoffs" data-tab="panelShutoffs">
+              <!-- Lucide Sliders/Gauge neutral icon for multi-utility shutoffs (Task 11) -->
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+              <span>Shutoffs</span>
+              <span class="tab-count-badge" id="shutoffTabCount">3</span>
+            </button>
+            <button class="tab-pill" role="tab" aria-selected="false" id="tabBtnAppliances" aria-controls="panelAppliances" data-tab="panelAppliances">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              <span>Appliances</span>
+              <span class="tab-count-badge">6</span>
+            </button>
+            <button class="tab-pill" role="tab" aria-selected="false" id="tabBtnServices" aria-controls="panelServices" data-tab="panelServices">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              <span>Service Log</span>
+              <span class="tab-count-badge">4</span>
+            </button>
+            <button class="tab-pill" role="tab" aria-selected="false" id="tabBtnCapture" aria-controls="panelCapture" data-tab="panelCapture">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+              <span>Vision Capture</span>
+            </button>
+            <button class="tab-pill" role="tab" aria-selected="false" id="tabBtnClaim" aria-controls="panelClaim" data-tab="panelClaim">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/></svg>
+              <span>Insurance Claim</span>
+            </button>
+          </div>
+          <button class="tab-scroll-btn" id="tabScrollNext" aria-label="Scroll tabs right">›</button>
         </div>
 
-        <!-- Tab 1: Utility Shutoffs (Tasks 6 & 7) -->
+        <!-- Tab 1: Utility Shutoffs (Tasks 1, 6 & 7) -->
         <div id="panelShutoffs" class="tab-panel active" role="tabpanel" aria-labelledby="tabBtnShutoffs">
           <div id="shutoffList" class="shutoff-list">
-            <!-- Dynamically populated -->
+            <!-- Dynamically populated or error/empty state -->
           </div>
         </div>
 
         <!-- Tab 2: Appliances & Warranties -->
         <div id="panelAppliances" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnAppliances">
           <div class="appliance-grid">
-            <div class="appliance-card">
+            <div class="appliance-card" id="appliance-as_dishwasher">
               <div class="appliance-name-row">
                 <span>Bosch Dishwasher</span>
                 <span class="warranty-tag warranty-active">Active</span>
@@ -1669,7 +1840,7 @@
               <div style="color:var(--text-muted)">Model: SHX78CM5N · SN: SN-4471-882</div>
               <div style="color:var(--text-dim)">Warranty: 2027-03-14 (Kitchen)</div>
             </div>
-            <div class="appliance-card">
+            <div class="appliance-card" id="appliance-as_boiler">
               <div class="appliance-name-row">
                 <span>Weil-McLain Boiler</span>
                 <span class="warranty-tag warranty-standard">Standard</span>
@@ -1677,7 +1848,7 @@
               <div style="color:var(--text-muted)">Model: CGa-5 · SN: WM-2291</div>
               <div style="color:var(--text-dim)">Annual service current (Basement)</div>
             </div>
-            <div class="appliance-card">
+            <div class="appliance-card" id="appliance-as_furnace">
               <div class="appliance-name-row">
                 <span>Trane Furnace</span>
                 <span class="warranty-tag warranty-active">Active</span>
@@ -1685,7 +1856,7 @@
               <div style="color:var(--text-muted)">Model: XR95 · SN: TR-90412</div>
               <div style="color:var(--text-dim)">Warranty: 2029-01-15 (Basement)</div>
             </div>
-            <div class="appliance-card">
+            <div class="appliance-card" id="appliance-as_water_heater">
               <div class="appliance-name-row">
                 <span>Rheem Water Heater</span>
                 <span class="warranty-tag warranty-active">Active</span>
@@ -1693,7 +1864,7 @@
               <div style="color:var(--text-muted)">Model: Perf Platinum · SN: RH-88310</div>
               <div style="color:var(--text-dim)">Warranty: 2028-10-20 (Basement)</div>
             </div>
-            <div class="appliance-card">
+            <div class="appliance-card" id="appliance-as_fridge">
               <div class="appliance-name-row">
                 <span>LG Refrigerator</span>
                 <span class="warranty-tag warranty-active">Active</span>
@@ -1701,7 +1872,7 @@
               <div style="color:var(--text-muted)">Model: LRFXS2503S · SN: LG-77120</div>
               <div style="color:var(--text-dim)">Warranty: 2028-06-30 (Kitchen)</div>
             </div>
-            <div class="appliance-card">
+            <div class="appliance-card" id="appliance-as_sump_pump">
               <div class="appliance-name-row">
                 <span>Wayne Sump Pump</span>
                 <span class="warranty-tag warranty-active">Active</span>
@@ -1721,7 +1892,7 @@
                 <span class="hero-step-pill">2025-11-02</span>
               </div>
               <div class="shutoff-loc">Dishwasher (Bosch SHX78CM5N)</div>
-              <div style="font-size:12px; color:var(--text-muted)">Supply line replaced under warranty. Fully inspected. No charge.</div>
+              <div style="font-size:11px; color:var(--text-muted)">Supply line replaced under warranty. Fully inspected. No charge.</div>
             </div>
             <div class="shutoff-card">
               <div class="shutoff-top">
@@ -1729,7 +1900,7 @@
                 <span class="hero-step-pill">2026-03-02</span>
               </div>
               <div class="shutoff-loc">Boiler (Weil-McLain CGa-5)</div>
-              <div style="font-size:12px; color:var(--text-muted)">Annual service. Replaced thermocouple. Holds pressure at 15 PSI.</div>
+              <div style="font-size:11px; color:var(--text-muted)">Annual service. Replaced thermocouple. Holds pressure at 15 PSI.</div>
             </div>
             <div class="shutoff-card">
               <div class="shutoff-top">
@@ -1737,7 +1908,7 @@
                 <span class="hero-step-pill">2025-09-15</span>
               </div>
               <div class="shutoff-loc">Furnace (Trane XR95)</div>
-              <div style="font-size:12px; color:var(--text-muted)">Pre-winter burner inspection and high-efficiency filter replacement.</div>
+              <div style="font-size:11px; color:var(--text-muted)">Pre-winter burner inspection and high-efficiency filter replacement.</div>
             </div>
             <div class="shutoff-card">
               <div class="shutoff-top">
@@ -1745,7 +1916,7 @@
                 <span class="hero-step-pill">2026-01-10</span>
               </div>
               <div class="shutoff-loc">Water Heater (Rheem)</div>
-              <div style="font-size:12px; color:var(--text-muted)">Flushed tank sediment and inspected pressure relief valve.</div>
+              <div style="font-size:11px; color:var(--text-muted)">Flushed tank sediment and inspected pressure relief valve.</div>
             </div>
           </div>
         </div>
@@ -1753,16 +1924,16 @@
         <!-- Tab 4: Bedrock Vision Capture -->
         <div id="panelCapture" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnCapture">
           <div class="capture-box">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#fb923c" stroke-width="2"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-            <h4 style="font-size:15px; color:#ffffff;">Bedrock Vision Nameplate Ingestion</h4>
-            <p style="font-size:12px; color:var(--text-muted); max-width:320px;">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fb923c" stroke-width="2"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            <h4 style="font-size:14px; color:#ffffff;">Bedrock Vision Nameplate Ingestion</h4>
+            <p style="font-size:11px; color:var(--text-muted); max-width:300px;">
               Drop an appliance photograph to extract model, serial, and manufacturer fields into SQLite.
             </p>
             <button id="btnTestCapture" class="btn-test-capture">Simulate Nameplate Photo Capture</button>
             <div id="captureOutput" class="capture-output">
               <div style="font-weight:700; color:#ffffff;">Extracted by Bedrock Vision:</div>
               <div id="captureJson"></div>
-              <button id="btnConfirmAsset" style="margin-top:6px; background:var(--success); color:white; border:none; padding:6px 12px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">Confirm & Save to House Record</button>
+              <button id="btnConfirmAsset" style="margin-top:6px; background:var(--success); color:white; border:none; padding:5px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">Confirm & Save to House Record</button>
             </div>
           </div>
         </div>
@@ -1771,7 +1942,7 @@
         <div id="panelClaim" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnClaim">
           <div class="claim-box">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:13px; font-weight:700; color:#ffffff;">Automated Incident Claim Draft</span>
+              <span style="font-size:12px; font-weight:700; color:#ffffff;">Automated Incident Claim Draft</span>
               <button id="btnCopyClaim" class="btn-card-action">Copy Text</button>
             </div>
             <div id="claimDraftText" class="claim-text-area">Trigger an emergency runbook to generate a structured timeline and appliance warranty report for adjusters.</div>
@@ -1780,20 +1951,29 @@
         </div>
       </div>
 
-      <!-- Active Runbook / Recent Activity Panel (Task 11) -->
-      <div class="activity-card">
-        <span class="activity-title">Live Telemetry & Activity</span>
+      <!-- Safety Guarantees Telemetry Card (Task 12) -->
+      <div class="activity-card" id="safetyGuaranteesCard">
+        <span class="activity-title">Safety Guarantees</span>
         <div class="activity-row">
-          <span>Runbook Engine:</span>
-          <span style="color:var(--text); font-weight:600;">Deterministic SQLite</span>
+          <span>Runbook engine:</span>
+          <span class="activity-val" title="State engine: SQLite tables sessions, incidents; deterministic step transitions">
+            <span class="status-dot-sm"></span>
+            <span>Deterministic (SQLite)</span>
+          </span>
         </div>
         <div class="activity-row">
-          <span>Active Session:</span>
-          <span id="activitySession" style="font-family:'JetBrains Mono'; font-weight:600; color:#38bdf8;">None (Idle)</span>
+          <span>Active session:</span>
+          <span class="activity-val" id="activitySession" title="Session tracking UUID and elapsed duration">
+            <span class="status-dot-sm" style="background:#38bdf8;"></span>
+            <span id="activitySessionText">None</span>
+          </span>
         </div>
         <div class="activity-row">
-          <span>Refusal Boundary:</span>
-          <span style="color:#34d399; font-weight:600;">Enforced (verified=1)</span>
+          <span>Refusal boundary:</span>
+          <span class="activity-val" title="Refusal invariant: findVerifiedPoint() strictly enforces verified=1 before returning shutoff location">
+            <span class="status-dot-sm"></span>
+            <span>Enforced · record verified</span>
+          </span>
         </div>
       </div>
     </aside>
@@ -1802,11 +1982,11 @@
   <!-- Mobile Bottom Dock (Task 18) -->
   <div class="mobile-dock" aria-label="Mobile quick actions">
     <button id="mobileMicBtn" class="voice-switch-btn" aria-label="Tap to speak">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
       <span>Speak</span>
     </button>
     <a href="tel:911" class="btn-emergency-call" style="min-height:36px; padding:6px 14px; font-size:12px;">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       <span>Emergency 911</span>
     </a>
   </div>
@@ -1816,7 +1996,9 @@
     const EMERGENCY_PHONE = "911";
     const GAS_UTILITY_PHONE = "1-800-427-2200";
 
-    // Application State
+    // Application State (Task 4: Single Source of Truth)
+    // Valid states: 'idle' | 'listening' | 'thinking' | 'speaking' | 'answered' | 'emergency'
+    let appState = 'idle';
     let currentPropertyId = 'prop_alder';
     let currentSessionId = null;
     let sessionStartTime = null;
@@ -1824,15 +2006,22 @@
     let voiceSynthesisEnabled = true;
     let recognition = null;
     let isListening = false;
-    let isEmergencyMode = false;
     let latestPropertyData = null;
+    let latestRawAnswer = '';
 
-    // DOM References
+    // DOM Elements
     const heroCard = document.getElementById('heroCard');
     const heroStatusText = document.getElementById('heroStatusText');
     const stepBadge = document.getElementById('stepBadge');
-    const agentReplyText = document.getElementById('agentReplyText');
-    const heroSubline = document.getElementById('heroSubline');
+    const answerHeadline = document.getElementById('answerHeadline');
+    const answerStepsList = document.getElementById('answerStepsList');
+    const answerCallout = document.getElementById('answerCallout');
+    const answerActionBar = document.getElementById('answerActionBar');
+    const btnReadAloudAgain = document.getElementById('btnReadAloudAgain');
+    const btnShowOnProfile = document.getElementById('btnShowOnProfile');
+    const btnCopyAnswer = document.getElementById('btnCopyAnswer');
+    const btnAskAnother = document.getElementById('btnAskAnother');
+
     const choiceChips = document.getElementById('choiceChips');
     const emergencyChecklist = document.getElementById('emergencyChecklist');
     const emergencyActionBar = document.getElementById('emergencyActionBar');
@@ -1864,32 +2053,34 @@
     const propMeta = document.getElementById('propMeta');
     const shutoffList = document.getElementById('shutoffList');
     const shutoffTabCount = document.getElementById('shutoffTabCount');
-    const activitySession = document.getElementById('activitySession');
+    const activitySessionText = document.getElementById('activitySessionText');
 
-    // Tab Buttons
+    // Tab Scrolling Elements
+    const tabList = document.getElementById('tabList');
+    const tabScrollPrev = document.getElementById('tabScrollPrev');
+    const tabScrollNext = document.getElementById('tabScrollNext');
     const tabButtons = document.querySelectorAll('.tab-pill');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
-    // Lucide SVG Icons in JS
+    // Lucide Icons
     const ICONS = {
-      droplet: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>`,
-      flame: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`,
-      zap: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
-      checkCircle: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`,
-      alertTriangle: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>`,
-      volume2: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`,
-      volumeX: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>`,
+      water: `<svg class="icon-water" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>`,
+      gas: `<svg class="icon-gas" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`,
+      electric: `<svg class="icon-electric" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+      checkCircle: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`,
+      alertTriangle: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>`,
+      stepBullet: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>`,
+      volume2: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`,
+      volumeX: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>`,
       copy: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`
     };
 
-    // Format Clock Time
     function getFormattedTime() {
-      const d = new Date();
-      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
     initTime.textContent = getFormattedTime();
 
-    // Remember Collapsible Demo Scenarios State (Task 13)
+    // Remember Collapsible Demo Scenarios State (Task 7)
     const savedAccordionState = localStorage.getItem('hearth_demo_scenarios_open');
     if (savedAccordionState !== null) {
       demoScenariosDetails.open = savedAccordionState === 'true';
@@ -1898,20 +2089,24 @@
       localStorage.setItem('hearth_demo_scenarios_open', demoScenariosDetails.open);
     });
 
-    // Keyboard & Accessible Tab Navigation (Tasks 1 & 17)
+    // Tab Scrolling Controls (Task 3)
+    tabScrollPrev.addEventListener('click', () => {
+      tabList.scrollBy({ left: -140, behavior: 'smooth' });
+    });
+    tabScrollNext.addEventListener('click', () => {
+      tabList.scrollBy({ left: 140, behavior: 'smooth' });
+    });
+
+    // Tab Selection & Keyboard Navigation (Tasks 1, 3 & 17)
     tabButtons.forEach((btn, index) => {
       btn.addEventListener('click', () => selectTab(btn));
       btn.addEventListener('keydown', (e) => {
         let newIndex = null;
-        if (e.key === 'ArrowRight') {
-          newIndex = (index + 1) % tabButtons.length;
-        } else if (e.key === 'ArrowLeft') {
-          newIndex = (index - 1 + tabButtons.length) % tabButtons.length;
-        } else if (e.key === 'Home') {
-          newIndex = 0;
-        } else if (e.key === 'End') {
-          newIndex = tabButtons.length - 1;
-        }
+        if (e.key === 'ArrowRight') newIndex = (index + 1) % tabButtons.length;
+        else if (e.key === 'ArrowLeft') newIndex = (index - 1 + tabButtons.length) % tabButtons.length;
+        else if (e.key === 'Home') newIndex = 0;
+        else if (e.key === 'End') newIndex = tabButtons.length - 1;
+
         if (newIndex !== null) {
           e.preventDefault();
           selectTab(tabButtons[newIndex]);
@@ -1921,12 +2116,12 @@
     });
 
     function selectTab(btn) {
-      tabButtons.forEach(b => {
-        b.setAttribute('aria-selected', 'false');
-      });
+      tabButtons.forEach(b => b.setAttribute('aria-selected', 'false'));
       tabPanels.forEach(p => p.classList.remove('active'));
 
       btn.setAttribute('aria-selected', 'true');
+      btn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+
       const targetPanelId = btn.getAttribute('data-tab');
       const targetPanel = document.getElementById(targetPanelId);
       if (targetPanel) {
@@ -1934,51 +2129,69 @@
       }
     }
 
-    // Voice Switch Logic (P0 - Task 4)
+    // Voice Toggle Switch Logic (P0 - Task 4)
     speechToggleBtn.addEventListener('click', () => {
       voiceSynthesisEnabled = !voiceSynthesisEnabled;
       speechToggleBtn.setAttribute('aria-checked', voiceSynthesisEnabled ? 'true' : 'false');
       if (voiceSynthesisEnabled) {
-        speechIcon.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+        speechIcon.innerHTML = ICONS.volume2;
         speechLabel.textContent = 'Voice On';
       } else {
         speechIcon.innerHTML = ICONS.volumeX;
         speechLabel.textContent = 'Voice Off';
         window.speechSynthesis?.cancel();
-        setAssistantState('idle');
+        if (appState === 'speaking') setAppState('idle');
       }
     });
 
-    // Assistant State Controller (P1 - Task 9)
-    function setAssistantState(state) {
-      heroCard.classList.remove('state-listening', 'state-processing', 'state-speaking');
-      micBtn.classList.remove('state-listening', 'state-processing');
-      micSoundwave.classList.add('paused');
+    // Single Source of Truth for Session State (Task 4)
+    function setAppState(newState, detail = {}) {
+      appState = newState;
 
-      if (isEmergencyMode) {
+      heroCard.classList.remove('state-listening', 'state-thinking', 'state-speaking', 'state-answered', 'emergency-mode');
+      micBtn.classList.remove('state-listening', 'state-thinking', 'state-speaking');
+
+      if (newState === 'emergency') {
         heroCard.classList.add('emergency-mode');
-      }
-
-      if (state === 'listening') {
+        stepBadge.textContent = 'EMERGENCY';
+        heroStatusText.textContent = 'CRITICAL RUNBOOK';
+        micStatus.textContent = 'Emergency Active · Follow instruction below';
+      } else if (newState === 'listening') {
         heroCard.classList.add('state-listening');
         micBtn.classList.add('state-listening');
         micSoundwave.classList.remove('paused');
         heroStatusText.textContent = 'Listening...';
+        stepBadge.textContent = 'LISTENING';
         micStatus.textContent = 'Listening... Speak clearly';
-      } else if (state === 'processing') {
-        heroCard.classList.add('state-processing');
-        micBtn.classList.add('state-processing');
-        heroStatusText.textContent = 'Evaluating MCP Runbook...';
+      } else if (newState === 'thinking') {
+        heroCard.classList.add('state-thinking');
+        micBtn.classList.add('state-thinking');
+        micSoundwave.classList.add('paused');
+        heroStatusText.textContent = 'Evaluating Runbook...';
+        stepBadge.textContent = 'THINKING';
         micStatus.textContent = 'Evaluating deterministic steps...';
-      } else if (state === 'speaking') {
+      } else if (newState === 'speaking') {
         heroCard.classList.add('state-speaking');
+        micBtn.classList.add('state-speaking');
         micSoundwave.classList.remove('paused');
         heroStatusText.textContent = 'Speaking...';
+        stepBadge.textContent = 'SPEAKING';
         micStatus.textContent = 'Responding with verified instruction';
-      } else {
-        heroStatusText.textContent = isEmergencyMode ? 'EMERGENCY ACTIVE' : 'Standby';
+      } else if (newState === 'answered') {
+        heroCard.classList.add('state-answered');
+        micSoundwave.classList.add('paused');
+        const timeStr = getFormattedTime();
+        heroStatusText.textContent = `Answered · ${timeStr}`;
+        stepBadge.textContent = 'ANSWERED';
+        micStatus.textContent = 'Tap mic or press Space to ask another question';
+      } else { // idle
+        micSoundwave.classList.add('paused');
+        heroStatusText.textContent = 'Standby';
+        stepBadge.textContent = 'IDLE';
         micStatus.textContent = 'Tap microphone to speak or choose a scenario below';
       }
+
+      updateSessionDisplay();
     }
 
     // Audio Output via SpeechSynthesis
@@ -1989,12 +2202,12 @@
       const utterance = new SpeechSynthesisUtterance(clean);
       utterance.rate = 1.0;
       utterance.pitch = 1.0;
-      setAssistantState('speaking');
+      setAppState('speaking');
       utterance.onend = () => {
-        setAssistantState('idle');
+        setAppState(appState === 'emergency' ? 'emergency' : 'answered');
       };
       utterance.onerror = () => {
-        setAssistantState('idle');
+        setAppState(appState === 'emergency' ? 'emergency' : 'idle');
       };
       window.speechSynthesis.speak(utterance);
     }
@@ -2009,7 +2222,7 @@
 
       recognition.onstart = () => {
         isListening = true;
-        setAssistantState('listening');
+        setAppState('listening');
       };
 
       recognition.onresult = (event) => {
@@ -2051,21 +2264,23 @@
 
     function stopListening() {
       isListening = false;
-      setAssistantState('idle');
+      if (appState === 'listening') {
+        setAppState(latestRawAnswer ? 'answered' : 'idle');
+      }
     }
 
     micBtn.addEventListener('click', toggleListening);
     mobileMicBtn.addEventListener('click', toggleListening);
 
-    // Space key on mic button to toggle
-    micBtn.addEventListener('keydown', (e) => {
-      if (e.key === ' ' || e.key === 'Enter') {
+    // Keyboard Space trigger on mic or body
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && document.activeElement !== textInput && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
         e.preventDefault();
         toggleListening();
       }
     });
 
-    // Session Duration Timer (P0 - Task 2)
+    // Session Timer & Display Consistency (Task 2 & 4)
     function startSessionTimer() {
       if (!sessionStartTime) sessionStartTime = Date.now();
       if (sessionTimerInterval) clearInterval(sessionTimerInterval);
@@ -2074,16 +2289,17 @@
     }
 
     function updateSessionDisplay() {
+      // Transcript header: "No active session" only when transcript is empty / no session active
       if (!currentSessionId) {
         sessionStatus.textContent = 'No active session';
-        activitySession.textContent = 'None (Idle)';
+        activitySessionText.textContent = 'None';
         return;
       }
       const elapsedSec = Math.floor((Date.now() - sessionStartTime) / 1000);
       const mins = String(Math.floor(elapsedSec / 60)).padStart(2, '0');
       const secs = String(elapsedSec % 60).padStart(2, '0');
       sessionStatus.textContent = `Active (${currentSessionId.slice(0, 8)}) · ${mins}:${secs}`;
-      activitySession.textContent = `${currentSessionId.slice(0, 8)} (${mins}:${secs})`;
+      activitySessionText.textContent = `${currentSessionId.slice(0, 8)} (${mins}:${secs})`;
     }
 
     function stopSessionTimer() {
@@ -2091,17 +2307,13 @@
       sessionTimerInterval = null;
     }
 
-    // Emergency Mode Activation & Deactivation (P1 - Task 5)
+    // Emergency Mode Activation & Deactivation (Task 5)
     function activateEmergencyMode(emergencyType, initialInstruction) {
-      isEmergencyMode = true;
-      heroCard.classList.add('emergency-mode');
-      stepBadge.textContent = 'EMERGENCY';
-      heroStatusText.textContent = 'CRITICAL SAFETY RUNBOOK';
+      setAppState('emergency');
       emergencyActiveInstruction.textContent = initialInstruction || 'Follow immediate verified shutoff instruction';
       emergencyActionBar.style.display = 'flex';
       emergencyChecklist.style.display = 'flex';
 
-      // Update call link if gas odor
       if (emergencyType === 'gas') {
         document.getElementById('emergencyCallBtn').href = `tel:${GAS_UTILITY_PHONE}`;
         document.getElementById('emergencyCallBtn').querySelector('span').textContent = `Call Gas Utility (${GAS_UTILITY_PHONE})`;
@@ -2112,26 +2324,127 @@
     }
 
     function deactivateEmergencyMode() {
-      isEmergencyMode = false;
-      heroCard.classList.remove('emergency-mode');
-      stepBadge.textContent = 'IDLE';
-      heroStatusText.textContent = 'Standby';
       emergencyActionBar.style.display = 'none';
       emergencyChecklist.style.display = 'none';
       currentSessionId = null;
       sessionStartTime = null;
       stopSessionTimer();
-      updateSessionDisplay();
-      agentReplyText.textContent = 'Runbook stopped. Ready for questions.';
-      heroSubline.textContent = 'One instruction per turn · Deterministic safety machine';
+      setAppState('idle');
+      answerHeadline.textContent = 'Runbook stopped. Ready for questions.';
+      answerStepsList.innerHTML = '';
+      answerCallout.style.display = 'none';
+      answerActionBar.classList.remove('visible');
       choiceChips.innerHTML = '';
-      setAssistantState('idle');
     }
 
     btnStopRunbook.addEventListener('click', () => {
       deactivateEmergencyMode();
-      appendTranscript('agent', 'Emergency runbook stopped by user. Place is preserved.');
+      appendTranscript('agent', 'Emergency runbook stopped by user. Place is preserved in SQLite.');
     });
+
+    // Parse Structured Answer (Task 5: Headline, Steps, Callout)
+    function renderStructuredAnswer(rawText) {
+      latestRawAnswer = rawText;
+      if (!rawText) return;
+
+      const sentences = rawText.match(/[^.!?]+[.!?]+/g) || [rawText];
+      const trimmed = sentences.map(s => s.trim()).filter(Boolean);
+
+      const headlineText = trimmed[0] || rawText;
+      const rest = trimmed.slice(1);
+
+      answerHeadline.textContent = headlineText;
+      answerStepsList.innerHTML = '';
+
+      const criticalRegex = /lever|wheel|clockwise|counter-clockwise|never|do not|immediately|evacuate|danger|hazard/i;
+      let calloutFound = false;
+
+      rest.forEach(sentence => {
+        if (!calloutFound && criticalRegex.test(sentence)) {
+          calloutFound = true;
+          answerCallout.innerHTML = `
+            <span class="answer-callout-icon">${ICONS.alertTriangle}</span>
+            <span><strong>Critical:</strong> ${escapeHtml(sentence)}</span>
+          `;
+          answerCallout.style.display = 'flex';
+        } else {
+          const row = document.createElement('div');
+          row.className = 'answer-step-row';
+          row.innerHTML = `
+            <span class="answer-step-icon">${ICONS.stepBullet}</span>
+            <span>${escapeHtml(sentence)}</span>
+          `;
+          answerStepsList.appendChild(row);
+        }
+      });
+
+      if (!calloutFound) {
+        answerCallout.style.display = 'none';
+      }
+
+      answerActionBar.classList.add('visible');
+    }
+
+    // Hero Answer Actions (Task 6)
+    btnReadAloudAgain.addEventListener('click', () => {
+      if (latestRawAnswer) speakText(latestRawAnswer);
+    });
+
+    btnCopyAnswer.addEventListener('click', () => {
+      if (latestRawAnswer) {
+        navigator.clipboard.writeText(latestRawAnswer);
+        const orig = btnCopyAnswer.innerHTML;
+        btnCopyAnswer.innerHTML = `${ICONS.checkCircle} <span>Copied!</span>`;
+        setTimeout(() => btnCopyAnswer.innerHTML = orig, 1500);
+      }
+    });
+
+    btnAskAnother.addEventListener('click', () => {
+      textInput.value = '';
+      textInput.focus();
+      setAppState('idle');
+      answerHeadline.textContent = 'Say or type another question...';
+      answerStepsList.innerHTML = '';
+      answerCallout.style.display = 'none';
+      answerActionBar.classList.remove('visible');
+    });
+
+    btnShowOnProfile.addEventListener('click', () => {
+      if (!latestRawAnswer) return;
+      const lower = latestRawAnswer.toLowerCase();
+
+      if (lower.includes('water main') || lower.includes('water shutoff') || lower.includes('oval valve')) {
+        selectTab(document.getElementById('tabBtnShutoffs'));
+        highlightCard('shutoff-water_main');
+      } else if (lower.includes('gas') || lower.includes('meter')) {
+        selectTab(document.getElementById('tabBtnShutoffs'));
+        highlightCard('shutoff-gas_meter');
+      } else if (lower.includes('electric') || lower.includes('panel') || lower.includes('breaker')) {
+        selectTab(document.getElementById('tabBtnShutoffs'));
+        highlightCard('shutoff-electrical_panel');
+      } else if (lower.includes('dishwasher')) {
+        selectTab(document.getElementById('tabBtnAppliances'));
+        highlightCard('appliance-as_dishwasher');
+      } else if (lower.includes('boiler')) {
+        selectTab(document.getElementById('tabBtnAppliances'));
+        highlightCard('appliance-as_boiler');
+      } else if (lower.includes('furnace')) {
+        selectTab(document.getElementById('tabBtnAppliances'));
+        highlightCard('appliance-as_furnace');
+      } else {
+        selectTab(document.getElementById('tabBtnShutoffs'));
+      }
+    });
+
+    function highlightCard(elementId) {
+      document.querySelectorAll('.shutoff-card, .appliance-card').forEach(el => el.classList.remove('highlighted-glow'));
+      const target = document.getElementById(elementId);
+      if (target) {
+        target.classList.add('highlighted-glow');
+        target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        setTimeout(() => target.classList.remove('highlighted-glow'), 2500);
+      }
+    }
 
     // Send Turn to BFF /api/turn
     async function sendTurn(text) {
@@ -2141,7 +2454,7 @@
       appendTranscript('user', cleanText);
       textInput.value = '';
 
-      setAssistantState('processing');
+      setAppState('thinking');
       const t0 = performance.now();
 
       try {
@@ -2170,8 +2483,9 @@
       } catch (err) {
         console.error('Turn call failed:', err);
         setMcpOnline(false);
-        setAssistantState('idle');
-        agentReplyText.textContent = 'Connection to MCP server lost. Your place is saved in SQLite.';
+        setAppState('idle');
+        answerHeadline.textContent = 'Connection to MCP server lost. Your place is saved in SQLite.';
+        renderTabError();
       }
     }
 
@@ -2191,25 +2505,40 @@
       }
     });
 
-    // Handle Turn Response
+    // Handle Turn Response (FIX: P0 Regression 1 & Task 3)
     function handleTurnResponse(inputText, data) {
-      setAssistantState('idle');
+      // 1. ALWAYS execute panel updates first so data is never bypassed
+      if (data.panel) {
+        updatePanel(data.panel);
+      }
 
-      // Task 3: The reply to "status" must not repeat the greeting.
-      // Render as a compact status summary using existing data.
+      // 2. Handle compact status summary without repeating greeting
       if (/^status$/i.test(inputText.trim())) {
         const verifiedCount = latestPropertyData?.utilityPoints?.filter(p => p.verified === 1 || p.verified === true).length || 3;
         const totalCount = latestPropertyData?.utilityPoints?.length || 3;
-        
-        agentReplyText.textContent = `Status: Connected to ${latestPropertyData?.address || '1427 Alder Street'}.`;
-        heroSubline.textContent = `${verifiedCount}/${totalCount} shutoffs physically verified · MCP Streamable HTTP live.`;
-        
+
+        answerHeadline.textContent = `Status: Connected to ${latestPropertyData?.address || '1427 Alder Street'}.`;
+        answerStepsList.innerHTML = `
+          <div class="answer-step-row">
+            <span class="answer-step-icon">${ICONS.stepBullet}</span>
+            <span>${verifiedCount}/${totalCount} shutoffs physically verified in SQLite registry.</span>
+          </div>
+          <div class="answer-step-row">
+            <span class="answer-step-icon">${ICONS.stepBullet}</span>
+            <span>Deterministic runbook engine active on Streamable HTTP transport.</span>
+          </div>
+        `;
+        answerCallout.style.display = 'none';
+        answerActionBar.classList.add('visible');
+
         appendStatusSummaryCard({
           connection: 'Streamable HTTP (2025-11-25) Connected',
           house: latestPropertyData?.address || '1427 Alder Street',
           shutoffs: `${verifiedCount} verified / ${totalCount} recorded`,
           runbook: currentSessionId ? `Active (${currentSessionId.slice(0, 8)})` : 'Idle'
         });
+
+        setAppState('answered');
         return;
       }
 
@@ -2219,10 +2548,12 @@
 
       if (data.sessionId && (isGas || isWaterEmergency)) {
         activateEmergencyMode(isGas ? 'gas' : 'water', data.say);
+      } else {
+        setAppState('answered');
       }
 
-      // Update Spoken Instruction
-      agentReplyText.textContent = data.say || '...';
+      // Render Structured Spoken Next Step
+      renderStructuredAnswer(data.say || '...');
       speakText(data.say);
       appendTranscript('agent', data.say);
 
@@ -2232,7 +2563,6 @@
         startSessionTimer();
       }
 
-      // Step ID Badge
       if (data.stepId) {
         stepBadge.textContent = data.stepId.toUpperCase();
       }
@@ -2248,11 +2578,6 @@
           choiceChips.appendChild(btn);
         });
       }
-
-      // Panel Updates
-      if (data.panel) {
-        updatePanel(data.panel);
-      }
     }
 
     function updatePanel(panel) {
@@ -2265,7 +2590,7 @@
         if (Array.isArray(p.utilityPoints)) {
           renderShutoffs(p.utilityPoints);
         } else if (panel.data.utility) {
-          highlightShutoff(panel.data);
+          highlightCard(`shutoff-${panel.data.utility}`);
         }
       } else if (panel.kind === 'incident') {
         const inc = panel.data;
@@ -2273,14 +2598,14 @@
       }
     }
 
-    // Render Shutoff Cards (Tasks 6 & 7)
+    // Render Shutoff Cards (P0 - Regression 1 Restored, Tasks 6, 7 & 11)
     function renderShutoffs(points) {
       shutoffList.innerHTML = '';
-      shutoffTabCount.textContent = points.length;
+      shutoffTabCount.textContent = points ? points.length : 0;
 
-      if (points.length === 0) {
+      if (!points || points.length === 0) {
         shutoffList.innerHTML = `
-          <div class="refusal-box">
+          <div class="tab-empty-box">
             <h4>⚠️ ZERO SHUTOFFS RECORDED</h4>
             <p>Hearth strictly <strong>refuses to guess</strong> valve or breaker locations. An assistant that invents a shutoff during a leak is a dangerous hazard.</p>
           </div>
@@ -2295,22 +2620,25 @@
         const isVer = p.verified === 1 || p.verified === true;
         const confidencePct = Math.round((p.confidence || 0.95) * 100);
 
-        // Task 6: Confidence tier color & provenance
+        // Task 6: Confidence tier & provenance
         const tierClass = confidencePct >= 90 ? 'badge-tier-high' : (confidencePct >= 70 ? 'badge-tier-med' : 'badge-tier-low');
         const provenanceText = isVer ? (p.source === 'realtor_handover' ? 'Realtor Handover' : 'Owner Recorded') : 'Unrecorded';
+
+        // Task 11: Semantic icon colors
+        const kindIcon = p.kind === 'water_main' ? ICONS.water : (p.kind === 'gas_meter' ? ICONS.gas : ICONS.electric);
 
         // Task 7: Critical instruction callout
         const accessCallout = p.accessNotes ? `
           <div class="shutoff-instruction-callout">
             ${ICONS.alertTriangle}
-            <span><strong>Critical:</strong> ${p.accessNotes}</span>
+            <span><strong>Critical:</strong> ${escapeHtml(p.accessNotes)}</span>
           </div>
         ` : '';
 
         card.innerHTML = `
           <div class="shutoff-top">
             <span class="shutoff-title">
-              ${p.kind === 'water_main' ? ICONS.droplet : (p.kind === 'gas_meter' ? ICONS.flame : ICONS.zap)}
+              ${kindIcon}
               <span>${p.kind.replace('_', ' ')}</span>
             </span>
             <span class="verification-badge ${tierClass}" title="Confidence: ${confidencePct}% · Cryptographically verified in SQLite record">
@@ -2330,43 +2658,40 @@
               <span>Copy Location</span>
             </button>
             <div class="photo-thumbnail-slot" title="Vision capture photo slot">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/></svg>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/></svg>
             </div>
           </div>
         `;
         shutoffList.appendChild(card);
       });
 
-      // Wire card actions (Task 7)
+      // Wire card action buttons
       document.querySelectorAll('.btn-read-shutoff').forEach(btn => {
-        btn.addEventListener('click', () => {
-          speakText(btn.getAttribute('data-text'));
-        });
+        btn.addEventListener('click', () => speakText(btn.getAttribute('data-text')));
       });
 
       document.querySelectorAll('.btn-copy-shutoff').forEach(btn => {
         btn.addEventListener('click', () => {
           navigator.clipboard.writeText(btn.getAttribute('data-copy'));
-          const original = btn.innerHTML;
+          const orig = btn.innerHTML;
           btn.innerHTML = `${ICONS.checkCircle} <span>Copied!</span>`;
-          setTimeout(() => btn.innerHTML = original, 1500);
+          setTimeout(() => btn.innerHTML = orig, 1500);
         });
       });
     }
 
-    function highlightShutoff(shutoffData) {
-      document.querySelectorAll('.shutoff-card').forEach(el => el.classList.remove('active-target'));
-      const target = document.getElementById(`shutoff-${shutoffData.utility}`);
-      if (target) {
-        target.classList.add('active-target');
-        selectTab(document.getElementById('tabBtnShutoffs'));
-        target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
+    function renderTabError() {
+      shutoffList.innerHTML = `
+        <div class="tab-error-box">
+          <p style="color:#fb7185; font-size:12px; font-weight:600;">Failed to load house shutoffs from MCP server.</p>
+          <button class="btn-retry" onclick="sendTurn('status')">Retry Connection</button>
+        </div>
+      `;
     }
 
     // Transcript Feed Management (Task 12)
     function appendTranscript(role, text) {
-      const isAtBottom = (transcriptFeed.scrollHeight - transcriptFeed.scrollTop - transcriptFeed.clientHeight) <= 40;
+      const isAtBottom = (transcriptFeed.scrollHeight - transcriptFeed.scrollTop - transcriptFeed.clientHeight) <= 50;
 
       const row = document.createElement('div');
       row.className = `msg-row ${role}`;
@@ -2381,17 +2706,19 @@
       }
     }
 
-    // Compact Status Summary Card (Task 3)
     function appendStatusSummaryCard(statusData) {
       const row = document.createElement('div');
       row.className = 'msg-row agent';
       row.innerHTML = `
         <div class="msg-time">${getFormattedTime()}</div>
-        <div class="status-summary-card">
-          <div class="status-line"><span>MCP Transport:</span> <strong>${escapeHtml(statusData.connection)}</strong></div>
-          <div class="status-line"><span>House Record:</span> <strong>${escapeHtml(statusData.house)}</strong></div>
-          <div class="status-line"><span>Verified Shutoffs:</span> <strong>${escapeHtml(statusData.shutoffs)}</strong></div>
-          <div class="status-line"><span>Runbook Engine:</span> <strong>${escapeHtml(statusData.runbook)}</strong></div>
+        <div class="msg-bubble" style="background:rgba(255,255,255,0.04); border-color:var(--border-prominent); width:100%;">
+          <div style="font-weight:700; margin-bottom:4px; color:#ffffff;">House Record Status</div>
+          <div style="font-size:11px; color:var(--text-muted); display:flex; flex-direction:column; gap:2px;">
+            <div>• Transport: <strong>${escapeHtml(statusData.connection)}</strong></div>
+            <div>• Property: <strong>${escapeHtml(statusData.house)}</strong></div>
+            <div>• Shutoffs: <strong>${escapeHtml(statusData.shutoffs)}</strong></div>
+            <div>• Active Session: <strong>${escapeHtml(statusData.runbook)}</strong></div>
+          </div>
         </div>
       `;
       transcriptFeed.appendChild(row);
@@ -2433,21 +2760,28 @@
       });
     });
 
-    // Property Selector Switcher with Skeleton Loader (Task 19)
+    // Property Selector with Skeleton Loader & 3.5s Timeout (Tasks 2 & 19)
     propertySelect.addEventListener('change', (e) => {
       currentPropertyId = e.target.value;
       currentSessionId = null;
       deactivateEmergencyMode();
-      
-      // Skeleton loader placeholder
+
+      // Show skeleton loader
       shutoffList.innerHTML = `
         <div class="shutoff-card" style="opacity:0.4; animation: pulseGlow 1s infinite alternate;">
-          <div class="shutoff-top"><span class="shutoff-title">Loading house profile...</span></div>
-          <div class="shutoff-loc">Fetching SQLite utility points...</div>
+          <div class="shutoff-top"><span class="shutoff-title">Loading house record...</span></div>
+          <div class="shutoff-loc">Connecting to SQLite utility points...</div>
         </div>
       `;
-      
-      sendTurn('status');
+
+      // Fallback timeout in case fetch hangs
+      const safetyTimeout = setTimeout(() => {
+        if (!latestPropertyData) {
+          renderTabError();
+        }
+      }, 3500);
+
+      sendTurn('status').finally(() => clearTimeout(safetyTimeout));
     });
 
     // Bedrock Vision Capture
@@ -2532,7 +2866,7 @@
       setTimeout(() => btnCopyClaim.textContent = 'Copy Text', 1500);
     });
 
-    // Initial load
+    // Initial Load Sequence
     window.addEventListener('DOMContentLoaded', () => {
       sendTurn('status');
     });

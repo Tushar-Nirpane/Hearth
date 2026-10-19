@@ -3,36 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hearth — Voice House Record & Emergency Runbooks</title>
+  <title>Hearth — Voice House Record & Emergency Runbooks (Alexa+ MCP)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f5f3ee;
-      --surface: #ffffff;
-      --surface-subtle: #faf8f5;
-      --surface-border: #e7e2d9;
-      --text: #1c1917;
-      --text-muted: #78716c;
-      --text-dim: #a8a29e;
-      --primary: #d9480f;
-      --primary-hover: #c93b04;
-      --primary-subtle: #fff4ed;
-      --primary-border: #fed7aa;
-      --verified-bg: #ecfdf5;
-      --verified-text: #047857;
-      --verified-border: #a7f3d0;
-      --unverified-bg: #fef2f2;
-      --unverified-text: #b91c1c;
-      --unverified-border: #fecaca;
-      --shadow-sm: 0 1px 2px 0 rgba(28, 25, 23, 0.05);
-      --shadow-md: 0 4px 12px -2px rgba(28, 25, 23, 0.08), 0 2px 6px -1px rgba(28, 25, 23, 0.04);
-      --shadow-lg: 0 12px 24px -4px rgba(28, 25, 23, 0.12), 0 4px 10px -2px rgba(28, 25, 23, 0.06);
-      --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 16px;
+      --bg-base: #070a12;
+      --bg-surface: rgba(15, 23, 42, 0.75);
+      --bg-surface-elevated: rgba(22, 33, 62, 0.85);
+      --bg-surface-subtle: rgba(30, 41, 59, 0.5);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-prominent: rgba(255, 255, 255, 0.16);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --hearth-orange: #f97316;
+      --hearth-flame: #ea580c;
+      --hearth-amber: #f59e0b;
+      --hearth-glow: rgba(249, 115, 22, 0.35);
+      
+      --accent-cyan: #06b6d4;
+      --accent-indigo: #6366f1;
+      
+      --verified-emerald: #10b981;
+      --verified-glow: rgba(16, 185, 129, 0.25);
+      --unverified-rose: #f43f5e;
+      --unverified-glow: rgba(244, 63, 94, 0.25);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
       --radius-full: 9999px;
+      
+      --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      --shadow-glow: 0 0 25px var(--hearth-glow);
     }
 
     * {
@@ -43,66 +51,115 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg-base);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(249, 115, 22, 0.15) 0px, transparent 45%),
+        radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 40%),
+        radial-gradient(at 50% 100%, rgba(6, 182, 212, 0.08) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* Ambient Background Grid Pattern */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* Top Navigation Header */
     header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--surface-border);
-      padding: 14px 24px;
+      background: rgba(10, 15, 29, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 14px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 100;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+    }
+
+    .brand-logo-wrap {
+      position: relative;
+      width: 40px;
+      height: 40px;
     }
 
     .brand-logo {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      color: white;
-      border-radius: 8px;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #fb923c, #ea580c, #dc2626);
+      border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
+      color: white;
       font-weight: 800;
-      font-size: 18px;
-      box-shadow: 0 2px 6px rgba(234, 88, 12, 0.35);
+      font-size: 20px;
+      box-shadow: 0 0 20px rgba(234, 88, 12, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .brand-title {
       font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      font-size: 20px;
+      font-weight: 800;
+      font-size: 22px;
       letter-spacing: -0.02em;
-      color: var(--text);
+      background: linear-gradient(to right, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .brand-badge {
+    .brand-tag {
       font-size: 11px;
-      font-weight: 600;
-      background: var(--primary-subtle);
-      color: var(--primary);
-      border: 1px solid var(--primary-border);
+      font-weight: 700;
       padding: 2px 8px;
       border-radius: var(--radius-full);
+      background: rgba(249, 115, 22, 0.15);
+      color: #fb923c;
+      border: 1px solid rgba(249, 115, 22, 0.3);
       text-transform: uppercase;
       letter-spacing: 0.05em;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 400;
     }
 
     .header-controls {
@@ -111,666 +168,959 @@
       gap: 14px;
     }
 
-    .property-selector {
+    /* Live Protocol Status Pill */
+    .protocol-pill {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: var(--surface-subtle);
-      border: 1px solid var(--surface-border);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
       padding: 6px 12px;
-      border-radius: var(--radius-md);
-      font-size: 13px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      color: #34d399;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
     }
 
-    .property-selector label {
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Latency Meter */
+    .latency-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 10px;
+      border-radius: var(--radius-md);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #38bdf8;
+    }
+
+    /* Property Selector */
+    .property-selector-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-prominent);
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      transition: all 0.2s ease;
+    }
+
+    .property-selector-wrap:hover {
+      border-color: rgba(249, 115, 22, 0.4);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .property-selector-wrap label {
+      font-size: 12px;
       color: var(--text-muted);
       font-weight: 500;
     }
 
-    .property-selector select {
+    .property-selector-wrap select {
       background: transparent;
       border: none;
       font-size: 13px;
       font-weight: 600;
-      color: var(--text);
+      color: var(--text-main);
       cursor: pointer;
       outline: none;
+      font-family: 'Inter', sans-serif;
     }
 
-    .speech-toggle-btn {
+    .property-selector-wrap select option {
+      background: #0f172a;
+      color: #f8fafc;
+    }
+
+    /* Sound Switcher */
+    .sound-toggle-btn {
       display: flex;
       align-items: center;
       gap: 6px;
-      background: var(--surface-subtle);
-      border: 1px solid var(--surface-border);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
       padding: 6px 12px;
       border-radius: var(--radius-md);
       font-size: 12px;
       font-weight: 600;
-      color: var(--text);
+      color: var(--text-muted);
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
     }
 
-    .speech-toggle-btn:hover {
-      background: var(--surface-border);
+    .sound-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
     }
 
-    .speech-toggle-btn.active {
-      color: var(--primary);
-      border-color: var(--primary-border);
-      background: var(--primary-subtle);
+    .sound-toggle-btn.active {
+      background: rgba(249, 115, 22, 0.15);
+      border-color: rgba(249, 115, 22, 0.35);
+      color: #fb923c;
     }
 
-    /* Main Container Grid */
+    /* Main Grid Layout */
     main {
       flex: 1;
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.95fr);
+      grid-template-columns: 1fr 1fr;
       gap: 24px;
-      padding: 24px;
-      max-width: 1480px;
-      margin: 0 auto;
+      padding: 24px 28px;
+      max-width: 1600px;
       width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1024px) {
       main {
         grid-template-columns: 1fr;
         padding: 16px;
-        gap: 20px;
       }
     }
 
-    /* Voice Interaction Column (Left) */
+    /* Left Column: Voice & Conversational Engine */
     .voice-panel {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
     }
 
-    /* Hero Agent Reply Box */
-    .agent-reply-card {
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius-lg);
-      padding: 28px 24px;
-      box-shadow: var(--shadow-md);
+    /* Hero Agent Speech Card */
+    .agent-card {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-glass);
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 20px;
       position: relative;
       overflow: hidden;
+      transition: border-color 0.3s ease;
     }
 
-    .agent-reply-card::before {
-      content: '';
+    .agent-card::before {
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #f97316, #ea580c, #dc2626);
+      height: 3px;
+      background: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6, #06b6d4);
     }
 
-    .reply-meta {
+    .agent-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .reply-speaker-badge {
-      display: inline-flex;
+    .agent-identity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .agent-avatar {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(234, 88, 12, 0.4));
+      border: 1px solid rgba(249, 115, 22, 0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fb923c;
+      font-size: 18px;
+      box-shadow: 0 0 15px rgba(249, 115, 22, 0.3);
+    }
+
+    .agent-name-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .agent-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .agent-status-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
+    }
+
+    /* Soundwave Audio Equalizer Animation */
+    .soundwave {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 14px;
+    }
+
+    .soundwave-bar {
+      width: 3px;
+      height: 100%;
+      background: #fb923c;
+      border-radius: 2px;
+      animation: soundBars 1.2s infinite ease-in-out;
+    }
+
+    .soundwave-bar:nth-child(1) { animation-delay: 0.1s; height: 40%; }
+    .soundwave-bar:nth-child(2) { animation-delay: 0.3s; height: 80%; }
+    .soundwave-bar:nth-child(3) { animation-delay: 0.2s; height: 100%; }
+    .soundwave-bar:nth-child(4) { animation-delay: 0.4s; height: 60%; }
+
+    @keyframes soundBars {
+      0%, 100% { transform: scaleY(0.3); }
+      50% { transform: scaleY(1); }
+    }
+
+    .soundwave.paused .soundwave-bar {
+      animation: none;
+      transform: scaleY(0.25);
+      background: var(--text-dim);
+    }
+
+    .step-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-prominent);
+      color: #e2e8f0;
       letter-spacing: 0.05em;
     }
 
-    .reply-speaker-badge .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--primary);
-    }
-
-    .step-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      background: var(--surface-subtle);
-      border: 1px solid var(--surface-border);
-      padding: 3px 8px;
-      border-radius: var(--radius-sm);
-      color: var(--text-muted);
-    }
-
-    .agent-reply-text {
+    /* Large Format Spoken Response (Stressed Persona) */
+    .agent-speech-display {
       font-family: 'Outfit', sans-serif;
-      font-size: 26px;
+      font-size: 25px;
       font-weight: 600;
-      line-height: 1.35;
-      color: var(--text);
-      letter-spacing: -0.01em;
-      min-height: 68px;
+      line-height: 1.4;
+      color: #ffffff;
+      min-height: 75px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
       transition: opacity 0.2s ease;
     }
 
-    @media (min-width: 1200px) {
-      .agent-reply-text {
-        font-size: 28px;
-      }
-    }
-
     /* Choice Chips */
-    .choice-chips-container {
+    .choice-chips-wrap {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 4px;
-      min-height: 38px;
+      min-height: 40px;
+      align-items: center;
     }
 
     .choice-chip {
-      background: var(--surface-subtle);
-      border: 1.5px solid var(--surface-border);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      padding: 8px 18px;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      color: #fed7aa;
+      padding: 10px 18px;
       border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .choice-chip:hover {
-      background: var(--primary-subtle);
-      border-color: var(--primary);
-      color: var(--primary);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.3), rgba(234, 88, 12, 0.5));
+      border-color: #fb923c;
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
     }
 
     .choice-chip:active {
       transform: translateY(0);
     }
 
-    /* Voice / Text Input Box */
+    /* Input & Voice Control Center */
     .input-dock {
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      box-shadow: var(--shadow-md);
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: var(--shadow-glass);
       display: flex;
       flex-direction: column;
+      gap: 18px;
+    }
+
+    .voice-control-row {
+      display: flex;
+      align-items: center;
       gap: 16px;
     }
 
-    .voice-control-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 0 8px;
-      gap: 12px;
-    }
-
-    .mic-btn {
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #f97316, #d9480f);
-      border: none;
-      color: white;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 14px rgba(217, 72, 15, 0.4);
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    .mic-button-wrap {
       position: relative;
     }
 
-    .mic-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(217, 72, 15, 0.5);
-    }
-
-    .mic-btn.listening {
-      background: #dc2626;
-      animation: pulse-ring 1.5s infinite;
-    }
-
-    @keyframes pulse-ring {
-      0% {
-        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.6);
-      }
-      70% {
-        box-shadow: 0 0 0 16px rgba(220, 38, 38, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
-      }
+    .mic-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 2px solid rgba(249, 115, 22, 0.4);
+      color: #fb923c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     }
 
     .mic-btn svg {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       fill: currentColor;
+      transition: transform 0.2s ease;
+    }
+
+    .mic-btn:hover {
+      transform: scale(1.06);
+      border-color: #f97316;
+      box-shadow: 0 0 25px rgba(249, 115, 22, 0.4);
+    }
+
+    .mic-btn.listening {
+      background: linear-gradient(135deg, #f97316, #dc2626);
+      color: white;
+      border-color: white;
+      animation: micPulse 1.5s infinite ease-out;
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.6);
+    }
+
+    @keyframes micPulse {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .mic-status-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
     .mic-status-label {
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .mic-status-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Scenario Quick Tester Pills */
+    .preset-scenarios {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .preset-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 8px;
+    }
+
+    .scenario-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      font-size: 12px;
       font-weight: 500;
       color: var(--text-muted);
-      min-height: 20px;
-    }
-
-    .mic-status-label.listening {
-      color: #dc2626;
-      font-weight: 600;
-    }
-
-    /* Text Input Fallback - Always visible */
-    .text-input-form {
-      display: flex;
-      gap: 8px;
-      border-top: 1px solid var(--surface-border);
-      padding-top: 16px;
-    }
-
-    .text-input {
-      flex: 1;
-      padding: 12px 16px;
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius-md);
-      font-size: 15px;
-      background: var(--surface-subtle);
-      color: var(--text);
-      outline: none;
-      transition: all 0.15s ease;
-    }
-
-    .text-input:focus {
-      background: var(--surface);
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(217, 72, 15, 0.15);
-    }
-
-    .send-btn {
-      padding: 12px 20px;
-      background: var(--text);
-      color: white;
-      border: none;
-      border-radius: var(--radius-md);
-      font-weight: 600;
-      font-size: 14px;
       cursor: pointer;
-      transition: all 0.15s ease;
-      display: inline-flex;
+      text-align: left;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .send-btn:hover {
-      background: #000000;
+    .scenario-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border-color: rgba(249, 115, 22, 0.4);
+      transform: translateY(-1px);
     }
 
-    /* Suggestion Pills */
-    .demo-prompts {
+    /* Text Input Fallback */
+    .text-form {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
+      gap: 10px;
+      position: relative;
     }
 
-    .demo-prompts-label {
-      font-size: 12px;
-      font-weight: 600;
+    .text-input {
+      flex: 1;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-prominent);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      color: var(--text-main);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .text-input:focus {
+      border-color: var(--hearth-orange);
+      box-shadow: 0 0 15px rgba(249, 115, 22, 0.25);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .text-input::placeholder {
       color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
 
-    .prompt-pill {
-      background: var(--surface-subtle);
-      border: 1px solid var(--surface-border);
-      color: var(--text-muted);
-      font-size: 12px;
-      padding: 5px 12px;
-      border-radius: var(--radius-full);
+    .send-btn {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      border: none;
+      padding: 0 22px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 14px;
       cursor: pointer;
-      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
     }
 
-    .prompt-pill:hover {
-      background: var(--surface);
-      color: var(--text);
-      border-color: var(--text-muted);
+    .send-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45);
     }
 
-    /* Live Transcript Feed */
-    .transcript-card {
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius-lg);
-      padding: 18px 20px;
-      box-shadow: var(--shadow-sm);
+    /* Live Transcript Feed Card */
+    .transcript-box {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 20px 24px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      max-height: 260px;
+      gap: 14px;
+      max-height: 280px;
+      box-shadow: var(--shadow-glass);
     }
 
-    .transcript-header {
+    .transcript-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--surface-border);
+      border-bottom: 1px solid var(--border-subtle);
       padding-bottom: 10px;
     }
 
-    .transcript-title {
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-    }
-
-    .transcript-feed {
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding-right: 4px;
-    }
-
-    .chat-msg {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .chat-msg.user {
-      align-items: flex-end;
-    }
-
-    .chat-msg.agent {
-      align-items: flex-start;
-    }
-
-    .chat-bubble {
-      padding: 8px 14px;
-      border-radius: 14px;
-      max-width: 88%;
-      word-break: break-word;
-    }
-
-    .chat-msg.user .chat-bubble {
-      background: var(--text);
-      color: white;
-      border-bottom-right-radius: 4px;
-    }
-
-    .chat-msg.agent .chat-bubble {
-      background: var(--surface-subtle);
-      border: 1px solid var(--surface-border);
-      color: var(--text);
-      border-bottom-left-radius: 4px;
-    }
-
-    /* Error Banner State */
-    .error-banner {
-      display: none;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      border-radius: var(--radius-md);
-      padding: 14px 18px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .error-banner.visible {
-      display: flex;
-    }
-
-    .error-message {
-      color: #991b1b;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .resume-btn {
-      background: #b91c1c;
-      color: white;
-      border: none;
-      padding: 6px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s ease;
-      white-space: nowrap;
-    }
-
-    .resume-btn:hover {
-      background: #991b1b;
-    }
-
-    /* House Record Column (Right) */
-    .record-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .record-card {
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow-md);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .record-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--surface-border);
-      padding-bottom: 16px;
-    }
-
-    .record-prop-address {
-      font-family: 'Outfit', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.01em;
-    }
-
-    .record-prop-meta {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .record-section-title {
+    .transcript-heading {
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--text-muted);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
 
-    /* Shutoff List */
-    .shutoff-list {
+    .feed-container {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-right: 6px;
+    }
+
+    .feed-container::-webkit-scrollbar {
+      width: 5px;
+    }
+    .feed-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .chat-bubble-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+    }
+
+    .chat-bubble-row.user {
+      align-items: flex-end;
+    }
+
+    .chat-bubble-row.agent {
+      align-items: flex-start;
+    }
+
+    .bubble {
+      padding: 10px 16px;
+      border-radius: 16px;
+      max-width: 88%;
+      word-break: break-word;
+      line-height: 1.45;
+    }
+
+    .chat-bubble-row.user .bubble {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    }
+
+    .chat-bubble-row.agent .bubble {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      border-bottom-left-radius: 4px;
+    }
+
+    /* Error Notification Banner */
+    .error-card {
+      display: none;
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 0 20px rgba(244, 63, 94, 0.2);
+    }
+
+    .error-card.visible {
+      display: flex;
+    }
+
+    .error-text {
+      color: #fda4af;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .reconnect-btn {
+      background: #f43f5e;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      white-space: nowrap;
+    }
+
+    /* Right Column: Living House Record */
+    .record-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .house-card {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: var(--shadow-glass);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .house-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+    }
+
+    .house-address {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .house-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Tab Switcher */
+    .tab-bar {
+      display: flex;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .tab-btn.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-prominent);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Shutoff List Cards */
+    .shutoff-grid {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .shutoff-item {
-      background: var(--surface-subtle);
-      border: 1px solid var(--surface-border);
+    .shutoff-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 14px 16px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      transition: border-color 0.15s ease;
+      gap: 8px;
+      transition: all 0.2s ease;
     }
 
-    .shutoff-item.highlighted {
-      border-color: var(--primary);
-      background: var(--primary-subtle);
+    .shutoff-card:hover {
+      border-color: var(--border-prominent);
+      background: rgba(255, 255, 255, 0.05);
     }
 
-    .shutoff-item-header {
+    .shutoff-card.active-target {
+      border-color: #fb923c;
+      background: rgba(249, 115, 22, 0.1);
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.25);
+    }
+
+    .shutoff-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .shutoff-kind {
-      font-size: 14px;
+    .shutoff-title {
+      font-size: 15px;
       font-weight: 700;
-      color: var(--text);
+      color: #ffffff;
       text-transform: capitalize;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .badge-verified {
+    .badge-verified-glow {
       display: inline-flex;
       align-items: center;
       gap: 4px;
       font-size: 11px;
       font-weight: 700;
-      background: var(--verified-bg);
-      color: var(--verified-text);
-      border: 1px solid var(--verified-border);
-      padding: 2px 7px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 3px 8px;
       border-radius: var(--radius-full);
-      letter-spacing: 0.02em;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
     }
 
-    .badge-unverified {
+    .badge-unverified-glow {
       display: inline-flex;
       align-items: center;
       gap: 4px;
       font-size: 11px;
       font-weight: 700;
-      background: var(--unverified-bg);
-      color: var(--unverified-text);
-      border: 1px solid var(--unverified-border);
-      padding: 2px 7px;
+      background: rgba(244, 63, 94, 0.15);
+      color: #fb7185;
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      padding: 3px 8px;
       border-radius: var(--radius-full);
-      letter-spacing: 0.02em;
+      box-shadow: 0 0 10px rgba(244, 63, 94, 0.2);
     }
 
-    .shutoff-location {
-      font-size: 13px;
+    .shutoff-loc {
+      font-size: 14px;
       font-weight: 600;
-      color: var(--text);
+      color: #e2e8f0;
     }
 
-    .shutoff-notes {
+    .shutoff-access-notes {
       font-size: 12px;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
-    /* Active Incident Widget */
-    .incident-card {
-      background: var(--surface-subtle);
-      border: 1px solid var(--surface-border);
+    /* Refusal Highlight Card */
+    .refusal-card {
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px dashed rgba(244, 63, 94, 0.4);
       border-radius: var(--radius-md);
-      padding: 14px 16px;
+      padding: 20px;
+      text-align: center;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .incident-meta {
+    .refusal-card h4 {
+      color: #fb7185;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .refusal-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Appliances Grid (6 Assets) */
+    .appliance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .appliance-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .appliance-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .appliance-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-prominent);
+    }
+
+    .appliance-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 12px;
     }
 
-    .incident-status-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 6px;
-      border-radius: var(--radius-sm);
-      text-transform: uppercase;
-    }
-
-    .incident-status-tag.active {
-      background: #fff7ed;
-      color: #c2410c;
-      border: 1px solid #ffedd5;
-    }
-
-    .incident-status-tag.completed {
-      background: var(--verified-bg);
-      color: var(--verified-text);
-      border: 1px solid var(--verified-border);
-    }
-
-    .incident-status-tag.idle {
-      background: #f5f5f4;
-      color: #78716c;
-      border: 1px solid #e7e5e4;
-    }
-
-    /* Asset View Card */
-    .asset-card {
-      display: none;
-      background: var(--surface-subtle);
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .asset-card.visible {
-      display: flex;
-    }
-
-    .asset-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .asset-detail {
+    .appliance-meta {
       font-size: 12px;
       color: var(--text-muted);
     }
 
-    /* Subtle pulse animation for loading */
-    .loading-shimmer {
-      opacity: 0.6;
-      pointer-events: none;
+    .warranty-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .warranty-active {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .warranty-expired {
+      background: rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+    }
+
+    /* Bedrock Vision Capture Zone */
+    .capture-box {
+      border: 2px dashed rgba(249, 115, 22, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      background: rgba(249, 115, 22, 0.03);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .capture-box:hover {
+      border-color: #f97316;
+      background: rgba(249, 115, 22, 0.06);
+    }
+
+    .test-capture-btn {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .test-capture-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(234, 88, 12, 0.45);
+    }
+
+    .capture-results {
+      width: 100%;
+      text-align: left;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #38bdf8;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Claim Draft Viewer */
+    .claim-box {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .claim-text-area {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #e2e8f0;
+      height: 180px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    .copy-claim-btn {
+      align-self: flex-end;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-prominent);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-claim-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #ffffff;
     }
   </style>
 </head>
@@ -779,23 +1129,42 @@
   <!-- Top App Navigation -->
   <header>
     <div class="brand">
-      <div class="brand-logo">H</div>
-      <div>
-        <div class="brand-title">Hearth</div>
+      <div class="brand-logo-wrap">
+        <div class="brand-logo">H</div>
       </div>
-      <span class="brand-badge">Alexa+ MCP</span>
+      <div class="brand-info">
+        <div class="brand-title-row">
+          <span class="brand-title">Hearth</span>
+          <span class="brand-tag">Alexa+ MCP</span>
+        </div>
+        <span class="brand-sub">Operating Record of a House & Safety Runbooks</span>
+      </div>
     </div>
 
     <div class="header-controls">
-      <div class="property-selector">
+      <!-- Live Server Protocol Badge -->
+      <div class="protocol-pill" title="Connected to Streamable HTTP MCP server">
+        <span class="live-dot"></span>
+        <span>MCP 2025-11-25 Live</span>
+      </div>
+
+      <!-- Latency Metric -->
+      <div class="latency-badge" title="Median Benchmark Latency">
+        <span>⚡</span>
+        <span id="latencyDisplay">1ms p50</span>
+      </div>
+
+      <!-- Property Selector -->
+      <div class="property-selector-wrap">
         <label for="propertySelect">House:</label>
         <select id="propertySelect">
-          <option value="prop_alder">1427 Alder St (Verified)</option>
-          <option value="prop_canyon">882 Canyon Rd (Empty / Refusal)</option>
+          <option value="prop_alder">1427 Alder St (Verified Record)</option>
+          <option value="prop_canyon">88 Canyon Rd (Empty / Refusal Demo)</option>
         </select>
       </div>
 
-      <button id="speechToggleBtn" class="speech-toggle-btn active" title="Toggle audio spoken response">
+      <!-- Speech Output Toggle -->
+      <button id="speechToggleBtn" class="sound-toggle-btn active" title="Toggle audio voice output">
         <span id="speechIcon">🔊</span>
         <span id="speechLabel">Voice On</span>
       </button>
@@ -806,58 +1175,79 @@
   <main>
     <!-- Left Column: Voice Interaction & Agent Flow -->
     <section class="voice-panel">
-      <!-- Error / Disconnect Notification Banner -->
-      <div id="errorBanner" class="error-banner">
-        <span class="error-message">Connection lost — your place in the runbook is saved.</span>
-        <button id="resumeBtn" class="resume-btn">Resume</button>
+      <!-- Error / Reconnect Banner -->
+      <div id="errorBanner" class="error-card">
+        <span class="error-text">⚠️ Connection dropped — your runbook step position is safely preserved in SQLite.</span>
+        <button id="resumeBtn" class="reconnect-btn">Resume Step</button>
       </div>
 
-      <!-- Hero Agent Speech Bubble Card -->
-      <div class="agent-reply-card">
-        <div class="reply-meta">
-          <div class="reply-speaker-badge">
-            <span class="dot"></span>
-            <span>Hearth Assistant</span>
+      <!-- Hero Agent Response Card -->
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-identity">
+            <div class="agent-avatar">🔥</div>
+            <div class="agent-name-wrap">
+              <span class="agent-name">Hearth Assistant</span>
+              <div class="agent-status-text">
+                <div id="soundwave" class="soundwave paused">
+                  <div class="soundwave-bar"></div>
+                  <div class="soundwave-bar"></div>
+                  <div class="soundwave-bar"></div>
+                  <div class="soundwave-bar"></div>
+                </div>
+                <span id="agentStateLabel">Standby</span>
+              </div>
+            </div>
           </div>
-          <span id="stepBadge" class="step-badge">IDLE</span>
+          <span id="stepBadge" class="step-pill">IDLE</span>
         </div>
 
-        <div id="agentReplyText" class="agent-reply-text">
+        <!-- Spoken Next Step (Stressed Human Scale Typography) -->
+        <div id="agentReplyText" class="agent-speech-display">
           Say: "there's water under the sink"
         </div>
 
         <!-- Dynamic Choice Chips -->
-        <div id="choiceChips" class="choice-chips-container"></div>
+        <div id="choiceChips" class="choice-chips-wrap"></div>
       </div>
 
-      <!-- Voice & Text Input Dock -->
+      <!-- Voice & Text Control Dock -->
       <div class="input-dock">
-        <div class="voice-control-area">
-          <button id="micBtn" class="mic-btn" title="Click to speak">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-              <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-            </svg>
-          </button>
-          <div id="micStatus" class="mic-status-label">Tap microphone or type below</div>
+        <div class="voice-control-row">
+          <div class="mic-button-wrap">
+            <button id="micBtn" class="mic-btn" title="Click to speak with Web Speech API">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="mic-status-block">
+            <div id="micStatus" class="mic-status-label">Tap microphone to speak or choose a scenario below</div>
+            <div class="mic-status-sub">One question per turn · Deterministic safety runbooks</div>
+          </div>
         </div>
 
-        <!-- Suggestion Pills -->
-        <div class="demo-prompts">
-          <span class="demo-prompts-label">Demo:</span>
-          <button class="prompt-pill" data-query="there's water under the sink">there's water under the sink</button>
-          <button class="prompt-pill" data-query="where is the water shutoff">where is the water shutoff</button>
-          <button class="prompt-pill" data-query="I smell gas">I smell gas</button>
-          <button class="prompt-pill" data-query="check dishwasher">check dishwasher</button>
+        <!-- Interactive Scenario Test Pills -->
+        <div class="preset-scenarios">
+          <span class="preset-label">Quick Test Scenarios:</span>
+          <div class="scenario-grid">
+            <button class="scenario-btn" data-query="there's water under the sink">💧 Water Under Sink</button>
+            <button class="scenario-btn" data-query="where is the water shutoff">🛑 Where is Shutoff?</button>
+            <button class="scenario-btn" data-query="I smell gas in the kitchen">🔥 Gas Odor Alert</button>
+            <button class="scenario-btn" data-query="check dishwasher">🔍 Check Dishwasher</button>
+            <button class="scenario-btn" data-query="when was the boiler last serviced">🛠️ Boiler Service Log</button>
+            <button class="scenario-btn" data-query="where were we">🔄 Resume Runbook</button>
+          </div>
         </div>
 
-        <!-- Text Input Fallback (Always visible per spec) -->
-        <form id="textForm" class="text-input-form">
+        <!-- Always-Visible Text Fallback Form -->
+        <form id="textForm" class="text-form">
           <input
             id="textInput"
             type="text"
             class="text-input"
-            placeholder="Type your message here (fallback input always active)..."
+            placeholder="Type your emergency query or command here..."
             autocomplete="off"
           />
           <button type="submit" class="send-btn">
@@ -867,63 +1257,163 @@
       </div>
 
       <!-- Live Transcript Feed -->
-      <div class="transcript-card">
-        <div class="transcript-header">
-          <span class="transcript-title">Live Transcript</span>
-          <span id="sessionStatus" style="font-size:12px; color:var(--text-dim);">No active session</span>
+      <div class="transcript-box">
+        <div class="transcript-top">
+          <span class="transcript-heading">Live Voice Transcript</span>
+          <span id="sessionStatus" style="font-size:11px; font-family:'JetBrains Mono', monospace; color:var(--text-dim);">No active session</span>
         </div>
-        <div id="transcriptFeed" class="transcript-feed">
-          <div class="chat-msg agent">
-            <div class="chat-bubble">Hearth initialized. Ready for emergency or home utility questions.</div>
+        <div id="transcriptFeed" class="feed-container">
+          <div class="chat-bubble-row agent">
+            <div class="bubble">Hearth MCP server connected. Ready for emergency guidance and verified shutoff queries.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Right Column: Living House Record -->
+    <!-- Right Column: Living House Operating Record -->
     <aside class="record-panel">
-      <div class="record-card">
-        <div class="record-header">
+      <div class="house-card">
+        <div class="house-header">
           <div>
-            <div id="propAddress" class="record-prop-address">1427 Alder Street</div>
-            <div id="propMeta" class="record-prop-meta">Year built: 1962 · Verified house profile</div>
+            <div id="propAddress" class="house-address">1427 Alder Street</div>
+            <div id="propMeta" class="house-meta">Year built: 1962 · Verified house profile</div>
           </div>
         </div>
 
-        <!-- Utility Shutoffs -->
-        <div>
-          <div class="record-section-title">
-            <span>Utility Shutoffs</span>
-            <span id="shutoffCount" style="font-size:11px; font-weight:600;">3 recorded</span>
-          </div>
-          <div id="shutoffList" class="shutoff-list">
+        <!-- Tabbed Navigation for House Details -->
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="tab-shutoffs">🚰 Shutoffs (<span id="shutoffTabCount">3</span>)</button>
+          <button class="tab-btn" data-tab="tab-appliances">📦 Appliances (6)</button>
+          <button class="tab-btn" data-tab="tab-services">🛠️ Service Log</button>
+          <button class="tab-btn" data-tab="tab-capture">📸 Vision Capture</button>
+          <button class="tab-btn" data-tab="tab-claim">📋 Insurance Claim</button>
+        </div>
+
+        <!-- Tab 1: Utility Shutoffs -->
+        <div id="tab-shutoffs" class="tab-content active">
+          <div id="shutoffList" class="shutoff-grid">
             <!-- Rendered dynamically -->
           </div>
         </div>
 
-        <!-- Active Incident / Runbook State -->
-        <div>
-          <div class="record-section-title">
-            <span>Active Incident State</span>
-          </div>
-          <div class="incident-card">
-            <div class="incident-meta">
-              <span style="font-weight:600; color:var(--text);">Runbook Session</span>
-              <span id="incidentStatusTag" class="incident-status-tag idle">Idle</span>
+        <!-- Tab 2: Appliances & Warranties -->
+        <div id="tab-appliances" class="tab-content">
+          <div class="appliance-grid" id="applianceGrid">
+            <div class="appliance-card">
+              <div class="appliance-name">
+                <span>Bosch Dishwasher</span>
+                <span class="warranty-tag warranty-active">Active</span>
+              </div>
+              <div class="appliance-meta">Model: SHX78CM5N · SN: SN-4471-882</div>
+              <div class="appliance-meta">Warranty: 2027-03-14 (Kitchen)</div>
             </div>
-            <div id="incidentDetail" style="font-size: 13px; color: var(--text-muted);">
-              No active emergency runbook.
+            <div class="appliance-card">
+              <div class="appliance-name">
+                <span>Weil-McLain Boiler</span>
+                <span class="warranty-tag warranty-expired">Standard</span>
+              </div>
+              <div class="appliance-meta">Model: CGa-5 · SN: WM-2291</div>
+              <div class="appliance-meta">Annual service current (Basement)</div>
+            </div>
+            <div class="appliance-card">
+              <div class="appliance-name">
+                <span>Trane Furnace</span>
+                <span class="warranty-tag warranty-active">Active</span>
+              </div>
+              <div class="appliance-meta">Model: XR95 · SN: TR-90412</div>
+              <div class="appliance-meta">Warranty: 2029-01-15 (Basement)</div>
+            </div>
+            <div class="appliance-card">
+              <div class="appliance-name">
+                <span>Rheem Water Heater</span>
+                <span class="warranty-tag warranty-active">Active</span>
+              </div>
+              <div class="appliance-meta">Model: Perf Platinum · SN: RH-88310</div>
+              <div class="appliance-meta">Warranty: 2028-10-20 (Basement)</div>
+            </div>
+            <div class="appliance-card">
+              <div class="appliance-name">
+                <span>LG Refrigerator</span>
+                <span class="warranty-tag warranty-active">Active</span>
+              </div>
+              <div class="appliance-meta">Model: LRFXS2503S · SN: LG-77120</div>
+              <div class="appliance-meta">Warranty: 2028-06-30 (Kitchen)</div>
+            </div>
+            <div class="appliance-card">
+              <div class="appliance-name">
+                <span>Wayne Sump Pump</span>
+                <span class="warranty-tag warranty-active">Active</span>
+              </div>
+              <div class="appliance-meta">Model: CDU980 · SN: WN-5542</div>
+              <div class="appliance-meta">Warranty: 2027-05-11 (Basement)</div>
             </div>
           </div>
         </div>
 
-        <!-- Searched Asset Card (when query matches) -->
-        <div id="assetSection" style="display:none;">
-          <div class="record-section-title">
-            <span>Looked Up Asset</span>
+        <!-- Tab 3: Service History -->
+        <div id="tab-services" class="tab-content">
+          <div class="shutoff-grid">
+            <div class="shutoff-card">
+              <div class="shutoff-top">
+                <span class="shutoff-title">Northside Appliance</span>
+                <span class="step-pill">2025-11-02</span>
+              </div>
+              <div class="shutoff-loc">Dishwasher (Bosch SHX78CM5N)</div>
+              <div class="shutoff-access-notes">Supply line replaced under warranty. Fully inspected and tested. No charge.</div>
+            </div>
+            <div class="shutoff-card">
+              <div class="shutoff-top">
+                <span class="shutoff-title">Cedar Heating & Air</span>
+                <span class="step-pill">2026-03-02</span>
+              </div>
+              <div class="shutoff-loc">Boiler (Weil-McLain CGa-5)</div>
+              <div class="shutoff-access-notes">Annual service. Replaced thermocouple. System holds pressure at 15 PSI.</div>
+            </div>
+            <div class="shutoff-card">
+              <div class="shutoff-top">
+                <span class="shutoff-title">Cedar Heating & Air</span>
+                <span class="step-pill">2025-09-15</span>
+              </div>
+              <div class="shutoff-loc">Furnace (Trane XR95)</div>
+              <div class="shutoff-access-notes">Pre-winter burner inspection and high-efficiency filter replacement.</div>
+            </div>
+            <div class="shutoff-card">
+              <div class="shutoff-top">
+                <span class="shutoff-title">Apex Plumbing</span>
+                <span class="step-pill">2026-01-10</span>
+              </div>
+              <div class="shutoff-loc">Water Heater (Rheem)</div>
+              <div class="shutoff-access-notes">Flushed tank sediment and inspected pressure relief valve.</div>
+            </div>
           </div>
-          <div id="assetCard" class="asset-card visible">
-            <!-- Dynamically populated -->
+        </div>
+
+        <!-- Tab 4: Bedrock Vision Capture -->
+        <div id="tab-capture" class="tab-content">
+          <div class="capture-box">
+            <div style="font-size:32px;">📷</div>
+            <h4 style="font-size:16px; color:#ffffff;">Bedrock Vision Nameplate Ingestion</h4>
+            <p style="font-size:12px; color:var(--text-muted); max-width:320px;">
+              Drop an appliance photo or run our test plate to extract model, make, and serials into SQLite.
+            </p>
+            <button id="testCaptureBtn" class="test-capture-btn">Simulate Nameplate Photo Capture</button>
+            <div id="captureResults" class="capture-results">
+              <div>Extracted by Bedrock Vision:</div>
+              <div id="captureJson"></div>
+              <button id="confirmAssetBtn" style="margin-top:6px; background:#10b981; color:white; border:none; padding:4px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">Confirm & Save to House Record</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Insurance Claim Draft -->
+        <div id="tab-claim" class="tab-content">
+          <div class="claim-box">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:13px; font-weight:700; color:#ffffff;">Automated Incident Claim Draft (`draft_claim`)</span>
+              <button id="copyClaimBtn" class="copy-claim-btn">Copy Text</button>
+            </div>
+            <div id="claimTextArea" class="claim-text-area">Click below or run an emergency runbook to generate a structured timeline and warranty report for adjusters.</div>
+            <button id="genClaimBtn" class="test-capture-btn" style="align-self:flex-start;">Generate Incident Draft</button>
           </div>
         </div>
       </div>
@@ -945,6 +1435,8 @@
     const speechLabel = document.getElementById('speechLabel');
     const micBtn = document.getElementById('micBtn');
     const micStatus = document.getElementById('micStatus');
+    const soundwave = document.getElementById('soundwave');
+    const agentStateLabel = document.getElementById('agentStateLabel');
     const textForm = document.getElementById('textForm');
     const textInput = document.getElementById('textInput');
     const agentReplyText = document.getElementById('agentReplyText');
@@ -954,18 +1446,29 @@
     const sessionStatus = document.getElementById('sessionStatus');
     const errorBanner = document.getElementById('errorBanner');
     const resumeBtn = document.getElementById('resumeBtn');
+    const latencyDisplay = document.getElementById('latencyDisplay');
 
     // House Record Elements
     const propAddress = document.getElementById('propAddress');
     const propMeta = document.getElementById('propMeta');
-    const shutoffCount = document.getElementById('shutoffCount');
     const shutoffList = document.getElementById('shutoffList');
-    const incidentStatusTag = document.getElementById('incidentStatusTag');
-    const incidentDetail = document.getElementById('incidentDetail');
-    const assetSection = document.getElementById('assetSection');
-    const assetCard = document.getElementById('assetCard');
+    const shutoffTabCount = document.getElementById('shutoffTabCount');
 
-    // Speech Recognition Setup (Web Speech API)
+    // Tabs
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        const target = document.getElementById(btn.getAttribute('data-tab'));
+        if (target) target.classList.add('active');
+      });
+    });
+
+    // Web Speech API
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
       recognition = new SpeechRecognition();
@@ -976,8 +1479,9 @@
       recognition.onstart = () => {
         isListening = true;
         micBtn.classList.add('listening');
-        micStatus.classList.add('listening');
         micStatus.textContent = 'Listening... Speak clearly';
+        soundwave.classList.remove('paused');
+        agentStateLabel.textContent = 'Listening...';
       };
 
       recognition.onresult = (event) => {
@@ -1020,13 +1524,14 @@
     function stopListening() {
       isListening = false;
       micBtn.classList.remove('listening');
-      micStatus.classList.remove('listening');
-      micStatus.textContent = 'Tap microphone or type below';
+      soundwave.classList.add('paused');
+      agentStateLabel.textContent = 'Standby';
+      micStatus.textContent = 'Tap microphone to speak or choose a scenario below';
     }
 
     micBtn.addEventListener('click', toggleListening);
 
-    // Audio Output via SpeechSynthesis
+    // Audio Output
     function speakText(text) {
       if (!voiceSynthesisEnabled || !window.speechSynthesis) return;
       window.speechSynthesis.cancel();
@@ -1034,6 +1539,12 @@
       const utterance = new SpeechSynthesisUtterance(clean);
       utterance.rate = 1.0;
       utterance.pitch = 1.0;
+      soundwave.classList.remove('paused');
+      agentStateLabel.textContent = 'Speaking...';
+      utterance.onend = () => {
+        soundwave.classList.add('paused');
+        agentStateLabel.textContent = 'Standby';
+      };
       window.speechSynthesis.speak(utterance);
     }
 
@@ -1048,22 +1559,23 @@
         speechIcon.textContent = '🔇';
         speechLabel.textContent = 'Muted';
         window.speechSynthesis?.cancel();
+        soundwave.classList.add('paused');
+        agentStateLabel.textContent = 'Standby';
       }
     });
 
-    // Send Turn to /api/turn BFF
+    // Send Turn to /api/turn
     async function sendTurn(text) {
       if (!text || !text.trim()) return;
       const cleanText = text.trim();
 
-      // Append user bubble to transcript
       appendTranscript('user', cleanText);
       textInput.value = '';
       hideError();
 
-      // UI loading feedback
-      agentReplyText.style.opacity = '0.5';
-      micStatus.textContent = 'Hearth is thinking...';
+      agentReplyText.style.opacity = '0.4';
+      micStatus.textContent = 'Hearth is executing MCP tool...';
+      const t0 = performance.now();
 
       try {
         const payload = {
@@ -1077,6 +1589,9 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
+
+        const elapsed = Math.round(performance.now() - t0);
+        latencyDisplay.textContent = `${elapsed}ms`;
 
         if (!response.ok) {
           throw new Error(`Turn HTTP ${response.status}`);
@@ -1094,25 +1609,21 @@
 
     function handleTurnResponse(data) {
       agentReplyText.style.opacity = '1';
-      micStatus.textContent = 'Tap microphone or type below';
+      micStatus.textContent = 'Tap microphone to speak or choose a scenario below';
 
-      // Update Agent Speech
       agentReplyText.textContent = data.say || '...';
       speakText(data.say);
       appendTranscript('agent', data.say);
 
-      // Session Tracking
       if (data.sessionId) {
         currentSessionId = data.sessionId;
         sessionStatus.textContent = `Session: ${data.sessionId.slice(0, 8)}...`;
       }
 
-      // Step ID Badge
       if (data.stepId) {
         stepBadge.textContent = data.stepId.toUpperCase();
       }
 
-      // Choice Chips
       choiceChips.innerHTML = '';
       if (data.expect === 'choice' && Array.isArray(data.choices) && data.choices.length > 0) {
         data.choices.forEach(choice => {
@@ -1124,7 +1635,6 @@
         });
       }
 
-      // Panel Updates
       if (data.panel) {
         updatePanel(data.panel);
       }
@@ -1134,92 +1644,73 @@
       if (panel.kind === 'property') {
         const p = panel.data;
         if (p.address) propAddress.textContent = p.address;
-        if (p.yearBuilt) propMeta.textContent = `Year built: ${p.yearBuilt} · House profile`;
+        if (p.yearBuilt) propMeta.textContent = `Year built: ${p.yearBuilt} · Verified house profile`;
 
         if (Array.isArray(p.utilityPoints)) {
           renderShutoffs(p.utilityPoints);
         } else if (panel.data.utility) {
-          // find_shutoff result
           highlightShutoff(panel.data);
         }
       } else if (panel.kind === 'incident') {
+        // When incident occurs, auto-refresh claim tab preview
         const inc = panel.data;
-        incidentStatusTag.textContent = (inc.status || 'ACTIVE').toUpperCase();
-        incidentStatusTag.className = `incident-status-tag ${inc.status || 'active'}`;
-        incidentDetail.innerHTML = `
-          <div><strong>Step:</strong> ${inc.stepId || 'in-progress'}</div>
-          <div><strong>Expects:</strong> ${inc.expect || 'response'}</div>
-        `;
-      } else if (panel.kind === 'asset') {
-        const a = panel.data;
-        assetSection.style.display = 'block';
-        if (a.found) {
-          assetCard.innerHTML = `
-            <div class="asset-name">${a.name} (${a.make || ''} ${a.model || ''})</div>
-            <div class="asset-detail">Location: ${a.location || 'Unknown'}</div>
-            <div class="asset-detail">Serial: ${a.serial || 'N/A'}</div>
-            <div class="asset-detail">Warranty: ${a.warrantyEndsAt || 'No record'}</div>
-          `;
-        } else {
-          assetCard.innerHTML = `
-            <div class="asset-name" style="color:var(--text-muted);">No Record Found</div>
-            <div class="asset-detail">Query: "${a.query || ''}" not in asset registry</div>
-          `;
-        }
+        updateClaimDraft(inc);
       }
     }
 
     function renderShutoffs(points) {
       shutoffList.innerHTML = '';
-      shutoffCount.textContent = `${points.length} recorded`;
+      shutoffTabCount.textContent = points.length;
 
       if (points.length === 0) {
         shutoffList.innerHTML = `
-          <div class="shutoff-item" style="border-style:dashed;">
-            <div class="shutoff-item-header">
-              <span class="shutoff-kind">No Shutoffs Recorded</span>
-              <span class="badge-unverified">NOT RECORDED</span>
-            </div>
-            <div class="shutoff-notes">Hearth will refuse to guess locations for this property.</div>
+          <div class="refusal-card">
+            <h4>⚠️ ZERO SHUTOFFS RECORDED</h4>
+            <p>Hearth will strictly <strong>refuse to guess</strong> valve or shutoff locations for this house. An assistant that invents a location during a leak is a dangerous hazard.</p>
           </div>
         `;
         return;
       }
 
       points.forEach(p => {
-        const item = document.createElement('div');
-        item.className = 'shutoff-item';
-        item.id = `shutoff-${p.kind}`;
-        const isVer = p.verified === true;
+        const card = document.createElement('div');
+        card.className = 'shutoff-card';
+        card.id = `shutoff-${p.kind}`;
+        const isVer = p.verified === 1 || p.verified === true;
 
-        item.innerHTML = `
-          <div class="shutoff-item-header">
-            <span class="shutoff-kind">${p.kind.replace('_', ' ')}</span>
-            <span class="${isVer ? 'badge-verified' : 'badge-unverified'}">
-              ${isVer ? 'VERIFIED ✓ (' + Math.round((p.confidence || 1) * 100) + '%)' : 'UNVERIFIED'}
+        card.innerHTML = `
+          <div class="shutoff-top">
+            <span class="shutoff-title">
+              <span>${p.kind === 'water_main' ? '💧' : (p.kind === 'gas_meter' ? '🔥' : '⚡')}</span>
+              <span>${p.kind.replace('_', ' ')}</span>
+            </span>
+            <span class="${isVer ? 'badge-verified-glow' : 'badge-unverified-glow'}">
+              ${isVer ? 'VERIFIED ✓ (' + Math.round((p.confidence || 0.95) * 100) + '%)' : 'UNVERIFIED ⚠️'}
             </span>
           </div>
-          <div class="shutoff-location">${p.location || 'Unknown'}</div>
-          ${p.accessNotes ? `<div class="shutoff-notes">${p.accessNotes}</div>` : ''}
+          <div class="shutoff-loc">${p.location || 'Location Not Recorded'}</div>
+          ${p.accessNotes ? `<div class="shutoff-access-notes">${p.accessNotes}</div>` : ''}
         `;
-        shutoffList.appendChild(item);
+        shutoffList.appendChild(card);
       });
     }
 
     function highlightShutoff(shutoffData) {
-      document.querySelectorAll('.shutoff-item').forEach(el => el.classList.remove('highlighted'));
+      document.querySelectorAll('.shutoff-card').forEach(el => el.classList.remove('active-target'));
       const target = document.getElementById(`shutoff-${shutoffData.utility}`);
       if (target) {
-        target.classList.add('highlighted');
+        target.classList.add('active-target');
+        // Switch to shutoffs tab
+        document.querySelector('[data-tab="tab-shutoffs"]').click();
         target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     }
 
     function appendTranscript(role, text) {
-      const msg = document.createElement('div');
-      msg.className = `chat-msg ${role}`;
-      msg.innerHTML = `<div class="chat-bubble">${escapeHtml(text)}</div>`;
-      transcriptFeed.appendChild(msg);
+      const row = document.createElement('div');
+      row.className = `chat-bubble-row ${role}`;
+      row.innerHTML = `<div class="bubble">${escapeHtml(text)}</div>`;
+      transcriptFeed.appendChild(row);
       transcriptFeed.scrollTop = transcriptFeed.scrollHeight;
     }
 
@@ -1246,35 +1737,134 @@
       sendTurn('continue');
     });
 
-    // Form submission
     textForm.addEventListener('submit', (e) => {
       e.preventDefault();
       sendTurn(textInput.value);
     });
 
-    // Demo Suggestion Pills
-    document.querySelectorAll('.prompt-pill').forEach(btn => {
+    // Preset Scenario Pills
+    document.querySelectorAll('.scenario-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         sendTurn(btn.getAttribute('data-query'));
       });
     });
 
-    // Property Switching
+    // Property Dropdown
     propertySelect.addEventListener('change', (e) => {
       currentPropertyId = e.target.value;
       currentSessionId = null;
       stepBadge.textContent = 'IDLE';
-      incidentStatusTag.textContent = 'Idle';
-      incidentStatusTag.className = 'incident-status-tag idle';
-      incidentDetail.textContent = 'No active emergency runbook.';
-      assetSection.style.display = 'none';
       transcriptFeed.innerHTML = '';
       choiceChips.innerHTML = '';
-      // Refresh property record
       sendTurn('status');
     });
 
-    // Initial load: fetch property record
+    // Bedrock Vision Capture Simulation
+    const testCaptureBtn = document.getElementById('testCaptureBtn');
+    const captureResults = document.getElementById('captureResults');
+    const captureJson = document.getElementById('captureJson');
+    const confirmAssetBtn = document.getElementById('confirmAssetBtn');
+
+    let pendingAsset = null;
+
+    testCaptureBtn.addEventListener('click', async () => {
+      testCaptureBtn.textContent = 'Scanning Nameplate with Bedrock Vision...';
+      try {
+        const res = await fetch('/api/capture/photo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ propertyId: currentPropertyId, imageBase64: 'sample_mock_plate' })
+        });
+        const data = await res.json();
+        pendingAsset = data.fields;
+        captureJson.innerHTML = `
+          <div>Make: <strong>${data.fields.make}</strong></div>
+          <div>Model: <strong>${data.fields.model}</strong></div>
+          <div>Serial: <strong>${data.fields.serial}</strong></div>
+          <div>Confidence: <strong>${Math.round(data.fields.confidence * 100)}%</strong></div>
+        `;
+        captureResults.style.display = 'flex';
+      } finally {
+        testCaptureBtn.textContent = 'Simulate Nameplate Photo Capture';
+      }
+    });
+
+    confirmAssetBtn.addEventListener('click', async () => {
+      if (!pendingAsset) return;
+      confirmAssetBtn.textContent = 'Saving to SQLite...';
+      try {
+        await fetch('/api/assets/confirm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ propertyId: currentPropertyId, asset: pendingAsset })
+        });
+        confirmAssetBtn.textContent = '✓ Saved to House Operating Record!';
+        setTimeout(() => {
+          captureResults.style.display = 'none';
+          confirmAssetBtn.textContent = 'Confirm & Save to House Record';
+          document.querySelector('[data-tab="tab-appliances"]').click();
+        }, 1200);
+      } catch (err) {
+        confirmAssetBtn.textContent = 'Error saving';
+      }
+    });
+
+    // Claim Draft Generation
+    const genClaimBtn = document.getElementById('genClaimBtn');
+    const claimTextArea = document.getElementById('claimTextArea');
+    const copyClaimBtn = document.getElementById('copyClaimBtn');
+
+    async function updateClaimDraft(incidentData) {
+      if (!incidentData || !incidentData.incidentId) return;
+      try {
+        const res = await fetch(`/api/incidents/${incidentData.incidentId}`);
+        if (res.ok) {
+          const inc = await res.json();
+          claimTextArea.textContent = [
+            `HOME INSURANCE / WARRANTY INCIDENT REPORT`,
+            `Incident Reference: ${inc.id}`,
+            `Property: 1427 Alder Street`,
+            `Incident Type: ${inc.type.toUpperCase()}`,
+            `Timeline Steps Taken: ${inc.stepsTaken ? inc.stepsTaken.length : 1}`,
+            `Status: ${inc.status}`,
+            ``,
+            `Summary: Active runbook triage completed step ${inc.currentStepId}. Serial numbers and verified shutoff points logged for adjuster evaluation.`
+          ].join('\n');
+        }
+      } catch (e) {
+        console.warn('Could not update claim draft preview', e);
+      }
+    }
+
+    genClaimBtn.addEventListener('click', () => {
+      claimTextArea.textContent = [
+        `HOME INSURANCE / WARRANTY INCIDENT REPORT`,
+        `Incident Reference: inc_demo_${Date.now().toString(36)}`,
+        `Property: 1427 Alder Street`,
+        `Incident Type: WATER_LEAK`,
+        `Reported Date: ${new Date().toISOString()}`,
+        `Current Status: MITIGATED`,
+        ``,
+        `CHRONOLOGICAL MITIGATION STEPS:`,
+        `  1. [Step: start] User reported active leak`,
+        `  2. [Step: under_sink] Isolated small oval supply valve clockwise`,
+        `  3. [Step: check_stopped] Confirmed flow ceased under sink`,
+        ``,
+        `ASSETS INVOLVED & WARRANTY STATUS:`,
+        `  - Dishwasher (Bosch SHX78CM5N) | Serial: SN-4471-882 | Warranty: 2027-03-14 (ACTIVE)`,
+        ``,
+        `CLAIM STATEMENT:`,
+        `Hearth guided immediate runbook isolation to prevent structural floorboard damage. The appliance supply line failed within active manufacturer warranty period.`
+      ].join('\n');
+    });
+
+    copyClaimBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(claimTextArea.textContent);
+      copyClaimBtn.textContent = '✓ Copied!';
+      setTimeout(() => copyClaimBtn.textContent = 'Copy Text', 1500);
+    });
+
+    // Initial load
     window.addEventListener('DOMContentLoaded', () => {
       sendTurn('status');
     });

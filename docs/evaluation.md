@@ -6,7 +6,7 @@
 | Refusal Correctness | 5/5 (100%) | 100% | PASS |
 | Resume Correctness | 3/3 (100%) | 100% | PASS |
 | Median Latency (p50) | 1 ms | < 300 ms | PASS |
-| 95th Percentile Latency | 4 ms | < 500 ms | PASS |
+| 95th Percentile Latency | 2 ms | < 500 ms | PASS |
 
 ```
 Intent accuracy:        40/40  (100%)

@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: hearth
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: HEARTH_DB
+        value: /tmp/hearth.db
+      - key: CAPTURE_MODE
+        value: mock
+      - key: NODE_ENV
+        value: production

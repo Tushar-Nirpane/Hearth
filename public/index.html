@@ -64,10 +64,16 @@
       padding: 0;
     }
 
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      background-color: #070a12;
+      color: var(--text);
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -978,8 +984,13 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      padding-top: 14px;
+      padding-bottom: 10px;
+      scroll-padding-top: 14px;
       padding-right: 4px;
       flex: 1;
+      mask-image: linear-gradient(to bottom, transparent 0px, black 14px, black calc(100% - 14px), transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 14px, black calc(100% - 14px), transparent 100%);
     }
 
     .transcript-stream::-webkit-scrollbar {
@@ -1033,19 +1044,30 @@
       border-bottom-left-radius: 4px;
     }
 
-    /* Right Column: Sticky House Profile & Safety Guarantees */
+    /* Right Column: Sticky House Profile & Safety Guarantees (Tasks 9, 11) */
     .right-column {
       display: flex;
       flex-direction: column;
       gap: var(--space-3);
       height: 100%;
+      position: sticky;
+      top: 0;
       overflow-y: auto;
       padding-right: 4px;
+    }
+
+    .right-column::-webkit-scrollbar {
+      width: 4px;
+    }
+    .right-column::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
     }
 
     @media (max-width: 960px) {
       .right-column {
         height: auto;
+        position: static;
         overflow-y: visible;
       }
     }
@@ -1114,6 +1136,13 @@
     .tab-scroll-btn:hover {
       background: rgba(255, 255, 255, 0.12);
       color: var(--text);
+    }
+
+    .tab-scroll-btn:disabled,
+    .tab-scroll-btn.disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
     .tab-list {
@@ -1312,27 +1341,73 @@
       font-size: 12px;
       font-weight: 600;
       color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .shutoff-instruction-callout {
-      background: rgba(245, 158, 11, 0.08);
-      border-left: 3px solid var(--warning);
-      padding: 6px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      color: #fef3c7;
-      font-weight: 600;
+    .shutoff-location-hint {
       display: flex;
       align-items: flex-start;
       gap: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
       line-height: 1.4;
+      margin-top: 2px;
+    }
+
+    .shutoff-location-hint svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--text-dim);
+    }
+
+    .shutoff-instruction-callout {
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
+    .shutoff-instruction-callout.operating-instruction {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.22);
+      color: #fde68a;
+    }
+
+    .shutoff-instruction-callout.critical-instruction {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fecdd3;
+    }
+
+    .shutoff-instruction-callout .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .shutoff-instruction-callout.operating-instruction .callout-header {
+      color: #f59e0b;
+    }
+
+    .shutoff-instruction-callout.critical-instruction .callout-header {
+      color: #ef4444;
     }
 
     .shutoff-actions {
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-top: 2px;
+      margin-top: 4px;
       padding-top: 6px;
       border-top: 1px solid var(--border);
     }
@@ -1349,7 +1424,8 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      min-height: 30px;
+      min-height: 28px;
+      transition: all 0.15s ease;
     }
 
     .btn-card-action:hover {
@@ -1357,17 +1433,101 @@
       color: var(--text);
     }
 
-    .photo-thumbnail-slot {
+    .btn-ghost-add-photo {
       margin-left: auto;
-      width: 28px;
-      height: 28px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 3px 8px;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px dashed var(--border-prominent);
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 28px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-ghost-add-photo:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border-color: var(--border-prominent);
+    }
+
+    .shutoff-photo-thumb {
+      margin-left: auto;
+      width: 48px;
+      height: 48px;
+      border-radius: 6px;
+      border: 1px solid var(--border-prominent);
+      padding: 0;
+      background: #000;
+      cursor: pointer;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-dim);
+      transition: transform 0.15s ease;
+    }
+
+    .shutoff-photo-thumb:hover {
+      transform: scale(1.05);
+      border-color: var(--accent);
+    }
+
+    .shutoff-photo-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Lightbox Modal Overlay */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-prominent);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #1e293b;
+      border: 1px solid var(--border-prominent);
+      color: #fff;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
     }
 
     /* Appliances Grid */
@@ -1651,8 +1811,8 @@
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
             <span>Read aloud again</span>
           </button>
-          <button id="btnShowOnProfile" class="btn-answer-action">
-            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <button id="btnShowOnProfile" class="btn-answer-action" aria-label="Show on house profile">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
             <span>Show on profile</span>
           </button>
           <button id="btnCopyAnswer" class="btn-answer-action">
@@ -1664,8 +1824,8 @@
           </button>
         </div>
 
-        <!-- Emergency Checklist (Task 5) -->
-        <div class="emergency-checklist" id="emergencyChecklist">
+        <!-- Emergency Checklist (Task 5 & 7: Numbered steps with aria-live updates) -->
+        <div class="emergency-checklist" id="emergencyChecklist" aria-live="assertive">
           <div class="check-step completed" id="stepCheck1">
             <span class="step-number-badge">1</span>
             <span>Identify leak location or gas odor presence</span>
@@ -1693,14 +1853,13 @@
         <div id="choiceChips" class="choice-chips-container" role="group" aria-label="Response options"></div>
       </div>
 
-      <!-- Voice & Command Input Card (Task 8 & 10: 80px mic, space hint, clean bars) -->
+      <!-- Voice & Command Input Card (Task 6 & 8: 80px mic, single hint line) -->
       <div class="command-card">
         <div class="mic-center-area">
           <button id="micBtn" class="mic-btn-main" aria-label="Microphone, tap to speak" title="Click to speak (or press Space)">
             <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
           </button>
-          <div class="mic-status-text" id="micStatus">Tap microphone to speak or choose a scenario below</div>
-          <div class="mic-hint-text">Press Space to talk</div>
+          <div class="mic-status-text" id="micStatus">Tap the mic or press Space</div>
           <div class="mic-soundwave paused" id="micSoundwave" aria-hidden="true">
             <div class="mic-wave-bar"></div>
             <div class="mic-wave-bar"></div>
@@ -1739,7 +1898,7 @@
               <span>Water Under Sink</span>
             </button>
             <button class="scenario-chip" data-query="where is the water shutoff">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#f59e0b" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
               <span>Where is Shutoff?</span>
             </button>
             <button class="scenario-chip" data-query="I smell gas in the kitchen">
@@ -1795,8 +1954,8 @@
           <button class="tab-scroll-btn" id="tabScrollPrev" aria-label="Scroll tabs left">‹</button>
           <div class="tab-list" id="tabList" role="tablist" aria-label="House profile tabs">
             <button class="tab-pill" role="tab" aria-selected="true" id="tabBtnShutoffs" aria-controls="panelShutoffs" data-tab="panelShutoffs">
-              <!-- Lucide Sliders/Gauge neutral icon for multi-utility shutoffs (Task 11) -->
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+              <!-- Lucide Power icon (Task 8) -->
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" x2="12" y1="2" y2="12"/></svg>
               <span>Shutoffs</span>
               <span class="tab-count-badge" id="shutoffTabCount">3</span>
             </button>
@@ -1962,9 +2121,9 @@
           </span>
         </div>
         <div class="activity-row">
-          <span>Active session:</span>
-          <span class="activity-val" id="activitySession" title="Session tracking UUID and elapsed duration">
-            <span class="status-dot-sm" style="background:#38bdf8;"></span>
+          <span>Active runbook:</span>
+          <span class="activity-val" id="activitySession" title="Currently running safety runbook">
+            <span class="status-dot-sm" id="activityRunbookDot" style="background:#38bdf8;"></span>
             <span id="activitySessionText">None</span>
           </span>
         </div>
@@ -1978,6 +2137,14 @@
       </div>
     </aside>
   </main>
+
+  <!-- Lightbox Modal for Shutoff / Appliance Photos (Task 4) -->
+  <div id="imageLightbox" class="lightbox-overlay" style="display:none;" role="dialog" aria-modal="true" aria-label="Photo preview">
+    <div class="lightbox-content">
+      <img id="lightboxImg" src="" alt="Enlarged photo preview" />
+      <button class="lightbox-close-btn" id="lightboxCloseBtn" aria-label="Close photo preview">✕</button>
+    </div>
+  </div>
 
   <!-- Mobile Bottom Dock (Task 18) -->
   <div class="mobile-dock" aria-label="Mobile quick actions">
@@ -2072,30 +2239,85 @@
       stepBullet: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>`,
       volume2: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`,
       volumeX: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>`,
-      copy: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`
+      copy: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`,
+      mapPin: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
+      wrench: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+      camera: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>`,
+      power: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" x2="12" y1="2" y2="12"/></svg>`
     };
+
+    // Lightbox Modal Controls (Task 4)
+    const imageLightbox = document.getElementById('imageLightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
+
+    function openLightbox(src, alt = 'Photo preview') {
+      if (!imageLightbox || !lightboxImg) return;
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      imageLightbox.style.display = 'flex';
+    }
+
+    function closeLightbox() {
+      if (!imageLightbox) return;
+      imageLightbox.style.display = 'none';
+      if (lightboxImg) lightboxImg.src = '';
+    }
+
+    if (lightboxCloseBtn) {
+      lightboxCloseBtn.addEventListener('click', closeLightbox);
+    }
+    if (imageLightbox) {
+      imageLightbox.addEventListener('click', (e) => {
+        if (e.target === imageLightbox) closeLightbox();
+      });
+    }
 
     function getFormattedTime() {
       return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
     initTime.textContent = getFormattedTime();
 
-    // Remember Collapsible Demo Scenarios State (Task 7)
+    // Remember Collapsible Demo Scenarios State (Task 10: Collapsed by default on first load)
     const savedAccordionState = localStorage.getItem('hearth_demo_scenarios_open');
     if (savedAccordionState !== null) {
       demoScenariosDetails.open = savedAccordionState === 'true';
+    } else {
+      demoScenariosDetails.open = false;
     }
     demoScenariosDetails.addEventListener('toggle', () => {
       localStorage.setItem('hearth_demo_scenarios_open', demoScenariosDetails.open);
     });
 
-    // Tab Scrolling Controls (Task 3)
+    // Tab Scrolling Controls (Task 8: Show only on overflow, disable at start/end)
+    function updateTabArrows() {
+      if (!tabList || !tabScrollPrev || !tabScrollNext) return;
+      const hasOverflow = tabList.scrollWidth > tabList.clientWidth + 2;
+      if (!hasOverflow) {
+        tabScrollPrev.style.display = 'none';
+        tabScrollNext.style.display = 'none';
+        return;
+      }
+      tabScrollPrev.style.display = 'flex';
+      tabScrollNext.style.display = 'flex';
+
+      const atStart = tabList.scrollLeft <= 2;
+      const atEnd = tabList.scrollLeft + tabList.clientWidth >= tabList.scrollWidth - 2;
+
+      tabScrollPrev.disabled = atStart;
+      tabScrollNext.disabled = atEnd;
+      tabScrollPrev.classList.toggle('disabled', atStart);
+      tabScrollNext.classList.toggle('disabled', atEnd);
+    }
+
     tabScrollPrev.addEventListener('click', () => {
       tabList.scrollBy({ left: -140, behavior: 'smooth' });
     });
     tabScrollNext.addEventListener('click', () => {
       tabList.scrollBy({ left: 140, behavior: 'smooth' });
     });
+    tabList.addEventListener('scroll', updateTabArrows);
+    window.addEventListener('resize', updateTabArrows);
 
     // Tab Selection & Keyboard Navigation (Tasks 1, 3 & 17)
     tabButtons.forEach((btn, index) => {
@@ -2272,15 +2494,85 @@
     micBtn.addEventListener('click', toggleListening);
     mobileMicBtn.addEventListener('click', toggleListening);
 
-    // Keyboard Space trigger on mic or body
+    // Keyboard Space trigger on mic or body (Task 6: Strict check for input/textarea/select/contenteditable)
     window.addEventListener('keydown', (e) => {
-      if (e.code === 'Space' && document.activeElement !== textInput && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-        e.preventDefault();
-        toggleListening();
+      if (e.code === 'Space' || e.key === ' ') {
+        const active = document.activeElement;
+        const isEditing = active && (
+          active.tagName === 'INPUT' ||
+          active.tagName === 'TEXTAREA' ||
+          active.tagName === 'SELECT' ||
+          active.isContentEditable ||
+          active.getAttribute('contenteditable') === 'true'
+        );
+        if (!isEditing) {
+          e.preventDefault();
+          toggleListening();
+        }
       }
     });
 
-    // Session Timer & Display Consistency (Task 2 & 4)
+    // Central Session State Store (Task 1: Single Source of Truth)
+    const sessionStore = {
+      activeRunbook: null,
+      sessionId: null,
+      stepId: null,
+      messages: [
+        { role: 'agent', text: 'Hearth MCP server ready. Ask about home utilities, appliances, or emergency runbooks.', time: getFormattedTime() }
+      ],
+      lastActivity: getFormattedTime(),
+
+      addMessage(role, text) {
+        const time = getFormattedTime();
+        this.messages.push({ role, text, time });
+        this.lastActivity = time;
+        this.render();
+      },
+
+      clearMessages() {
+        this.messages = [];
+        this.lastActivity = null;
+        this.render();
+      },
+
+      setActiveRunbook(name, sessionId = null, stepId = null) {
+        this.activeRunbook = name;
+        if (sessionId) this.sessionId = sessionId;
+        if (stepId) this.stepId = stepId;
+        this.render();
+      },
+
+      clearActiveRunbook() {
+        this.activeRunbook = null;
+        this.sessionId = null;
+        this.stepId = null;
+        this.render();
+      },
+
+      render() {
+        // 1. Transcript header wording:
+        // Must NEVER say "No active session" when messages exist.
+        // With messages: "Conversation · N messages · last activity hh:mm"
+        // With none: "No messages yet"
+        if (this.messages.length > 0) {
+          const act = this.lastActivity || getFormattedTime();
+          sessionStatus.textContent = `Conversation · ${this.messages.length} messages · last activity ${act}`;
+        } else {
+          sessionStatus.textContent = 'No messages yet';
+        }
+
+        // 2. Telemetry row "Active runbook" (value "None" when idle)
+        if (activitySessionText) {
+          activitySessionText.textContent = this.activeRunbook || 'None';
+        }
+        const actDot = document.getElementById('activityRunbookDot');
+        if (actDot) {
+          actDot.style.background = this.activeRunbook ? '#ef4444' : '#10b981';
+        }
+      }
+    };
+
+    // Session Timer
     function startSessionTimer() {
       if (!sessionStartTime) sessionStartTime = Date.now();
       if (sessionTimerInterval) clearInterval(sessionTimerInterval);
@@ -2289,17 +2581,7 @@
     }
 
     function updateSessionDisplay() {
-      // Transcript header: "No active session" only when transcript is empty / no session active
-      if (!currentSessionId) {
-        sessionStatus.textContent = 'No active session';
-        activitySessionText.textContent = 'None';
-        return;
-      }
-      const elapsedSec = Math.floor((Date.now() - sessionStartTime) / 1000);
-      const mins = String(Math.floor(elapsedSec / 60)).padStart(2, '0');
-      const secs = String(elapsedSec % 60).padStart(2, '0');
-      sessionStatus.textContent = `Active (${currentSessionId.slice(0, 8)}) · ${mins}:${secs}`;
-      activitySessionText.textContent = `${currentSessionId.slice(0, 8)} (${mins}:${secs})`;
+      sessionStore.render();
     }
 
     function stopSessionTimer() {
@@ -2307,20 +2589,63 @@
       sessionTimerInterval = null;
     }
 
-    // Emergency Mode Activation & Deactivation (Task 5)
-    function activateEmergencyMode(emergencyType, initialInstruction) {
+    // Emergency Mode Activation & Deactivation (Task 7)
+    function activateEmergencyMode(emergencyType, initialInstruction, stepId) {
       setAppState('emergency');
-      emergencyActiveInstruction.textContent = initialInstruction || 'Follow immediate verified shutoff instruction';
       emergencyActionBar.style.display = 'flex';
       emergencyChecklist.style.display = 'flex';
 
-      if (emergencyType === 'gas') {
+      const isGas = emergencyType === 'gas';
+      sessionStore.setActiveRunbook(isGas ? 'Gas Leak Runbook' : 'Water Leak Runbook', currentSessionId, stepId);
+
+      if (isGas) {
         document.getElementById('emergencyCallBtn').href = `tel:${GAS_UTILITY_PHONE}`;
         document.getElementById('emergencyCallBtn').querySelector('span').textContent = `Call Gas Utility (${GAS_UTILITY_PHONE})`;
       } else {
         document.getElementById('emergencyCallBtn').href = `tel:${EMERGENCY_PHONE}`;
         document.getElementById('emergencyCallBtn').querySelector('span').textContent = `Call Emergency (${EMERGENCY_PHONE})`;
       }
+
+      updateEmergencyChecklist(emergencyType, initialInstruction, stepId);
+    }
+
+    function updateEmergencyChecklist(emergencyType, instruction, stepId) {
+      const isGas = emergencyType === 'gas';
+      let steps = [];
+
+      if (isGas) {
+        steps = [
+          { num: 1, text: "Get everyone out of the house now. Don't switch anything on or off.", id: 'leave' },
+          { num: 2, text: "Call gas utility (1-800-427-2200) from outside.", id: 'outside' },
+          { num: 3, text: "Stay outside until utility clears the house.", id: 'done' }
+        ];
+      } else {
+        steps = [
+          { num: 1, text: "Isolate local shutoff valve under sink (turn clockwise).", id: 'under_sink' },
+          { num: 2, text: "Verify cessation of flow; isolate water main if flow continues.", id: 'check' },
+          { num: 3, text: "Verify water stopped and document for insurance claim.", id: 'done' }
+        ];
+      }
+
+      let activeIndex = 0;
+      if (stepId) {
+        if (stepId === 'outside' || stepId === 'check' || stepId === 'to_main') activeIndex = 1;
+        else if (stepId === 'done' || stepId === 'check_main') activeIndex = 2;
+      }
+
+      emergencyChecklist.innerHTML = steps.map((s, idx) => {
+        let statusClass = '';
+        if (idx < activeIndex) statusClass = 'completed';
+        else if (idx === activeIndex) statusClass = 'current';
+
+        const stepText = (idx === activeIndex && instruction) ? instruction : s.text;
+        return `
+          <div class="check-step ${statusClass}" id="stepCheck${s.num}">
+            <span class="step-number-badge">${s.num}</span>
+            <span>${escapeHtml(stepText)}</span>
+          </div>
+        `;
+      }).join('');
     }
 
     function deactivateEmergencyMode() {
@@ -2329,11 +2654,13 @@
       currentSessionId = null;
       sessionStartTime = null;
       stopSessionTimer();
+      sessionStore.clearActiveRunbook();
       setAppState('idle');
       answerHeadline.textContent = 'Runbook stopped. Ready for questions.';
       answerStepsList.innerHTML = '';
       answerCallout.style.display = 'none';
       answerActionBar.classList.remove('visible');
+      btnShowOnProfile.style.display = 'none';
       choiceChips.innerHTML = '';
     }
 
@@ -2342,7 +2669,26 @@
       appendTranscript('agent', 'Emergency runbook stopped by user. Place is preserved in SQLite.');
     });
 
-    // Parse Structured Answer (Task 5: Headline, Steps, Callout)
+    // Check if hero answer maps to a profile card (Task 5)
+    function checkAnswerMapsToCard(rawText) {
+      if (!rawText) return false;
+      const lower = rawText.toLowerCase();
+      return (
+        lower.includes('water main') ||
+        lower.includes('water shutoff') ||
+        lower.includes('oval valve') ||
+        lower.includes('gas') ||
+        lower.includes('meter') ||
+        lower.includes('electric') ||
+        lower.includes('panel') ||
+        lower.includes('breaker') ||
+        lower.includes('dishwasher') ||
+        lower.includes('boiler') ||
+        lower.includes('furnace')
+      );
+    }
+
+    // Parse Structured Answer (Tasks 5 & 6)
     function renderStructuredAnswer(rawText) {
       latestRawAnswer = rawText;
       if (!rawText) return;
@@ -2383,6 +2729,13 @@
       }
 
       answerActionBar.classList.add('visible');
+
+      // Task 5: Show "Show on profile" only when answer maps to a card; hide otherwise
+      if (checkAnswerMapsToCard(rawText)) {
+        btnShowOnProfile.style.display = 'inline-flex';
+      } else {
+        btnShowOnProfile.style.display = 'none';
+      }
     }
 
     // Hero Answer Actions (Task 6)
@@ -2407,6 +2760,7 @@
       answerStepsList.innerHTML = '';
       answerCallout.style.display = 'none';
       answerActionBar.classList.remove('visible');
+      btnShowOnProfile.style.display = 'none';
     });
 
     btnShowOnProfile.addEventListener('click', () => {
@@ -2530,25 +2884,33 @@
         `;
         answerCallout.style.display = 'none';
         answerActionBar.classList.add('visible');
+        btnShowOnProfile.style.display = 'none'; // Task 5: Hidden for status answer
 
         appendStatusSummaryCard({
           connection: 'Streamable HTTP (2025-11-25) Connected',
           house: latestPropertyData?.address || '1427 Alder Street',
           shutoffs: `${verifiedCount} verified / ${totalCount} recorded`,
-          runbook: currentSessionId ? `Active (${currentSessionId.slice(0, 8)})` : 'Idle'
+          runbook: sessionStore.activeRunbook || 'None'
         });
 
         setAppState('answered');
         return;
       }
 
-      // Check for Emergency Runbook Trigger (Task 5)
+      // Check for Emergency Runbook Trigger (Task 5 & 7)
       const isGas = /gas/i.test(inputText) || /gas/i.test(data.say);
       const isWaterEmergency = (/water|leak|flood/i.test(inputText) && data.sessionId) || (/water.*main|oval valve|clockwise/i.test(data.say) && data.sessionId);
 
       if (data.sessionId && (isGas || isWaterEmergency)) {
-        activateEmergencyMode(isGas ? 'gas' : 'water', data.say);
+        currentSessionId = data.sessionId;
+        activateEmergencyMode(isGas ? 'gas' : 'water', data.say, data.stepId);
+        startSessionTimer();
       } else {
+        if (data.sessionId) {
+          currentSessionId = data.sessionId;
+          sessionStore.setActiveRunbook('Utility Runbook', data.sessionId, data.stepId);
+          startSessionTimer();
+        }
         setAppState('answered');
       }
 
@@ -2556,12 +2918,6 @@
       renderStructuredAnswer(data.say || '...');
       speakText(data.say);
       appendTranscript('agent', data.say);
-
-      // Session Tracking (Task 2)
-      if (data.sessionId) {
-        currentSessionId = data.sessionId;
-        startSessionTimer();
-      }
 
       if (data.stepId) {
         stepBadge.textContent = data.stepId.toUpperCase();
@@ -2598,7 +2954,38 @@
       }
     }
 
-    // Render Shutoff Cards (P0 - Regression 1 Restored, Tasks 6, 7 & 11)
+    // Task 3: Split description into sentences (presentation only)
+    function parseShutoffDescription(desc, severity) {
+      if (!desc || !desc.trim()) return { locationHint: null, instruction: null, isCritical: false };
+
+      // Remove "Critical:" prefix presentation-only
+      let cleanDesc = desc.trim().replace(/^critical:\s*/i, '');
+      const sentences = cleanDesc.match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g);
+      const trimmed = sentences ? sentences.map(s => s.trim()).filter(Boolean) : [cleanDesc];
+
+      const isExplicitCritical = severity === 'critical' || severity === 'danger' ||
+        /^(warning|danger|never|do not)\b/i.test(cleanDesc);
+
+      if (trimmed.length <= 1) {
+        return {
+          locationHint: null,
+          instruction: trimmed[0],
+          isCritical: isExplicitCritical
+        };
+      }
+
+      const locationHint = trimmed[0];
+      const instruction = trimmed.slice(1).join(' ');
+      const instructionIsCritical = isExplicitCritical || /^(warning|danger|never|do not)\b/i.test(instruction);
+
+      return {
+        locationHint,
+        instruction,
+        isCritical: instructionIsCritical
+      };
+    }
+
+    // Render Shutoff Cards (Tasks 3, 4, 6, 7 & 11)
     function renderShutoffs(points) {
       shutoffList.innerHTML = '';
       shutoffTabCount.textContent = points ? points.length : 0;
@@ -2620,20 +3007,47 @@
         const isVer = p.verified === 1 || p.verified === true;
         const confidencePct = Math.round((p.confidence || 0.95) * 100);
 
-        // Task 6: Confidence tier & provenance
         const tierClass = confidencePct >= 90 ? 'badge-tier-high' : (confidencePct >= 70 ? 'badge-tier-med' : 'badge-tier-low');
         const provenanceText = isVer ? (p.source === 'realtor_handover' ? 'Realtor Handover' : 'Owner Recorded') : 'Unrecorded';
-
-        // Task 11: Semantic icon colors
         const kindIcon = p.kind === 'water_main' ? ICONS.water : (p.kind === 'gas_meter' ? ICONS.gas : ICONS.electric);
 
-        // Task 7: Critical instruction callout
-        const accessCallout = p.accessNotes ? `
-          <div class="shutoff-instruction-callout">
-            ${ICONS.alertTriangle}
-            <span><strong>Critical:</strong> ${escapeHtml(p.accessNotes)}</span>
+        // Task 3: Sentence split into location hint and operating instruction callout
+        const parsed = parseShutoffDescription(p.accessNotes || p.description, p.severity);
+
+        const locationHintHtml = parsed.locationHint ? `
+          <div class="shutoff-location-hint">
+            ${ICONS.mapPin}
+            <span>${escapeHtml(parsed.locationHint)}</span>
           </div>
         ` : '';
+
+        const instructionHtml = parsed.instruction ? `
+          <div class="shutoff-instruction-callout ${parsed.isCritical ? 'critical-instruction' : 'operating-instruction'}">
+            <div class="callout-header">
+              ${parsed.isCritical ? ICONS.alertTriangle : ICONS.wrench}
+              <span>${parsed.isCritical ? 'Critical' : 'How to shut off'}</span>
+            </div>
+            <div class="callout-body">${escapeHtml(parsed.instruction)}</div>
+          </div>
+        ` : '';
+
+        // Task 4: Photo slot without empty dashed squares
+        let photoSlotHtml = '';
+        if (p.photoUrl || p.photo) {
+          const photoSrc = escapeHtml(p.photoUrl || p.photo);
+          photoSlotHtml = `
+            <button class="shutoff-photo-thumb" onclick="openLightbox('${photoSrc}', '${escapeHtml(p.kind)} Photo')" aria-label="View photo in lightbox">
+              <img src="${photoSrc}" alt="${escapeHtml(p.kind)}" width="48" height="48" />
+            </button>
+          `;
+        } else {
+          photoSlotHtml = `
+            <button class="btn-ghost-add-photo" title="Add photo via Vision Capture" aria-label="Add photo for ${p.kind.replace('_', ' ')}">
+              ${ICONS.camera}
+              <span>Add photo</span>
+            </button>
+          `;
+        }
 
         card.innerHTML = `
           <div class="shutoff-top">
@@ -2647,7 +3061,8 @@
             </span>
           </div>
           <div class="shutoff-loc">${p.location || 'Location Not Recorded'}</div>
-          ${accessCallout}
+          ${locationHintHtml}
+          ${instructionHtml}
           <div class="shutoff-actions">
             <button class="btn-card-action btn-read-shutoff" data-text="${p.location}. ${p.accessNotes || ''}">
               ${ICONS.volume2}
@@ -2657,9 +3072,7 @@
               ${ICONS.copy}
               <span>Copy Location</span>
             </button>
-            <div class="photo-thumbnail-slot" title="Vision capture photo slot">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/></svg>
-            </div>
+            ${photoSlotHtml}
           </div>
         `;
         shutoffList.appendChild(card);
@@ -2678,6 +3091,15 @@
           setTimeout(() => btn.innerHTML = orig, 1500);
         });
       });
+
+      // Wire ghost Add photo button to open Vision Capture tab
+      document.querySelectorAll('.btn-ghost-add-photo').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const tabBtn = document.getElementById('tabBtnCapture');
+          if (tabBtn) selectTab(tabBtn);
+        });
+      });
     }
 
     function renderTabError() {
@@ -2689,9 +3111,9 @@
       `;
     }
 
-    // Transcript Feed Management (Task 12)
+    // Transcript Feed Management (Tasks 1 & 2)
     function appendTranscript(role, text) {
-      const isAtBottom = (transcriptFeed.scrollHeight - transcriptFeed.scrollTop - transcriptFeed.clientHeight) <= 50;
+      sessionStore.addMessage(role, text);
 
       const row = document.createElement('div');
       row.className = `msg-row ${role}`;
@@ -2701,12 +3123,12 @@
       `;
       transcriptFeed.appendChild(row);
 
-      if (isAtBottom) {
-        transcriptFeed.scrollTop = transcriptFeed.scrollHeight;
-      }
+      transcriptFeed.scrollTop = transcriptFeed.scrollHeight;
     }
 
     function appendStatusSummaryCard(statusData) {
+      sessionStore.addMessage('agent', `House Record Status: ${statusData.house} · ${statusData.shutoffs}`);
+
       const row = document.createElement('div');
       row.className = 'msg-row agent';
       row.innerHTML = `
@@ -2717,7 +3139,7 @@
             <div>• Transport: <strong>${escapeHtml(statusData.connection)}</strong></div>
             <div>• Property: <strong>${escapeHtml(statusData.house)}</strong></div>
             <div>• Shutoffs: <strong>${escapeHtml(statusData.shutoffs)}</strong></div>
-            <div>• Active Session: <strong>${escapeHtml(statusData.runbook)}</strong></div>
+            <div>• Active Runbook: <strong>${escapeHtml(statusData.runbook)}</strong></div>
           </div>
         </div>
       `;
@@ -2726,15 +3148,15 @@
     }
 
     btnClearTranscript.addEventListener('click', () => {
+      sessionStore.clearMessages();
       transcriptFeed.innerHTML = `
         <div class="msg-row agent">
           <div class="msg-time">${getFormattedTime()}</div>
           <div class="msg-bubble">Transcript cleared. Hearth MCP server ready.</div>
         </div>
       `;
-      if (!currentSessionId) {
-        sessionStatus.textContent = 'No active session';
-      }
+      sessionStore.addMessage('agent', 'Transcript cleared. Hearth MCP server ready.');
+      transcriptFeed.scrollTop = transcriptFeed.scrollHeight;
     });
 
     function escapeHtml(str) {
@@ -2868,6 +3290,11 @@
 
     // Initial Load Sequence
     window.addEventListener('DOMContentLoaded', () => {
+      sessionStore.render();
+      updateTabArrows();
+      if (transcriptFeed) {
+        transcriptFeed.scrollTop = transcriptFeed.scrollHeight;
+      }
       sendTurn('status');
     });
   </script>

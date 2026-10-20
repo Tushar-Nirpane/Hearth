@@ -20,8 +20,10 @@ Track: **Alexa+** · Transport: **Streamable HTTP** · Protocol: **2025-11-25**
 npm install
 npm run seed      # demo property with a full record, plus an empty one for refusal tests
 npm run build
-npm start         # http://localhost:8787/mcp
+npm start         # http://localhost:8787
 ```
+
+Open **http://localhost:8787** in your browser to launch the Hearth voice UI.
 
 In a second terminal:
 
@@ -98,6 +100,7 @@ Voice is the right interface for this because the moment you need it, your hands
 | `src/api/turn.ts` | Turn handler & NLU routing layer |
 | `src/api/capture.ts` | Appliance photo capture & nameplate extraction |
 | `src/seed.ts` | Demo data (`prop_alder` with rich records, `prop_canyon` for safety refusals) |
+| `public/index.html` | Voice-first browser UI (no framework, no build step) |
 
 ---
 
@@ -114,6 +117,82 @@ Voice is the right interface for this because the moment you need it, your hands
 | `draft_claim` | `{ incidentId: string }` | Generates a chronological mitigation log with involved appliance warranties |
 
 Full schemas and contracts: [`SPEC.md`](SPEC.md).
+
+---
+
+## Browser UI
+
+The voice simulation UI at **http://localhost:8787** connects to the same `/mcp` Streamable HTTP endpoint that an Alexa+ agent uses. It is a single `public/index.html` file — no framework, no build step.
+
+### Layout
+
+```
+┌─ Header ─────────────────────────────────────────────────────────────────┐
+│  🏠 Hearth  [ALEXA+ MCP]  ● MCP live  ⚡ Xms  [1427 Alder St ▾]  Voice On │
+└──────────────────────────────────────────────────────────────────────────┘
+┌─ Left column ───────────────────────┬─ Right column ────────────────────┐
+│  Hearth Assistant hero card         │  House Profile — 1427 Alder St    │
+│  (status pill · answer · state)     │  Tabs: Shutoffs · Appliances ·    │
+│                                     │        Service Log · Vision ·     │
+│  Voice input card                   │        Insurance Claim            │
+│  (mic button · quick scenarios)     │                                   │
+│  (text input · Send)                │  Shutoff cards:                   │
+│                                     │  Water Main · Gas Meter ·         │
+│  Live Voice Transcript              │  Electrical Panel                 │
+│  (session · message count · time)   │  each with VERIFIED ✓ (NN%) badge │
+└─────────────────────────────────────┴───────────────────────────────────┘
+```
+
+### Voice & Input
+
+- Web Speech API mic (`webkitSpeechRecognition`) with `speechSynthesis` output
+- Text input fallback always visible — the demo never depends on a microphone permission dialog
+- **Space bar** toggles voice input globally (ignored inside text fields, textareas, selects, and `contenteditable` elements)
+- Single-line mic hint: *"Tap the mic or press Space"*
+- Quick scenario chips with categorised demo prompts (drawer collapsed by default, state persisted in `localStorage`)
+
+### Transcript & Session State
+
+- Live transcript header: `Conversation · N messages · last activity hh:mm` when messages exist; *"No messages yet"* when empty — never *"No active session"*
+- Telemetry row shows **Active runbook** (name or *"None"* when idle) driven by the central `sessionStore`
+- Scroll-aware vertical fade masks on the transcript stream; first-message timestamp never clipped under the header divider
+
+### House Record Panel
+
+- Tabs with count badges and Lucide icons (Shutoffs tab uses `Power` icon)
+- Tab scroll arrows appear only on overflow (< 1100 px) and are disabled at scroll boundaries
+- Right column sticky-scrolls alongside the voice transcript
+- Shutoff cards display:
+  - **Location hint** (MapPin icon) — exact physical placement
+  - **Operating instruction** (Wrench icon, amber tint) — *"How to shut off"*
+  - **Critical callout** (AlertTriangle, red tint) — triggered when text contains *Warning / Danger / Never / Do not*
+  - `VERIFIED ✓ (NN%)` confidence badge
+  - 48 px photo thumbnail with click-to-open lightbox, or a ghost *"Add photo"* button when no photo exists
+
+### Hero Answer Card
+
+- Structured answer display with distinct voice / runbook / info styling
+- *Show on profile* (MapPin icon) visible only when the answer maps to a physical house component
+- *Ask another question* shifts focus directly to the mic / input field
+- Per-tab error boundaries and meaningful empty states
+
+### Emergency Mode
+
+Triggered by the *Gas Odor Alert* and *Water Under Sink* demo scenarios:
+
+- Solid red accent bar across the top of the hero card
+- Status pill changes to bold red **EMERGENCY**
+- Numbered step checklist: current step highlighted, completed steps struck-through
+- `aria-live="assertive"` announcements for screen readers
+- Persistent action button: *Call 911 / Gas Utility* (gas) or *Call Emergency Plumber* (water)
+- *Stop runbook* secondary action cleans up state and returns to idle
+
+### Accessibility & Polish
+
+- WCAG AA contrast on all text and badge combinations
+- `:focus-visible` rings on all interactive elements (buttons, tabs, chips, inputs)
+- Semantic `aria-label` attributes on buttons and landmark regions
+- No background bleed: `html, body { margin: 0; background-color: var(--bg); }`
 
 ---
 
@@ -143,6 +222,7 @@ No LLM sits inside the runbook step machine. Step order is a safety property —
 - Additional runbooks: electrical panel isolation, HVAC freeze prevention, lockout recovery
 - Direct claim export to major homeowner insurance carriers (JSON-LD schema)
 - Local on-device document extraction via WebAssembly
+- Push notifications for warranty expiry and upcoming service dates
 
 ---
 
@@ -155,6 +235,7 @@ npm run smoke   # end-to-end MCP checks (7 tools)
 npm run eval    # 40-utterance intent & safety evaluation
 ```
 
-See [`BUILD-PLAN.md`](BUILD-PLAN.md) for schedule and [`SPEC.md`](SPEC.md) for contracts.
+See [`BUILD-PLAN.md`](BUILD-PLAN.md) for schedule and [`SPEC.md`](SPEC.md) for contracts.  
+See [`docs/friction-log.md`](docs/friction-log.md) for developer experience notes.
 
 MIT licensed.

@@ -2943,6 +2943,34 @@
       }
     }
 
+    // Renders the insurance/warranty draft whenever an incident panel arrives.
+    // Was referenced but never defined after the backend/frontend split, which threw
+    // a ReferenceError on every runbook response and surfaced as "connection lost".
+    function updateClaimDraft(inc) {
+      const el = document.getElementById('claimDraftText');
+      if (!el || !inc) return;
+
+      const steps = Array.isArray(inc.stepsTaken) ? inc.stepsTaken : [];
+      const stepLines = steps.length
+        ? steps.map((s, i) => `  ${i + 1}. [${s.stepId || 'step'}] ${s.answer || 'recorded'}`).join('\n')
+        : '  (no steps recorded yet)';
+
+      el.textContent = [
+        'HOME INSURANCE / WARRANTY INCIDENT REPORT',
+        `Incident Reference: ${inc.id || 'pending'}`,
+        `Property: ${latestPropertyData?.address || '—'}`,
+        `Incident Type: ${String(inc.type || 'water').toUpperCase()}`,
+        `Reported Date: ${inc.startedAt || new Date().toISOString()}`,
+        `Current Status: ${String(inc.status || 'open').toUpperCase()}`,
+        '',
+        'CHRONOLOGICAL MITIGATION STEPS:',
+        stepLines,
+        '',
+        'CLAIM STATEMENT:',
+        'Hearth guided deterministic runbook steps to isolate the hazard. Timeline recorded for adjuster review.'
+      ].join('\n');
+    }
+
     function updatePanel(panel) {
       if (panel.kind === 'property') {
         const p = panel.data;

@@ -4,6 +4,9 @@
 > **Entry point:** [`src/index.ts`](src/index.ts) · **Tool registration:** [`src/server.ts`](src/server.ts)  
 > **Start:** `npm install && npm run seed && npm run build && npm start`
 
+**Live demo:** <https://hearth-production-8551.up.railway.app>  
+**Deploy:** Railway (Dockerfile, `/data` volume) · `railway up -d`
+
 **The operating record of a house, exposed to Alexa+ as a self-hosted MCP server.**
 
 Alexa knows how to turn off a water main. It doesn't know where yours is.

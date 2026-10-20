@@ -1,54 +1,61 @@
-# Product Feedback & Mini-Challenges
+# Product feedback — Hearth (Alexa+ track)
 
-## 1. Alexa+ & Ring Tooling Feedback
+## 1. Which developer tools, APIs, and SDKs did you use, and for what?
 
-### What We Used
-- **Streamable HTTP MCP Transport (Protocol 2025-11-25):** Deployed as a self-hosted Model Context Protocol server exposing house-specific tools (`get_property`, `find_shutoff`, `get_asset`, `start_runbook`, `answer_runbook`, `resume_runbook`, `draft_claim`).
-- **Alexa+ Tool Calling Model:** Designed to bridge voice assistant NLU with deterministic tools, allowing Alexa to call structured APIs rather than hallucinate critical infrastructure locations.
-- **Web Speech API Frontend:** Simulated the Alexa+ multimodal experience in a clean browser UI combining conversational voice input/output with dynamic visual house records.
+**MCP TypeScript SDK (`@modelcontextprotocol/sdk`, 1.32.x)** — the entire server. `McpServer` + `registerTool` for the seven tools, `StreamableHTTPServerTransport` for the HTTP transport, and the SDK's client (`Client` + `StreamableHTTPClientTransport`) for the nine-check smoke suite.
 
-### What Worked Well
-1. **Model Context Protocol (MCP) as an Integration Standard:** Moving away from proprietary custom skill slot models to standardized MCP tools is a game-changer. Developing and testing tools locally with standard TypeScript types and MCP inspectors was significantly faster than testing legacy Alexa Skills Kit (ASK) Lambda endpoints.
-2. **Deterministic Tool Invocations for Safety:** The MCP model enabled us to cleanly enforce a strict boundary: statistics and LLMs explain or transcribe, but state machines and SQLite databases decide.
+**Streamable HTTP, MCP spec `2025-11-25`** — the transport contract exposed at `POST /mcp`, with `mcp-session-id` session handling.
 
-### Onboarding & Developer Friction
-1. **Streamable HTTP Session Lifecycle:** Managing session continuity across disconnects in voice interfaces requires clear session ID propagation. The `@modelcontextprotocol/sdk` could offer more turnkey connection pooling and reconnect handlers for Streamable HTTP endpoints.
-2. **Documentation on Streamable HTTP vs SSE:** Most MCP documentation still highlights stdio or SSE; comprehensive examples of production Streamable HTTP servers for Alexa+ agents would accelerate developer adoption.
+**Zod 4** — input schemas for every tool, so validation and the published JSON Schema come from one definition.
 
-### Would We Build on Alexa+ Again?
-**Yes, absolutely.** For emergency home management, hands-free voice interaction is not just a convenience — it's a safety requirement when a homeowner's hands are full or shutoff valves are located in dark basements.
+**Express 5 + Node 22 + TypeScript** — HTTP host, the `/api/turn` BFF, and static serving.
 
----
+**better-sqlite3** — durable storage for properties, assets, incidents, and runbook position.
 
-## 2. AWS Builder Mini-Challenge
+**Docker + Railway** — deployment, with SQLite on a persistent volume at `/data`.
 
-### Architecture Overview
-Hearth leverages AWS services to automate the ingestion of physical home appliances into digital operating records:
+**Not used, deliberately:** Amazon Bedrock. The nameplate-capture endpoint is scaffolded but returns deterministic mock data; no AWS SDK is wired, so this submission does not enter the AWS Builder mini challenge.
 
-- **Amazon Bedrock (Converse API / Claude 3 Sonnet):**  
-  - **Purpose:** Vision-based multimodal extraction from appliance nameplate photographs (`POST /api/capture/photo`).
-  - **Function:** When a user uploads or photographs a water heater, boiler, or dishwasher nameplate, Bedrock parses make, model number, serial number, and electrical/water specifications into strict JSON without prose.
-  - **Reliability Engineering:** Hearth implements a `CAPTURE_MODE=mock` safety fallback to guarantee demo resilience under network or credential constraints, satisfying zero-failure production criteria.
-- **Amazon S3 (Planned Storage Layer):**  
-  - Secure storage for property photographic records, utility meter inspection shots, and signed insurance claim attachments.
-- **AWS Lambda & Amazon DynamoDB (Deployment Architecture):**  
-  - The deterministic runbook engine (`engine.ts`) and SQLite state machine can be hosted serverless on AWS Lambda with state stored in DynamoDB for global multi-tenant scaling.
+**Not available to us:** Alexa+ Preview. We took the documented simulated-experience path — a browser client that speaks to the same `/mcp` endpoint an Alexa+ agent would, with the simulation source in `frontend/`.
 
----
+## 2. What worked well?
 
-## 3. Open Source Mini-Challenge: `hearth-runbook-engine`
+**`registerTool` is the right shape.** Name, description, Zod schema, handler — one place, and the tool list is immediately usable by any MCP client. A working server was ~30 lines.
 
-To give back to the open source developer community, Hearth's core runbook state machine has been designed for clean extraction into a standalone, zero-dependency NPM package: `hearth-runbook-engine`.
+**The protocol stayed out of the way.** Streamable HTTP is ordinary POST plus an SSE response. It ran behind Express and Railway without a proxy or transport shim, and behaved identically locally and in production.
 
-### Standalone Package Summary
-- **Package Name:** `hearth-runbook-engine`
-- **License:** MIT
-- **Repository:** `https://github.com/hearth-org/hearth-runbook-engine`
-- **Core Files Extracted:**
-  - `src/engine.ts`: Zero-dependency deterministic runbook engine
-  - `src/types.ts`: TypeScript contracts for Steps, Choices, Incidents, and Sessions
-  - `src/runbooks/water.ts`: 9-step water emergency runbook with refusal branches
-  - `src/runbooks/gas.ts`: 3-step gas leak runbook with evacuation-first safety invariant
+**Session semantics were predictable once understood.** `mcp-session-id` arrives on `initialize`, is echoed on subsequent requests, and a missing/expired ID produces a clear 400/404. That made it straightforward to decide what belonged in the transport session and what belonged in the database.
 
-### 200-Word Package Abstract
-> `hearth-runbook-engine` is a lightweight, zero-dependency TypeScript library for executing deterministic, safety-critical guided runbooks. Unlike conversational chatbots that generate unverified instructions, `hearth-runbook-engine` strictly guarantees one instruction per turn, enforces linear branching logic, and persists exact conversational step position across network disconnections. Designed specifically for voice assistants, emergency triage, and field operations, the engine interpolates verified property facts (such as shutoff locations) while deterministically refusing to guess when data is missing. Steps are defined in a clean DSL supporting confirmations, multi-choice branching, and automated incident event logging.
+**The SDK client is a good test harness.** `test/smoke.ts` drives the deployed server exactly as an assistant would — seven tools, a refusal case, a resume-after-reconnect case — and it caught real regressions.
+
+**SQLite on a volume is the correct amount of infrastructure** for a service whose state is a few thousand rows and one runbook position.
+
+## 3. What needs work?
+
+**Stateful server examples are buried.** The spec allows stateful and stateless Streamable HTTP, but the only complete session-map example I found was inside `node_modules/.../examples/server/`. A first-class "stateful server with session management" example in the README would have saved most of a day. The failure modes (unknown session → 404, no session + non-initialize → 400) are easy to get wrong and hard to discover.
+
+**Transport session vs. application session is an easy conflation.** The docs never quite say "`mcp-session-id` is disposable; your durable state is your problem." For a runbook that must resume after a dropped call, that distinction is the whole design.
+
+**Version negotiation examples are thin.** Pinning `2025-11-25` worked, but there is little guidance on what a server should do when a client offers an older revision.
+
+**No local harness that behaves like the assistant.** The simulated path is explicitly allowed, which is good — but there is no reference client that mimics Alexa's tool-selection and turn-taking. You are guessing at latency budget, barge-in behaviour, and how much text is reasonable to speak in one turn. A "fake Alexa" harness would make the simulated path much more predictive.
+
+**MCP Inspector is good at discovery, weak at sequences.** Listing tools and calling one is clean. Replaying a multi-step stateful flow — answer, advance, disconnect, resume — is manual. That is exactly the flow this product lives on.
+
+**Native module builds are still a tax.** `better-sqlite3` needed `python3`, `make`, and `g++` in a slim base image; prebuilt binaries were not reliable across base images. Not an Amazon issue, but it is the kind of thing that eats a hackathon afternoon.
+
+## 4. How was onboarding?
+
+**MCP SDK: fast to hello world, slow to correct.** Zero to a tool that responds: about 30 minutes. Zero to a server whose state survives a dropped connection, with the right session semantics: most of a day, almost all of it spent on transport lifecycle rather than tools.
+
+**Express, TypeScript, SQLite: minutes.** Nothing surprising.
+
+**Alexa+ track: the gate is access, not code.** Without Preview, the documentation explains the MCP contract well but not the *experience* contract — how long an answer should be, when to ask versus act, what the assistant does with a tool error. We designed those by judgement, which is the least defensible way to design them.
+
+## 5. Would you build with these devices and services again?
+
+**MCP: yes, without reservation.** It is the correct abstraction for "an assistant calls your domain's tools," and it keeps the product independent of which assistant is calling. The same server would work for any MCP host.
+
+**Streamable HTTP + SQLite: yes**, for small stateful services. The operational surface is tiny and the resume behaviour is genuinely useful.
+
+**Alexa+: yes, if Preview access or a realistic local harness exists.** The protocol side is ready. What is missing is a tight feedback loop on the interaction design — and for a product whose entire value is how it behaves in a stressful thirty seconds, that loop is the product.

@@ -1,5 +1,8 @@
 import { db } from "./db.js";
 
+/** Idempotent: wipes and rewrites the two demo properties. */
+export function seed(): void {
+
 const DEMO_PROPERTY = "prop_alder";
 const EMPTY_PROPERTY = "prop_canyon";
 
@@ -158,4 +161,12 @@ insertService.run(
   "Flushed tank sediment and inspected pressure relief valve.",
 );
 
-console.log(`Seeded ${DEMO_PROPERTY} (full record) and ${EMPTY_PROPERTY} (empty, for refusal tests).`);
+  console.log(`Seeded ${DEMO_PROPERTY} (full record) and ${EMPTY_PROPERTY} (empty, for refusal tests).`);
+}
+
+import { pathToFileURL } from "node:url";
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  seed();
+}
+

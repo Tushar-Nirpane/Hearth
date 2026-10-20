@@ -9,6 +9,15 @@ import { handlePhotoCapture, handleAssetConfirm, handleGetIncident } from "./api
 
 import path from "node:path";
 
+import { db } from "./db.js";
+import { seed } from "./seed.js";
+
+const propertyCount = (db.prepare("SELECT COUNT(*) AS n FROM properties").get() as { n: number }).n;
+if (propertyCount === 0) {
+  console.log("[boot] empty database — seeding demo data");
+  seed();
+}
+
 const app = express();
 app.use(express.json({ limit: "4mb" }));
 app.use(express.static(path.join(process.cwd(), "public")));

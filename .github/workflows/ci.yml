@@ -1,4 +1,4 @@
-name: CI + Deploy
+name: CI
 
 on:
   push:
@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   test:
-    name: Build & Smoke Test
+    name: Build, smoke and benchmark
     runs-on: ubuntu-latest
     env:
       PORT: 8787
@@ -36,7 +36,7 @@ jobs:
       - name: Seed demo database
         run: npm run seed
 
-      - name: Smoke + eval against a live server
+      - name: Smoke and eval against a live server
         run: |
           npm start > server.log 2>&1 &
           SERVER_PID=$!
@@ -55,19 +55,3 @@ jobs:
         with:
           name: server-log
           path: server.log
-
-  deploy:
-    name: Deploy to Fly.io
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Deploy
-        run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

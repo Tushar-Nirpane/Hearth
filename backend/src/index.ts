@@ -20,7 +20,12 @@ if (propertyCount === 0) {
 
 const app = express();
 app.use(express.json({ limit: "4mb" }));
-app.use(express.static(path.join(process.cwd(), "public")));
+// Serve the frontend from the sibling frontend/ directory.
+// When running from the repo: cwd is backend/, so ../frontend resolves correctly.
+// In Docker: /app/backend/dist/index.js is the entry; frontend is at /app/frontend/.
+const frontendDir = process.env.FRONTEND_DIR
+  ?? path.join(path.dirname(new URL(import.meta.url).pathname), '..', '..', '..', 'frontend');
+app.use(express.static(frontendDir));
 app.post("/api/turn", handleTurn);
 app.post("/api/capture/photo", handlePhotoCapture);
 app.post("/api/assets/confirm", handleAssetConfirm);
@@ -112,5 +117,7 @@ setInterval(() => {
 }, 60_000).unref();
 
 app.listen(PORT, () => {
-  console.log(`Hearth MCP listening on http://localhost:${PORT}/mcp`);
+  console.log(`Hearth MCP server  : http://localhost:${PORT}/mcp`);
+  console.log(`Hearth UI          : http://localhost:${PORT}`);
+  console.log(`Frontend dir       : ${frontendDir}`);
 });

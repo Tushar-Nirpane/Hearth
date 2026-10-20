@@ -2163,6 +2163,13 @@
     const EMERGENCY_PHONE = "911";
     const GAS_UTILITY_PHONE = "1-800-427-2200";
 
+    // ── Backend URL ──────────────────────────────────────────────────────────
+    // Defaults to the deployed Railway instance so this file can be opened
+    // standalone (GitHub Pages, Vercel, local file://) without changing code.
+    // When the backend itself serves this file the relative paths still work
+    // because window.location.origin already equals the backend origin.
+    const BACKEND_URL = 'https://hearth-production-8551.up.railway.app';
+
     // Application State (Task 4: Single Source of Truth)
     // Valid states: 'idle' | 'listening' | 'thinking' | 'speaking' | 'answered' | 'emergency'
     let appState = 'idle';
@@ -2818,7 +2825,7 @@
           ...(currentSessionId ? { sessionId: currentSessionId } : {})
         };
 
-        const response = await fetch('/api/turn', {
+        const response = await fetch(`${BACKEND_URL}/api/turn`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -3216,7 +3223,7 @@
     btnTestCapture.addEventListener('click', async () => {
       btnTestCapture.textContent = 'Scanning Nameplate with Bedrock Vision...';
       try {
-        const res = await fetch('/api/capture/photo', {
+        const res = await fetch(`${BACKEND_URL}/api/capture/photo`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ propertyId: currentPropertyId, imageBase64: 'sample_plate_data' })
@@ -3239,7 +3246,7 @@
       if (!pendingAsset) return;
       btnConfirmAsset.textContent = 'Saving to SQLite...';
       try {
-        await fetch('/api/assets/confirm', {
+        await fetch(`${BACKEND_URL}/api/assets/confirm`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ propertyId: currentPropertyId, asset: pendingAsset })

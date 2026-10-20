@@ -1,0 +1,67 @@
+name: CI + Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ── Test ───────────────────────────────────────────────────────────────────
+  test:
+    name: Build & Smoke Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend     # all npm commands run inside backend/
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript build
+        run: npm run build
+
+      - name: Seed demo database
+        run: npm run seed
+        env:
+          HEARTH_DB: ./hearth.db
+
+      - name: Smoke tests
+        run: npm run smoke
+        env:
+          PORT: 8787
+          HEARTH_DB: ./hearth.db
+          CAPTURE_MODE: mock
+
+      - name: Eval suite (40-utterance benchmark)
+        run: npm run eval
+        env:
+          PORT: 8787
+          HEARTH_DB: ./hearth.db
+          CAPTURE_MODE: mock
+
+  # ── Deploy (main branch only) ──────────────────────────────────────────────
+  deploy:
+    name: Deploy to Railway
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v4
+      # Railway auto-deploys on push via webhook — no CLI step needed.
+      # If you want explicit deploys via CLI, uncomment below and add RAILWAY_TOKEN secret:
+      # - uses: railwayapp/nixpacks-action@v1
+      #   with:
+      #     token: ${{ secrets.RAILWAY_TOKEN }}
+      - name: Notify deploy triggered
+        run: echo "Railway deployment triggered by push to main ✅"

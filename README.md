@@ -206,7 +206,7 @@ Triggered by the *Gas Odor Alert* and *Water Under Sink* demo scenarios:
 ## The two design rules
 
 **1. Statistics and state machines decide; language models explain.**  
-No LLM sits inside the runbook step machine. Step order is a safety property — "get everyone out of the house" must come before "call the utility", every time, deterministically. Bedrock is used only to extract structured fields from photos and documents.
+No LLM sits inside the runbook step machine. Step order is a safety property — "get everyone out of the house" must come before "call the utility", every time, deterministically. The only place a model belongs is extraction: turning a photo of a nameplate into structured fields. That path is scaffolded for Amazon Bedrock but currently returns deterministic mock data — no AWS call is made in the deployed demo.
 
 **2. Never guess a shutoff.**  
 `find_shutoff` returns `found: false` when a location hasn't been verified for that specific house. The refusal is the product: an assistant that invents a valve location is worse than no assistant.
@@ -216,7 +216,7 @@ No LLM sits inside the runbook step machine. Step order is a safety property —
 ## What is mocked
 
 - **Authentication:** Absent in demo mode; production uses OAuth 2.1 + PKCE as an MCP resource server.
-- **Bedrock Vision:** `CAPTURE_MODE=mock` returns deterministic nameplate fields (Bosch dishwasher model/serial) when AWS Bedrock credentials are not configured, preventing API flakiness during demos.
+- **Bedrock Vision:** not implemented. The capture endpoint returns deterministic nameplate fields. `CAPTURE_MODE` is read but no AWS SDK is wired, which is why this project does **not** enter the AWS Builder mini challenge.
 - **NLU / Voice Simulation:** The browser UI at `http://localhost:8787` stands in for Alexa+; it speaks to the exact same `/mcp` Streamable HTTP endpoint an Alexa+ agent uses.
 - **Runbook catalog:** Two emergency runbooks are implemented (water, gas). The engine DSL cleanly supports electrical, HVAC, and freeze warnings.
 

@@ -26,7 +26,7 @@ The refusal.
 
 An assistant that invents a valve location is worse than no assistant. In an emergency, a confident wrong answer sends someone to the wrong room while the floor is flooding. The refusal is not an edge case — it is the product's entire claim to trust.
 
-That principle shaped the architecture: **statistics and state machines decide; language models explain.** No LLM sits inside the step machine, because step order is a safety property. "Get everyone out of the house" must precede "call the utility" every single time, deterministically. Bedrock is used only to extract structured fields from photos of nameplates.
+That principle shaped the architecture: **statistics and state machines decide; language models explain.** No LLM sits inside the step machine, because step order is a safety property. "Get everyone out of the house" must precede "call the utility" every single time, deterministically. The only place a model belongs is extraction — turning a nameplate photo into structured fields. That path is scaffolded for Bedrock but returns deterministic mock data today; no AWS call is made.
 
 ## How I built it
 
@@ -34,7 +34,7 @@ That principle shaped the architecture: **statistics and state machines decide; 
 - **Protocol:** MCP TypeScript SDK, Streamable HTTP transport, session map, all durable state in SQLite
 - **Runbooks:** a small DSL — steps as data, the engine walks them; water (9 steps) and gas (3 steps)
 - **Frontend:** a single `index.html`, no framework, no build step, Web Speech API with a text fallback that is always visible
-- **Capture:** Bedrock vision turns a photo of a nameplate into a structured asset record
+- **Capture:** nameplate extraction UI, scaffolded for Bedrock but returning deterministic mock fields
 - **Deploy:** Docker on Railway, SQLite on a persistent volume at `/data`
 - **Evaluation:** 40 utterances, 5 refusal cases, 3 mid-call disconnects — 40/40, 5/5, 3/3
 
@@ -48,7 +48,7 @@ That principle shaped the architecture: **statistics and state machines decide; 
 
 **Deployment fought back.** Railway's Railpack auto-detector saw a repo with no root Dockerfile and decided it was a static site, so it built a Caddy image that served an empty folder. The fix was a root Dockerfile that builds `backend/` and copies `frontend/` in. A second bug surfaced locally: `new URL(import.meta.url).pathname` percent-encodes spaces, so a repo path containing a space produced `AMAZON%20hackathon` and a 404 on the frontend. `fileURLToPath()` fixed it.
 
-**Being honest about what is mocked.** Bedrock capture runs in `mock` mode by default so the demo cannot fail on a credential. The repository says so plainly, and the README documents the real integration path.
+**Being honest about what is mocked.** The Bedrock capture path is not implemented. The endpoint returns deterministic fields, and `CAPTURE_MODE` is read but never acted on. I chose to document that plainly rather than enter the AWS Builder mini challenge on the strength of an import that does not exist.
 
 ## What I learned
 
@@ -64,7 +64,7 @@ Alexa knows how. Hearth knows where.
 
 ---
 
-**Built with:** TypeScript, Node.js, Express, SQLite, MCP SDK, Amazon Bedrock, Docker, Railway, HTML/CSS/JavaScript
+**Built with:** TypeScript, Node.js, Express, SQLite, MCP SDK, Docker, Railway, HTML/CSS/JavaScript
 
 **Repository:** https://github.com/Tushar-Nirpane/Hearth
 **Demo video:** https://youtu.be/scuF6O7mVag

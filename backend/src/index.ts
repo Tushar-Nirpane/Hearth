@@ -8,6 +8,7 @@ import { handleTurn } from "./api/turn.js";
 import { handlePhotoCapture, handleAssetConfirm, handleGetIncident } from "./api/capture.js";
 
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { db } from "./db.js";
 import { seed } from "./seed.js";
@@ -24,7 +25,7 @@ app.use(express.json({ limit: "4mb" }));
 // When running from the repo: cwd is backend/, so ../frontend resolves correctly.
 // In Docker: /app/backend/dist/index.js is the entry; frontend is at /app/frontend/.
 const frontendDir = process.env.FRONTEND_DIR
-  ?? path.join(path.dirname(new URL(import.meta.url).pathname), '..', '..', '..', 'frontend');
+  ?? path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..', 'frontend');
 app.use(express.static(frontendDir));
 app.post("/api/turn", handleTurn);
 app.post("/api/capture/photo", handlePhotoCapture);

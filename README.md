@@ -1,8 +1,8 @@
 # Hearth
 
 > **This repository contains a self-hosted MCP server (Streamable HTTP, spec 2025-11-25).**  
-> **Entry point:** [`src/index.ts`](src/index.ts) · **Tool registration:** [`src/server.ts`](src/server.ts)  
-> **Start:** `npm install && npm run seed && npm run build && npm start`
+> **Entry point:** [`backend/src/index.ts`](backend/src/index.ts) · **Tool registration:** [`backend/src/server.ts`](backend/src/server.ts)  
+> **Start:** `cd backend && npm ci && npm run seed && npm run build && npm start`
 
 **Live demo:** <https://hearth-production-8551.up.railway.app>  
 **Demo video (2 min):** <https://youtu.be/scuF6O7mVag>  
@@ -21,11 +21,14 @@ Track: **Alexa+** · Transport: **Streamable HTTP** · Protocol: **2025-11-25**
 ## Quick start
 
 ```bash
-npm install
+cd backend
+npm ci
 npm run seed      # demo property with a full record, plus an empty one for refusal tests
 npm run build
 npm start         # http://localhost:8787
 ```
+
+The frontend is plain HTML in `frontend/` — no build step. The server serves it automatically.
 
 Open **http://localhost:8787** in your browser to launch the Hearth voice UI.
 
@@ -232,7 +235,10 @@ No LLM sits inside the runbook step machine. Step order is a safety property —
 
 ## Development
 
+All commands run from `backend/`:
+
 ```bash
+cd backend
 npm run dev     # tsx watch
 npm run build   # tsc
 npm run smoke   # end-to-end MCP checks (7 tools)

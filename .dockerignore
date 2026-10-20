@@ -1,0 +1,11 @@
+node_modules
+dist
+.git
+.github
+*.db
+*.db-wal
+*.db-shm
+.preview
+docs
+*.md
+!README.md

@@ -128,6 +128,9 @@ async function runEval() {
   if (intentAccuracy < 90 || refusalCorrectness < 100 || resumeCorrectness < 100) {
     process.exit(1);
   }
+
+  // The persistent MCP client keeps the event loop alive; exit explicitly.
+  process.exit(0);
 }
 
 runEval().catch((err) => {

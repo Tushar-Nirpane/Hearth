@@ -30,7 +30,7 @@ ENV PORT=8787
 EXPOSE 8787
 
 HEALTHCHECK --interval=10s --timeout=3s --start-period=15s --retries=3 \
-  CMD node -e "fetch('http://localhost:8787/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+  CMD node -e "fetch('http://localhost:'+(process.env.PORT||8787)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["node", "dist/index.js"]

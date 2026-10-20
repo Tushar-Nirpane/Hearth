@@ -1,0 +1,49 @@
+# Hearth — Fly.io configuration
+# Deploy: flyctl deploy
+# Docs:   https://fly.io/docs/reference/configuration/
+
+app            = "hearth"
+primary_region = "bom"          # Mumbai — closest to India
+
+[build]
+  dockerfile = "Dockerfile"
+
+# ── Environment ───────────────────────────────────────────────────────────────
+[env]
+  PORT         = "8787"
+  HEARTH_DB    = "/data/hearth.db"   # lives on the persistent volume
+  CAPTURE_MODE = "mock"              # flip to "live" via: flyctl secrets set CAPTURE_MODE=live
+
+# ── Persistent volume (SQLite) ────────────────────────────────────────────────
+# Create once before first deploy:
+#   flyctl volumes create hearth_data --size 1 --region bom
+[[mounts]]
+  source      = "hearth_data"
+  destination = "/data"
+
+# ── HTTP service ──────────────────────────────────────────────────────────────
+[[services]]
+  protocol      = "tcp"
+  internal_port = 8787
+
+  [[services.ports]]
+    port     = 443
+    handlers = ["tls", "http"]
+
+  [[services.ports]]
+    port     = 80
+    handlers = ["http"]
+
+  # Health check — Fly restarts the machine if this fails 3× in a row
+  [[services.http_checks]]
+    interval     = "10s"
+    timeout      = "2s"
+    grace_period = "15s"
+    method       = "GET"
+    path         = "/health"
+
+# ── Machine sizing (free tier) ────────────────────────────────────────────────
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1

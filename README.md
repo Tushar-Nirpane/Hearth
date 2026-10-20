@@ -5,7 +5,7 @@
 > **Start:** `cd backend && npm ci && npm run seed && npm run build && npm start`
 
 **Live demo:** <https://hearth-production-8551.up.railway.app>  
-**Demo video (2 min):** <https://youtu.be/scuF6O7mVag>  
+**Demo video (1:07):** <https://youtu.be/scuF6O7mVag>  
 **Deploy:** Railway (Dockerfile, `/data` volume) · `railway up -d`
 
 **The operating record of a house, exposed to Alexa+ as a self-hosted MCP server.**

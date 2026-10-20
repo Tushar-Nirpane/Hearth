@@ -1,5 +1,11 @@
 # ── Stage 1: Build ────────────────────────────────────────────────────────────
 FROM node:22-slim AS builder
+
+# better-sqlite3 may compile from source; keep the toolchain in this stage only.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends python3 make g++ \
+ && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 COPY package*.json ./
@@ -9,17 +15,17 @@ COPY tsconfig.json ./
 COPY src ./src
 COPY public ./public
 
-RUN npm run build
+# Build, then drop dev dependencies before copying node_modules forward.
+RUN npm run build && npm prune --omit=dev
 
 # ── Stage 2: Production ───────────────────────────────────────────────────────
 FROM node:22-slim
 WORKDIR /app
 
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/package*.json ./
-
-RUN npm ci --omit=dev
+COPY --from=builder /app/package.json ./package.json
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
